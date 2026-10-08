@@ -25,7 +25,7 @@ jobs:
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: "17"
+          java-version: "21"
 
       # ubuntu-latest fournit déjà le SDK Android (ANDROID_HOME) : pas besoin d'une action tierce pour l'installer.
       - name: Accepter les licences du SDK Android (déjà installé sur ce runner)
