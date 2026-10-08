@@ -10,7 +10,7 @@
     "@aws-sdk/client-rekognition": "^3.1095.0",
     "cors": "^2.8.5",
     "express": "^4.19.2",
-    "ioredis": "^5.4.1",
+    "ioredis": "^6.0.0",
     "sharp": "^0.35.3",
     "tesseract.js": "^7.0.0",
     "uuid": "^9.0.1"
