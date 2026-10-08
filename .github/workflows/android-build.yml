@@ -16,7 +16,7 @@ jobs:
         with:
           node-version: "22"
 
-      - name: Installer les dépendances et régénérer les fichiers Capacitor (non versionnés : capacitor-cordova-android-plugins)
+      - name: "Installer les dépendances et régénérer les fichiers Capacitor (non versionnés : capacitor-cordova-android-plugins)"
         run: |
           npm ci
           npx cap sync android
