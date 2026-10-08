@@ -12,6 +12,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Installer les dépendances et régénérer les fichiers Capacitor (non versionnés : capacitor-cordova-android-plugins)
+        run: |
+          npm ci
+          npx cap sync android
+        working-directory: driver-app
+
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
