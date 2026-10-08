@@ -1,0 +1,33 @@
+{
+  "name": "louage-express-driver-portal",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Portail d'inscription à distance réservé aux chauffeurs de louage, avec prise de rendez-vous d'entretien.",
+  "type": "module",
+  "engines": {
+    "node": ">=22.5"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "check": "node tools/check-repo.js",
+    "test": "node --test",
+    "test:coverage": "node --test --experimental-test-coverage --test-coverage-exclude=\"test/**\" --test-coverage-exclude=\"e2e/**\" --test-coverage-exclude=\"tools/**\" --test-coverage-lines=90 --test-coverage-branches=80 --test-coverage-functions=90",
+    "test:e2e": "node --test \"e2e/*.e2e.js\"",
+    "ci": "npm run check && npm run test:coverage && npm run test:e2e",
+    "rotate-key": "node rotate-key.js",
+    "purge": "node purge.js",
+    "admin": "node admin-cli.js",
+    "secrets": "node deploy/secrets.js",
+    "check-config": "node deploy/check-config.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "express-rate-limit": "^7.4.0",
+    "helmet": "^7.1.0",
+    "multer": "^2.4.0"
+  },
+  "devDependencies": {
+    "axe-core": "^4.14.0",
+    "playwright-core": "^1.63.0"
+  }
+}

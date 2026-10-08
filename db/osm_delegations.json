@@ -1,0 +1,2133 @@
+{
+"source": "© OpenStreetMap contributors (ODbL) : relations administratives de niveau 5 (délégations de Tunisie), extraites avec Overpass API le 2026-10-07 ; gouvernorat obtenu par géocodage inverse Nominatim du centre (peut être faux pour les grandes délégations : voir tools/make_places_data.py).",
+"delegations": [
+{
+"osm_id": 273213,
+"fr": "Délégation Bir Ali Ben Khalifa",
+"ar": "معتمدية بئر علي بن خليفة",
+"state": "Gouvernorat Sfax",
+"lat": 34.7629,
+"lon": 10.1103
+},
+{
+"osm_id": 273305,
+"fr": "Délégation El Ghraiba",
+"ar": "معتمدية الغريبة",
+"state": "Gouvernorat Sfax",
+"lat": 34.4842,
+"lon": 10.2156
+},
+{
+"osm_id": 273307,
+"fr": "Délégation Menzel Chaker",
+"ar": "معتمدية منزل شاكر",
+"state": "Gouvernorat Sfax",
+"lat": 35.0291,
+"lon": 10.3825
+},
+{
+"osm_id": 273308,
+"fr": "Délégation El Hencha",
+"ar": "معتمدية الحنشة",
+"state": "Gouvernorat Sfax",
+"lat": 35.0827,
+"lon": 10.716
+},
+{
+"osm_id": 273458,
+"fr": "Délégation Jebeniana",
+"ar": "معتمدية جبنيانة",
+"state": "Gouvernorat Sfax",
+"lat": 35.0939,
+"lon": 10.9057
+},
+{
+"osm_id": 273459,
+"fr": "Délégation El Amra",
+"ar": "معتمدية العامرة",
+"state": "Gouvernorat Sfax",
+"lat": 34.9378,
+"lon": 10.8826
+},
+{
+"osm_id": 273483,
+"fr": "Kerkennah",
+"ar": "قرقنة",
+"state": "Gouvernorat Sfax",
+"lat": 34.722,
+"lon": 11.1648
+},
+{
+"osm_id": 1595206,
+"fr": "Délégation Agareb",
+"ar": "معتمدية عقارب",
+"state": "Gouvernorat Sfax",
+"lat": 34.7451,
+"lon": 10.4691
+},
+{
+"osm_id": 4128393,
+"fr": "Délégation Le Bardo",
+"ar": "معتمدية باردو",
+"state": "Gouvernorat Tunis",
+"lat": 36.8135,
+"lon": 10.1351
+},
+{
+"osm_id": 4129675,
+"fr": "Délégation El Hrairia",
+"ar": "معتمدية الحرائرية",
+"state": "Gouvernorat Tunis",
+"lat": 36.782,
+"lon": 10.0659
+},
+{
+"osm_id": 4129684,
+"fr": "Délégation Sidi Hassine",
+"ar": "معتمدية سيدي حسين",
+"state": "Gouvernorat Tunis",
+"lat": 36.74,
+"lon": 10.0896
+},
+{
+"osm_id": 4130297,
+"fr": "Délégation Ezzouhour",
+"ar": "معتمدية الزهور",
+"state": "Gouvernorat Tunis",
+"lat": 36.7944,
+"lon": 10.1389
+},
+{
+"osm_id": 4130348,
+"fr": "Délégation Essijoumi",
+"ar": "معتمدية السيجومي",
+"state": "Gouvernorat Tunis",
+"lat": 36.7848,
+"lon": 10.1619
+},
+{
+"osm_id": 4130434,
+"fr": "Délégation Ettahrir",
+"ar": "معتمدية التحرير",
+"state": "Gouvernorat Tunis",
+"lat": 36.8271,
+"lon": 10.1279
+},
+{
+"osm_id": 4132537,
+"fr": "Délégation El Omrane Supérieur",
+"ar": "معتمدية العمران الأعلى",
+"state": "Gouvernorat Tunis",
+"lat": 36.8349,
+"lon": 10.1314
+},
+{
+"osm_id": 4132591,
+"fr": "Délégation El Menzah",
+"ar": "معتمدية المنزه",
+"state": "Gouvernorat Tunis",
+"lat": 36.8356,
+"lon": 10.1573
+},
+{
+"osm_id": 4133432,
+"fr": "Délégation El Omrane",
+"ar": "معتمدية العمران",
+"state": "Gouvernorat Tunis",
+"lat": 36.821,
+"lon": 10.1572
+},
+{
+"osm_id": 4133433,
+"fr": "Délégation Bab Souika",
+"ar": "معتمدية باب سويقة",
+"state": "Gouvernorat Tunis",
+"lat": 36.8063,
+"lon": 10.1622
+},
+{
+"osm_id": 4133520,
+"fr": "Délégation Médina",
+"ar": "معتمدية المدينة",
+"state": "Gouvernorat Tunis",
+"lat": 36.7985,
+"lon": 10.169
+},
+{
+"osm_id": 4133739,
+"fr": "Délégation Cité El Khadra",
+"ar": "معتمدية حي الخضراء",
+"state": "Gouvernorat Tunis",
+"lat": 36.8371,
+"lon": 10.2253
+},
+{
+"osm_id": 4133740,
+"fr": "Délégation Bab Bhar",
+"ar": "معتمدية باب بحر",
+"state": "Gouvernorat Tunis",
+"lat": 36.8006,
+"lon": 10.1987
+},
+{
+"osm_id": 4133965,
+"fr": "Délégation El Ouardia",
+"ar": "معتمدية الوردية",
+"state": "Gouvernorat Tunis",
+"lat": 36.772,
+"lon": 10.183
+},
+{
+"osm_id": 4133966,
+"fr": "Délégation Sidi El Béchir",
+"ar": "معتمدية سيدي البشير",
+"state": "Gouvernorat Tunis",
+"lat": 36.7848,
+"lon": 10.1769
+},
+{
+"osm_id": 4134868,
+"fr": "Délégation El Kabaria",
+"ar": "الكبارية",
+"state": "Gouvernorat Tunis",
+"lat": 36.7424,
+"lon": 10.1895
+},
+{
+"osm_id": 4134869,
+"fr": "Délégation Djebel Jelloud",
+"ar": "معتمدية جبل الجلود",
+"state": "Gouvernorat Tunis",
+"lat": 36.7657,
+"lon": 10.2054
+},
+{
+"osm_id": 4134886,
+"fr": "Délégation La Goulette",
+"ar": "معتمدية حلق الوادي",
+"state": "Gouvernorat Tunis",
+"lat": 36.8343,
+"lon": 10.279
+},
+{
+"osm_id": 4135019,
+"fr": "Le Kram",
+"ar": "الكرم",
+"state": "Gouvernorat Tunis",
+"lat": 36.8479,
+"lon": 10.2946
+},
+{
+"osm_id": 4135055,
+"fr": "Carthage",
+"ar": "قرطاج",
+"state": "Gouvernorat Tunis",
+"lat": 36.8579,
+"lon": 10.331
+},
+{
+"osm_id": 4135056,
+"fr": "Délégation La Marsa",
+"ar": "معتمدية المرسى",
+"state": "Gouvernorat Tunis",
+"lat": 36.9001,
+"lon": 10.2965
+},
+{
+"osm_id": 4156579,
+"fr": "Délégation Cité Ettadhamen",
+"ar": "معتمدية حي التضامن",
+"state": "Gouvernorat Ariana",
+"lat": 36.8337,
+"lon": 10.1053
+},
+{
+"osm_id": 4184671,
+"fr": "Délégation Mnihla",
+"ar": "معتمدية منيهلة",
+"state": "Gouvernorat Ariana",
+"lat": 36.8639,
+"lon": 10.1118
+},
+{
+"osm_id": 4184709,
+"fr": "Délégation Soukra",
+"ar": "معتمدية سكرة",
+"state": "Gouvernorat Ariana",
+"lat": 36.8812,
+"lon": 10.2371
+},
+{
+"osm_id": 4184891,
+"fr": "Délégation de Sidi Thabet",
+"ar": "معتمدية سيدي ثابت",
+"state": "Gouvernorat Ariana",
+"lat": 36.9116,
+"lon": 10.0402
+},
+{
+"osm_id": 4742122,
+"fr": "Délégation Ghardimaou",
+"ar": "معتمدية غار الدماء",
+"state": "Gouvernorat Jendouba",
+"lat": 36.4848,
+"lon": 8.3469
+},
+{
+"osm_id": 4742499,
+"fr": "Délégation Oued Meliz",
+"ar": "معتمدية وادي مليز",
+"state": "Gouvernorat Jendouba",
+"lat": 36.4857,
+"lon": 8.5842
+},
+{
+"osm_id": 4742562,
+"fr": "Délégation Fernana",
+"ar": "معتمدية فرنانة",
+"state": "Gouvernorat Jendouba",
+"lat": 36.6527,
+"lon": 8.6346
+},
+{
+"osm_id": 4742591,
+"fr": "Délégation Aïn Draham",
+"ar": "معتمدية عين دراهم",
+"state": "Gouvernorat Jendouba",
+"lat": 36.7945,
+"lon": 8.6812
+},
+{
+"osm_id": 4742596,
+"fr": "Délégation Tabarka",
+"ar": "معتمدية طبرقة",
+"state": "Gouvernorat Jendouba",
+"lat": 36.9073,
+"lon": 8.8215
+},
+{
+"osm_id": 4742613,
+"fr": "Délégation Balta Bouawene",
+"ar": "معتمدية بلطة بوعوان",
+"state": "Gouvernorat Jendouba",
+"lat": 36.6935,
+"lon": 8.9055
+},
+{
+"osm_id": 4742640,
+"fr": "Délégation Bousalem",
+"ar": "معتمدية بوسالم",
+"state": "Gouvernorat Jendouba",
+"lat": 36.5579,
+"lon": 8.9572
+},
+{
+"osm_id": 4742885,
+"fr": "Délégation Jendouba Nord",
+"ar": "معتمدية جندوبة الشمالية",
+"state": "Gouvernorat Jendouba",
+"lat": 36.5359,
+"lon": 8.6956
+},
+{
+"osm_id": 4742886,
+"fr": "Délégation Jendouba Sud",
+"ar": "معتمدية جندوبة الجنوبية",
+"state": "Gouvernorat Jendouba",
+"lat": 36.4847,
+"lon": 8.7987
+},
+{
+"osm_id": 4748624,
+"fr": "Délégation Nebeur",
+"ar": "معتمدية نبر",
+"state": "Gouvernorat Le Kef",
+"lat": 36.3301,
+"lon": 8.752
+},
+{
+"osm_id": 4748625,
+"fr": "Délégation Sakiet Sidi Youssef",
+"ar": "معتمدية ساقية سيدي يوسف",
+"state": "Gouvernorat Le Kef",
+"lat": 36.169,
+"lon": 8.4596
+},
+{
+"osm_id": 4749235,
+"fr": "Délégation Kef Ouest",
+"ar": "معتمدية الكاف الغربية",
+"state": "Gouvernorat Le Kef",
+"lat": 36.154,
+"lon": 8.6177
+},
+{
+"osm_id": 4749239,
+"fr": "Délégation Kef Est",
+"ar": "معتمدية الكاف الشرقية",
+"state": "Gouvernorat Le Kef",
+"lat": 36.1839,
+"lon": 8.8731
+},
+{
+"osm_id": 4752889,
+"fr": "Délégation Kalaat Senan",
+"ar": "معتمدية قلعة سنان",
+"state": "Gouvernorat Le Kef",
+"lat": 35.797,
+"lon": 8.4065
+},
+{
+"osm_id": 4752899,
+"fr": "Délégation Kalaat Khasba",
+"ar": "معتمدية القلعة الخصبة",
+"state": "Gouvernorat Le Kef",
+"lat": 35.7275,
+"lon": 8.5212
+},
+{
+"osm_id": 4752900,
+"fr": "Délégation Djérissa",
+"ar": "معتمدية الجريصة",
+"state": "Gouvernorat Le Kef",
+"lat": 35.816,
+"lon": 8.6494
+},
+{
+"osm_id": 4752901,
+"fr": "Délégation Tajerouine",
+"ar": "معتمدية تاجروين",
+"state": "Gouvernorat Le Kef",
+"lat": 35.9658,
+"lon": 8.5513
+},
+{
+"osm_id": 4752904,
+"fr": "Délégation Dahmani",
+"ar": "معتمدية الدهماني",
+"state": "Gouvernorat Le Kef",
+"lat": 35.9354,
+"lon": 8.8345
+},
+{
+"osm_id": 4752914,
+"fr": "Délégation El Ksour",
+"ar": "معتمدية القصور",
+"state": "Gouvernorat Le Kef",
+"lat": 35.8278,
+"lon": 8.95
+},
+{
+"osm_id": 4752920,
+"fr": "Délégation Sers",
+"ar": "معتمدية السرس",
+"state": "Gouvernorat Le Kef",
+"lat": 36.063,
+"lon": 8.9688
+},
+{
+"osm_id": 7107872,
+"fr": "Délégation El Faouar",
+"ar": "معتمدية الفوار",
+"state": "Gouvernorat Kébili",
+"lat": 33.1528,
+"lon": 8.4005
+},
+{
+"osm_id": 7108012,
+"fr": "Délégation Douz Sud",
+"ar": "معتمدية دوز الجنوبية",
+"state": "Gouvernorat Kébili",
+"lat": 33.0647,
+"lon": 9.3513
+},
+{
+"osm_id": 7110404,
+"fr": "Délégation Douz Nord",
+"ar": "معتمدية دوز الشمالية",
+"state": "Gouvernorat Kébili",
+"lat": 33.2452,
+"lon": 9.468
+},
+{
+"osm_id": 7110422,
+"fr": "Délégation Souk El Ahad",
+"ar": "معتمدية سوق الأحد",
+"state": "Gouvernorat Kébili",
+"lat": 33.9306,
+"lon": 8.7591
+},
+{
+"osm_id": 7110466,
+"fr": "Délégation Kébili Sud",
+"ar": "معتمدية قبلي الجنوبية",
+"state": "Gouvernorat Kébili",
+"lat": 33.604,
+"lon": 9.0659
+},
+{
+"osm_id": 7110523,
+"fr": "Délégation Kébili Nord",
+"ar": "معتمدية قبلي الشمالية",
+"state": "Gouvernorat Kébili",
+"lat": 33.8928,
+"lon": 9.0428
+},
+{
+"osm_id": 7111008,
+"fr": "Délégation El Mahrès",
+"ar": "معتمدية ‫المحرس‬",
+"state": "Gouvernorat Sfax",
+"lat": 34.5301,
+"lon": 10.4451
+},
+{
+"osm_id": 7111391,
+"fr": "Délégation Skhira",
+"ar": "معتمدية الصخيرة",
+"state": "Gouvernorat Sfax",
+"lat": 34.3469,
+"lon": 9.9544
+},
+{
+"osm_id": 7133840,
+"fr": "Délégation Djerba Houmet Souk",
+"ar": "معتمدية جربة حومة السوق",
+"state": "Gouvernorat Médenine",
+"lat": 33.8509,
+"lon": 10.8667
+},
+{
+"osm_id": 7133841,
+"fr": "Délégation Djerba Midoun",
+"ar": "معتمدية جربة ميدون",
+"state": "Gouvernorat Médenine",
+"lat": 33.7536,
+"lon": 10.9611
+},
+{
+"osm_id": 7133842,
+"fr": "Délégation Djerba Ajim",
+"ar": "معتمدية جربة أجيم",
+"state": "Gouvernorat Médenine",
+"lat": 33.7383,
+"lon": 10.8214
+},
+{
+"osm_id": 7142934,
+"fr": "Délégation Medenine Nord",
+"ar": "معتمدية مدنين الشمالية",
+"state": "Gouvernorat Médenine",
+"lat": 33.3637,
+"lon": 10.3846
+},
+{
+"osm_id": 7142936,
+"fr": "Délégation Medenine Sud",
+"ar": "معتمدية مدنين االجنوبية",
+"state": "Gouvernorat Médenine",
+"lat": 33.4219,
+"lon": 10.6105
+},
+{
+"osm_id": 7142942,
+"fr": "Délégation Ben Gardane",
+"ar": "معتمدية بنقردان",
+"state": "Gouvernorat Tataouine",
+"lat": 32.8121,
+"lon": 11.0617
+},
+{
+"osm_id": 7142975,
+"fr": "Délégation Zarzis",
+"ar": "معتمدية جرجيس",
+"state": "Gouvernorat Médenine",
+"lat": 33.4661,
+"lon": 11.0221
+},
+{
+"osm_id": 7142978,
+"fr": "Délégation Beni Khedech",
+"ar": "معتمدية بني خداش",
+"state": "Gouvernorat Médenine",
+"lat": 33.235,
+"lon": 10.0785
+},
+{
+"osm_id": 7142982,
+"fr": "Délégation Sidi Makhlouf",
+"ar": "معتمدية سيدي مخلوف",
+"state": "Gouvernorat Médenine",
+"lat": 33.5411,
+"lon": 10.5433
+},
+{
+"osm_id": 7143811,
+"fr": "Délégation Tataouine Nord",
+"ar": "معتمدية تطاوين الشمالية",
+"state": "Gouvernorat Tataouine",
+"lat": 32.7026,
+"lon": 10.7611
+},
+{
+"osm_id": 7143813,
+"fr": "Délégation Dhehiba",
+"ar": "معتمدية الذهيبة",
+"state": "Gouvernorat Tataouine",
+"lat": 31.963,
+"lon": 10.5813
+},
+{
+"osm_id": 7143836,
+"fr": "Délégation Smâr",
+"ar": "معتمدية الصمار",
+"state": "Gouvernorat Tataouine",
+"lat": 32.7041,
+"lon": 11.0126
+},
+{
+"osm_id": 7143840,
+"fr": "Délégation Remada",
+"ar": "معتمدية رمادة",
+"state": "Gouvernorat Tataouine",
+"lat": 31.5148,
+"lon": 9.5794
+},
+{
+"osm_id": 7143855,
+"fr": "Bir Lahmar",
+"ar": "بئر الأحمر",
+"state": "Gouvernorat Tataouine",
+"lat": 33.1481,
+"lon": 10.4731
+},
+{
+"osm_id": 7143858,
+"fr": "Délégation Ghomrassen",
+"ar": "معتمدية غمراسن",
+"state": "Gouvernorat Tataouine",
+"lat": 33.0463,
+"lon": 10.2504
+},
+{
+"osm_id": 7143863,
+"fr": "Délégation Tataouine Sud",
+"ar": "معتمدية تطاوين الجنوبية",
+"state": "Gouvernorat Tataouine",
+"lat": 32.7766,
+"lon": 10.2007
+},
+{
+"osm_id": 7145292,
+"fr": "Délégation Soliman",
+"ar": "معتمدية سليمان",
+"state": null,
+"lat": 36.7494,
+"lon": 10.5087
+},
+{
+"osm_id": 7145293,
+"fr": "Délégation Takelsa",
+"ar": "معتمدية تاكلسة",
+"state": "Gouvernorat Nabeul",
+"lat": 36.7932,
+"lon": 10.6959
+},
+{
+"osm_id": 7145294,
+"fr": "Délégation Hammam El Ghezaz",
+"ar": "معتمدية حمام الغزاز",
+"state": "Gouvernorat Nabeul",
+"lat": 36.9336,
+"lon": 11.0726
+},
+{
+"osm_id": 7145295,
+"fr": "Délégation Kélibia",
+"ar": "معتمدية قليبية",
+"state": "Gouvernorat Nabeul",
+"lat": 36.8794,
+"lon": 11.0296
+},
+{
+"osm_id": 7145296,
+"fr": "Délégation El Mida",
+"ar": "معتمدية الميدة",
+"state": "Gouvernorat Nabeul",
+"lat": 36.7212,
+"lon": 10.849
+},
+{
+"osm_id": 7145297,
+"fr": "Délégation Menzel Temime",
+"ar": "معتمدية منزل تميم",
+"state": "Gouvernorat Nabeul",
+"lat": 36.8064,
+"lon": 10.8956
+},
+{
+"osm_id": 7145298,
+"fr": "Délégation Korba",
+"ar": "معتمدية قربة",
+"state": "Gouvernorat Nabeul",
+"lat": 36.6057,
+"lon": 10.8063
+},
+{
+"osm_id": 7145299,
+"fr": "Délégation Beni Khiar",
+"ar": "معتمدية بني خيار",
+"state": "Gouvernorat Nabeul",
+"lat": 36.5231,
+"lon": 10.7608
+},
+{
+"osm_id": 7145300,
+"fr": "Délégation Dar Chaabane El Fehri",
+"ar": "معتمدية دار شعبان الفهري",
+"state": "Gouvernorat Nabeul",
+"lat": 36.5181,
+"lon": 10.6966
+},
+{
+"osm_id": 7145301,
+"fr": "Délégation Nabeul",
+"ar": "معتمدية نابل",
+"state": "Gouvernorat Nabeul",
+"lat": 36.4825,
+"lon": 10.6817
+},
+{
+"osm_id": 7145302,
+"fr": "Délégation El Haouaria",
+"ar": "معتمدية الهوارية",
+"state": "Gouvernorat Nabeul",
+"lat": 36.9548,
+"lon": 10.9204
+},
+{
+"osm_id": 7145379,
+"fr": "Délégation Mareth",
+"ar": "معتمدية مارث",
+"state": "Gouvernorat Gabès",
+"lat": 33.5589,
+"lon": 10.1979
+},
+{
+"osm_id": 7145382,
+"fr": "Délégation Nouvelle Matmata",
+"ar": "معتمدية مطماطة الجديدة",
+"state": "Gouvernorat Gabès",
+"lat": 33.6175,
+"lon": 9.8493
+},
+{
+"osm_id": 7145387,
+"fr": "Délégation Gabès Ville",
+"ar": "معتمدية قابس المدينة",
+"state": "Gouvernorat Gabès",
+"lat": 33.904,
+"lon": 10.0988
+},
+{
+"osm_id": 7145391,
+"fr": "Délégation Gabès Sud",
+"ar": "معتمدية قابس الجنوبية",
+"state": "Gouvernorat Gabès",
+"lat": 33.7797,
+"lon": 10.0583
+},
+{
+"osm_id": 7145400,
+"fr": "Délégation Matmata",
+"ar": "معتمدية مطماطة",
+"state": "Gouvernorat Gabès",
+"lat": 33.4664,
+"lon": 9.7835
+},
+{
+"osm_id": 7145411,
+"fr": "Délégation El Metouia",
+"ar": "معتمدية المطوية",
+"state": "Gouvernorat Gabès",
+"lat": 34.0615,
+"lon": 9.9241
+},
+{
+"osm_id": 7145417,
+"fr": "Délégation El Hamma",
+"ar": "معتمدية الحامة",
+"state": "Gouvernorat Gabès",
+"lat": 33.8652,
+"lon": 9.6071
+},
+{
+"osm_id": 7145425,
+"fr": "Délégation Ghanouch",
+"ar": "معتمدية غنوش",
+"state": "Gouvernorat Gabès",
+"lat": 33.948,
+"lon": 10.0543
+},
+{
+"osm_id": 7145426,
+"fr": "Délégation Gabès Ouest",
+"ar": "معتمدية قابس الغربية",
+"state": "Gouvernorat Gabès",
+"lat": 33.8781,
+"lon": 9.9968
+},
+{
+"osm_id": 7145436,
+"fr": "Délégation Menzel El Habib",
+"ar": "معتمدية منزل الحبيب",
+"state": "Gouvernorat Gabès",
+"lat": 34.1541,
+"lon": 9.5827
+},
+{
+"osm_id": 7145835,
+"fr": "Délégation Hammamet",
+"ar": "معتمدية الحمامات",
+"state": "Gouvernorat Nabeul",
+"lat": 36.4099,
+"lon": 10.5149
+},
+{
+"osm_id": 7145836,
+"fr": "Délégation Bou Argoub",
+"ar": "معتمدية بو عرقوب",
+"state": "Gouvernorat Nabeul",
+"lat": 36.528,
+"lon": 10.5751
+},
+{
+"osm_id": 7145837,
+"fr": "Délégation Grombalia",
+"ar": "معتمدية قرمبالية",
+"state": "Gouvernorat Nabeul",
+"lat": 36.592,
+"lon": 10.4569
+},
+{
+"osm_id": 7145838,
+"fr": "Délégation Beni Khalled",
+"ar": "معتمدية بني خلاد",
+"state": "Gouvernorat Nabeul",
+"lat": 36.6246,
+"lon": 10.6333
+},
+{
+"osm_id": 7145839,
+"fr": "Délégation Menzel Bouzelfa",
+"ar": "معتمدية منزل بوزلفة",
+"state": "Gouvernorat Nabeul",
+"lat": 36.7037,
+"lon": 10.6586
+},
+{
+"osm_id": 7147547,
+"fr": "Délégation Sfax Ouest",
+"ar": "معتمدية صفاقس الغربية",
+"state": "Gouvernorat Sfax",
+"lat": 34.7354,
+"lon": 10.7226
+},
+{
+"osm_id": 7147548,
+"fr": "Délégation Sfax Sud",
+"ar": "معتمدية صفاقس الجنوبية",
+"state": "Gouvernorat Sfax",
+"lat": 34.8442,
+"lon": 10.6647
+},
+{
+"osm_id": 7147551,
+"fr": "Délégation Sakiet Eddaier",
+"ar": "معتمدية ساقية الدائر",
+"state": "Gouvernorat Sfax",
+"lat": 34.8342,
+"lon": 10.8258
+},
+{
+"osm_id": 7147554,
+"fr": "Délégation Sakiet Ezzit",
+"ar": "معتمدية ساقية الزيت",
+"state": "Gouvernorat Sfax",
+"lat": 34.8599,
+"lon": 10.7334
+},
+{
+"osm_id": 7147562,
+"fr": "Délégation Thyna",
+"ar": "معتمدية طينة",
+"state": "Gouvernorat Sfax",
+"lat": 34.682,
+"lon": 10.6699
+},
+{
+"osm_id": 7147588,
+"fr": "Délégation Sfax Ville",
+"ar": "معتمدية صفاقس المدينة",
+"state": "Gouvernorat Sfax",
+"lat": 34.7362,
+"lon": 10.7532
+},
+{
+"osm_id": 7150105,
+"fr": "Délégation Hammam Sousse",
+"ar": "معتمدية حمام سوسة",
+"state": "Gouvernorat Sousse",
+"lat": 35.8749,
+"lon": 10.5884
+},
+{
+"osm_id": 7150106,
+"fr": "Délégation Sousse Sidi Abdelhamid",
+"ar": "معتمدية سوسة سيدي عبد الحميد",
+"state": "Gouvernorat Sousse",
+"lat": 35.7965,
+"lon": 10.6508
+},
+{
+"osm_id": 7150107,
+"fr": "Délégation Sousse Jaouhara",
+"ar": "معتمدية سوسة جوهرة",
+"state": "Gouvernorat Sousse",
+"lat": 35.8284,
+"lon": 10.6089
+},
+{
+"osm_id": 7150108,
+"fr": "Délégation Sousse Erriadh",
+"ar": "معتمدية سوسة الرياض",
+"state": "Gouvernorat Sousse",
+"lat": 35.8045,
+"lon": 10.5818
+},
+{
+"osm_id": 7150109,
+"fr": "Délégation Sousse Medina",
+"ar": "معتمدية سوسة المدينة",
+"state": "Gouvernorat Sousse",
+"lat": 35.8362,
+"lon": 10.6275
+},
+{
+"osm_id": 7150155,
+"fr": "Délégation Oum El Araies",
+"ar": "معتمدية أم العرائس",
+"state": "Gouvernorat Gafsa",
+"lat": 34.5657,
+"lon": 8.3777
+},
+{
+"osm_id": 7150156,
+"fr": "Délégation Redeyef",
+"ar": "معتمدية الرديف",
+"state": "Gouvernorat Gafsa",
+"lat": 34.353,
+"lon": 8.1948
+},
+{
+"osm_id": 7150157,
+"fr": "Délégation Sened",
+"ar": "معتمدية السند",
+"state": "Gouvernorat Gafsa",
+"lat": 34.5434,
+"lon": 9.1603
+},
+{
+"osm_id": 7150158,
+"fr": "Délégation El Ksar",
+"ar": "معتمدية القصر",
+"state": "Gouvernorat Gafsa",
+"lat": 34.4121,
+"lon": 8.8866
+},
+{
+"osm_id": 7150159,
+"fr": "Délégation El Guetar",
+"ar": "معتمدية القطار",
+"state": "Gouvernorat Gafsa",
+"lat": 34.2725,
+"lon": 9.0405
+},
+{
+"osm_id": 7150160,
+"fr": "Délégation Metlaoui",
+"ar": "معتمدية المتلوي",
+"state": "Gouvernorat Gafsa",
+"lat": 34.2352,
+"lon": 8.3747
+},
+{
+"osm_id": 7150161,
+"fr": "Délégation Mdhila",
+"ar": "معتمدية المضيلة",
+"state": "Gouvernorat Gafsa",
+"lat": 34.2008,
+"lon": 8.6974
+},
+{
+"osm_id": 7150162,
+"fr": "Délégation Belkhir",
+"ar": "معتمدية بلخير",
+"state": "Gouvernorat Gafsa",
+"lat": 34.3362,
+"lon": 9.3539
+},
+{
+"osm_id": 7150163,
+"fr": "Délégation Sidi Aïch",
+"ar": "معتمدية سيدي عيش",
+"state": "Gouvernorat Gafsa",
+"lat": 34.6943,
+"lon": 8.8072
+},
+{
+"osm_id": 7150164,
+"fr": "Délégation Gafsa Sud",
+"ar": "معتمدية قفصة الجنوبية",
+"state": "Gouvernorat Gafsa",
+"lat": 34.4443,
+"lon": 8.647
+},
+{
+"osm_id": 7150165,
+"fr": "Délégation Gafsa Nord",
+"ar": "معتمدية قفصة الشمالية",
+"state": "Gouvernorat Gafsa",
+"lat": 34.5768,
+"lon": 8.9259
+},
+{
+"osm_id": 7150740,
+"fr": "Délégation Sidi El Heni",
+"ar": "معتمدية سيدي الهاني",
+"state": "Gouvernorat Sousse",
+"lat": 35.697,
+"lon": 10.3207
+},
+{
+"osm_id": 7150741,
+"fr": "Délégation Kondar",
+"ar": "معتمدية كندار",
+"state": "Gouvernorat Sousse",
+"lat": 35.9032,
+"lon": 10.262
+},
+{
+"osm_id": 7150742,
+"fr": "Délégation Bouficha",
+"ar": "معتمدية بوفيشة",
+"state": "Gouvernorat Sousse",
+"lat": 36.2747,
+"lon": 10.4233
+},
+{
+"osm_id": 7150743,
+"fr": "Délégation Enfidha",
+"ar": "معتمدية النفيضة",
+"state": "Gouvernorat Sousse",
+"lat": 36.1177,
+"lon": 10.3272
+},
+{
+"osm_id": 7150744,
+"fr": "Délégation Hergla",
+"ar": "معتمدية هرقلة",
+"state": "Gouvernorat Sousse",
+"lat": 36.0289,
+"lon": 10.45
+},
+{
+"osm_id": 7150745,
+"fr": "Délégation Sidi Bou Ali",
+"ar": "معتمدية سيدي بو علي",
+"state": "Gouvernorat Sousse",
+"lat": 35.9702,
+"lon": 10.4271
+},
+{
+"osm_id": 7150746,
+"fr": "Délégation Kalaa Kebira",
+"ar": "معتمدية القلعة الكبرى",
+"state": "Gouvernorat Sousse",
+"lat": 35.8682,
+"lon": 10.4339
+},
+{
+"osm_id": 7150747,
+"fr": "Délégation Akouda",
+"ar": "معتمدية أكودة",
+"state": "Gouvernorat Sousse",
+"lat": 35.9055,
+"lon": 10.5472
+},
+{
+"osm_id": 7150922,
+"fr": "Zaouia Ksibet Thrayet",
+"ar": "الزاوية قصيبة الثريات",
+"state": "Gouvernorat Sousse",
+"lat": 35.7679,
+"lon": 10.6277
+},
+{
+"osm_id": 7150923,
+"fr": "Délégation Kalaa Sghira",
+"ar": "معتمدية القلعة الصغرى",
+"state": "Gouvernorat Sousse",
+"lat": 35.7982,
+"lon": 10.4793
+},
+{
+"osm_id": 7150924,
+"fr": "Délégation Msaken",
+"ar": "معتمدية مساكن",
+"state": "Gouvernorat Sousse",
+"lat": 35.6739,
+"lon": 10.5148
+},
+{
+"osm_id": 7151751,
+"fr": "Délégation Utique",
+"ar": "معتمدية أوتيك",
+"state": "Gouvernorat Bizerte",
+"lat": 37.0344,
+"lon": 10.0215
+},
+{
+"osm_id": 7151752,
+"fr": "Délégation Tinja",
+"ar": "معتمدية تينجة",
+"state": "Gouvernorat Bizerte",
+"lat": 37.1291,
+"lon": 9.7016
+},
+{
+"osm_id": 7151753,
+"fr": "Délégation Menzel Bourguiba",
+"ar": "معتمدية منزل بورقيبة",
+"state": "Gouvernorat Bizerte",
+"lat": 37.1075,
+"lon": 9.8558
+},
+{
+"osm_id": 7151754,
+"fr": "Délégation Ghezala",
+"ar": "معتمدية غزالة",
+"state": "Gouvernorat Bizerte",
+"lat": 37.0786,
+"lon": 9.4886
+},
+{
+"osm_id": 7151755,
+"fr": "Délégation Mateur",
+"ar": "معتمدية ماطر",
+"state": "Gouvernorat Bizerte",
+"lat": 36.985,
+"lon": 9.6699
+},
+{
+"osm_id": 7151756,
+"fr": "Délégation Joumine",
+"ar": "معتمدية جومين",
+"state": "Gouvernorat Bizerte",
+"lat": 36.8782,
+"lon": 9.3959
+},
+{
+"osm_id": 7151757,
+"fr": "Délégation Sejnane",
+"ar": "معتمدية سجنان",
+"state": "Gouvernorat Bizerte",
+"lat": 37.1367,
+"lon": 9.2902
+},
+{
+"osm_id": 7151758,
+"fr": "Délégation Bizerte Sud",
+"ar": "معتمدية بنزرت الجنوبية",
+"state": "Gouvernorat Bizerte",
+"lat": 37.2573,
+"lon": 9.667
+},
+{
+"osm_id": 7151759,
+"fr": "Délégation Jarzouna",
+"ar": "معتمدية جرزونة",
+"state": "Gouvernorat Bizerte",
+"lat": 37.2597,
+"lon": 9.891
+},
+{
+"osm_id": 7151760,
+"fr": "Délégation Bizerte Nord",
+"ar": "معتمدية بنزرت الشمالية",
+"state": null,
+"lat": 37.4029,
+"lon": 9.3947
+},
+{
+"osm_id": 7151812,
+"fr": "Délégation Ras Jebel",
+"ar": "معتمدية رأس الجبل",
+"state": "Gouvernorat Bizerte",
+"lat": 37.2225,
+"lon": 10.1439
+},
+{
+"osm_id": 7151813,
+"fr": "Délégation El Alia",
+"ar": "معتمدية العالية",
+"state": "Gouvernorat Bizerte",
+"lat": 37.1582,
+"lon": 9.9912
+},
+{
+"osm_id": 7151814,
+"fr": "Délégation Menzel Jemil",
+"ar": "معتمدية منزل جميل",
+"state": null,
+"lat": 37.2035,
+"lon": 9.9255
+},
+{
+"osm_id": 7151815,
+"fr": "Délégation Ghar El Melh",
+"ar": "معتمدية غار الملح",
+"state": "Gouvernorat Bizerte",
+"lat": 37.1453,
+"lon": 10.1379
+},
+{
+"osm_id": 7152190,
+"fr": "Délégation Ksour Essef",
+"ar": "معتمدية قصور الساف",
+"state": "Gouvernorat Mahdia",
+"lat": 35.3565,
+"lon": 10.9709
+},
+{
+"osm_id": 7152191,
+"fr": "Délégation Chorbane",
+"ar": "معتمدية شربان",
+"state": "Gouvernorat Mahdia",
+"lat": 35.2268,
+"lon": 10.4325
+},
+{
+"osm_id": 7152192,
+"fr": "Délégation Ouled Chamekh",
+"ar": "معتمدية أولاد الشامخ",
+"state": "Gouvernorat Mahdia",
+"lat": 35.4798,
+"lon": 10.3244
+},
+{
+"osm_id": 7152203,
+"fr": "Délégation Sidi Alouane",
+"ar": "معتمدية سيدي علوان",
+"state": "Gouvernorat Mahdia",
+"lat": 35.2878,
+"lon": 10.8769
+},
+{
+"osm_id": 7152227,
+"fr": "Délégation Mahdia",
+"ar": "معتمدية المهدية",
+"state": "Gouvernorat Mahdia",
+"lat": 35.4878,
+"lon": 10.9599
+},
+{
+"osm_id": 7152230,
+"fr": "Délégation El Jem",
+"ar": "معتمدية الجم",
+"state": "Gouvernorat Mahdia",
+"lat": 35.3134,
+"lon": 10.7195
+},
+{
+"osm_id": 7152265,
+"fr": "Délégation Bou Merdès",
+"ar": "معتمدية بومرداس",
+"state": "Gouvernorat Mahdia",
+"lat": 35.4242,
+"lon": 10.7095
+},
+{
+"osm_id": 7152279,
+"fr": "Délégation Hebira",
+"ar": "معتمدية هبيرة",
+"state": "Gouvernorat Mahdia",
+"lat": 35.2776,
+"lon": 10.2687
+},
+{
+"osm_id": 7152282,
+"fr": "Délégation Essouassi",
+"ar": "معتمدية السواسي",
+"state": "Gouvernorat Mahdia",
+"lat": 35.3408,
+"lon": 10.5217
+},
+{
+"osm_id": 7152799,
+"fr": "Délégation Kalaat El Andalous",
+"ar": "معتمدية قلعة الأندلس",
+"state": "Gouvernorat Ariana",
+"lat": 36.9971,
+"lon": 10.1228
+},
+{
+"osm_id": 7152800,
+"fr": "Délégation Raoued",
+"ar": "معتمدية رواد",
+"state": "Gouvernorat Ariana",
+"lat": 36.9288,
+"lon": 10.1765
+},
+{
+"osm_id": 7152802,
+"fr": "Délégation Ariana Ville",
+"ar": "معتمدية أريانة المدينة",
+"state": "Gouvernorat Ariana",
+"lat": 36.8657,
+"lon": 10.1704
+},
+{
+"osm_id": 7154128,
+"fr": "Aroussa",
+"ar": "العروسة",
+"state": "Gouvernorat Siliana",
+"lat": 36.3539,
+"lon": 9.4551
+},
+{
+"osm_id": 7154129,
+"fr": "Délégation Bargou",
+"ar": "معتمدية برقو",
+"state": "Gouvernorat Siliana",
+"lat": 36.1011,
+"lon": 9.6222
+},
+{
+"osm_id": 7154130,
+"fr": "Délégation Kesra",
+"ar": "معتمدية كسرى",
+"state": "Gouvernorat Siliana",
+"lat": 35.8026,
+"lon": 9.371
+},
+{
+"osm_id": 7154131,
+"fr": "Délégation Errouhia",
+"ar": "معتمدية الروحية",
+"state": "Gouvernorat Siliana",
+"lat": 35.6567,
+"lon": 9.214
+},
+{
+"osm_id": 7154132,
+"fr": "Délégation Makthar",
+"ar": "معتمدية مكثر",
+"state": "Gouvernorat Siliana",
+"lat": 35.87,
+"lon": 9.1631
+},
+{
+"osm_id": 7154133,
+"fr": "Délégation Sidi Bourouis",
+"ar": "معتمدية سيدي بورويس",
+"state": "Gouvernorat Siliana",
+"lat": 36.1891,
+"lon": 9.1384
+},
+{
+"osm_id": 7154134,
+"fr": "Délégation El Krib",
+"ar": "معتمدية الكريب",
+"state": "Gouvernorat Siliana",
+"lat": 36.3485,
+"lon": 9.0972
+},
+{
+"osm_id": 7154135,
+"fr": "Délégation Gaafour",
+"ar": "معتمدية قعفور",
+"state": "Gouvernorat Siliana",
+"lat": 36.2532,
+"lon": 9.3595
+},
+{
+"osm_id": 7154136,
+"fr": "Délégation Bou Arada",
+"ar": "معتمدية بوعرادة",
+"state": "Gouvernorat Siliana",
+"lat": 36.3137,
+"lon": 9.6205
+},
+{
+"osm_id": 7154137,
+"fr": "Délégation Siliana Sud",
+"ar": "معتمدية سليانة الجنوبية",
+"state": "Gouvernorat Siliana",
+"lat": 35.9696,
+"lon": 9.421
+},
+{
+"osm_id": 7154138,
+"fr": "Délégation Siliana Nord",
+"ar": "معتمدية سليانة الشمالية",
+"state": "Gouvernorat Siliana",
+"lat": 36.0299,
+"lon": 9.3252
+},
+{
+"osm_id": 7154889,
+"fr": "Délégation Tameghza",
+"ar": "معتمدية تمغزة",
+"state": "Gouvernorat Tozeur",
+"lat": 34.2925,
+"lon": 7.834
+},
+{
+"osm_id": 7154890,
+"fr": "Délégation Tozeur",
+"ar": "معتمدية توزر",
+"state": "Gouvernorat Tozeur",
+"lat": 33.9131,
+"lon": 8.1392
+},
+{
+"osm_id": 7154891,
+"fr": "Délégation Hazoua",
+"ar": "معتمدية حزوة",
+"state": "Gouvernorat Tozeur",
+"lat": 33.7662,
+"lon": 7.7256
+},
+{
+"osm_id": 7154892,
+"fr": "Délégation Degache",
+"ar": "معتمدية دقاش",
+"state": "Gouvernorat Tozeur",
+"lat": 34.0338,
+"lon": 8.2947
+},
+{
+"osm_id": 7154893,
+"fr": "Délégation Nefta",
+"ar": "معتمدية نفطة",
+"state": "Gouvernorat Tozeur",
+"lat": 33.8201,
+"lon": 7.9225
+},
+{
+"osm_id": 7154971,
+"fr": "Délégation Bekalta",
+"ar": "معتمدية البقالطة",
+"state": "Gouvernorat Monastir",
+"lat": 35.598,
+"lon": 11.0114
+},
+{
+"osm_id": 7154972,
+"fr": "Délégation Sahline",
+"ar": "معتمدية الساحلين",
+"state": "Gouvernorat Monastir",
+"lat": 35.7415,
+"lon": 10.7222
+},
+{
+"osm_id": 7154973,
+"fr": "Délégation Moknine",
+"ar": "معتمدية المكنين",
+"state": "Gouvernorat Monastir",
+"lat": 35.5369,
+"lon": 10.839
+},
+{
+"osm_id": 7154974,
+"fr": "Délégation Monastir",
+"ar": "معتمدية المنستير",
+"state": "Gouvernorat Monastir",
+"lat": 35.7399,
+"lon": 10.7623
+},
+{
+"osm_id": 7154975,
+"fr": "Délégation El Ouerdanine",
+"ar": "معتمدية الوردانين",
+"state": "Gouvernorat Monastir",
+"lat": 35.7009,
+"lon": 10.6737
+},
+{
+"osm_id": 7154976,
+"fr": "Délégation Bembla",
+"ar": "معتمدية بنبلة",
+"state": "Gouvernorat Monastir",
+"lat": 35.6819,
+"lon": 10.7659
+},
+{
+"osm_id": 7154977,
+"fr": "Délégation Beni Hassen",
+"ar": "معتمدية بني حسان",
+"state": "Gouvernorat Monastir",
+"lat": 35.5354,
+"lon": 10.745
+},
+{
+"osm_id": 7154978,
+"fr": "Délégation Jammel",
+"ar": "معتمدية جمّال",
+"state": "Gouvernorat Monastir",
+"lat": 35.607,
+"lon": 10.7009
+},
+{
+"osm_id": 7154979,
+"fr": "Délégation Zeramdine",
+"ar": "معتمدية زرمدين",
+"state": "Gouvernorat Monastir",
+"lat": 35.5601,
+"lon": 10.6272
+},
+{
+"osm_id": 7154980,
+"fr": "Délégation Sayada-Lamta-Bou Hjar",
+"ar": "معتمدية صيادة - لمطة - بوحجر",
+"state": "Gouvernorat Monastir",
+"lat": 35.6673,
+"lon": 10.8916
+},
+{
+"osm_id": 7154981,
+"fr": "Délégation Teboulba",
+"ar": "معتمدية طبلبة",
+"state": "Gouvernorat Monastir",
+"lat": 35.64,
+"lon": 10.9658
+},
+{
+"osm_id": 7154982,
+"fr": "Délégation Ksar Hellal",
+"ar": "معتمدية قصر هلال",
+"state": "Gouvernorat Monastir",
+"lat": 35.6378,
+"lon": 10.8778
+},
+{
+"osm_id": 7154983,
+"fr": "Délégation Ksibet El Mediouni",
+"ar": "معتمدية قصيبة المديوني",
+"state": "Gouvernorat Monastir",
+"lat": 35.6448,
+"lon": 10.8264
+},
+{
+"osm_id": 7164915,
+"fr": "Délégation Sbiba",
+"ar": "معتمدية سبيبة",
+"state": "Gouvernorat Kasserine",
+"lat": 35.496,
+"lon": 9.1595
+},
+{
+"osm_id": 7164919,
+"fr": "Délégation Djedeliane",
+"ar": "معتمدية جدليان",
+"state": "Gouvernorat Kasserine",
+"lat": 35.6568,
+"lon": 8.9364
+},
+{
+"osm_id": 7164924,
+"fr": "Délégation Kasserine Sud",
+"ar": "معتمدية القصرين الجنوبية",
+"state": "Gouvernorat Kasserine",
+"lat": 35.0981,
+"lon": 8.7958
+},
+{
+"osm_id": 7164930,
+"fr": "Délégation Sbeitla",
+"ar": "معتمدية سبيطلة",
+"state": "Gouvernorat Kasserine",
+"lat": 35.2421,
+"lon": 9.0615
+},
+{
+"osm_id": 7164955,
+"fr": "Délégation Hidra",
+"ar": "معتمدية حيدرة",
+"state": "Gouvernorat Kasserine",
+"lat": 35.5395,
+"lon": 8.4983
+},
+{
+"osm_id": 7164968,
+"fr": "Délégation Kasserine Nord",
+"ar": "معتمدية القصرين الشمالية",
+"state": "Gouvernorat Kasserine",
+"lat": 35.2158,
+"lon": 8.7886
+},
+{
+"osm_id": 7164976,
+"fr": "Délégation Ezzouhour",
+"ar": "معتمدية الزهور",
+"state": "Gouvernorat Kasserine",
+"lat": 35.1588,
+"lon": 8.8297
+},
+{
+"osm_id": 7164979,
+"fr": "Délégation Hassi Ferid",
+"ar": "معتمدية حاسي الفريد",
+"state": "Gouvernorat Kasserine",
+"lat": 34.9629,
+"lon": 8.9353
+},
+{
+"osm_id": 7164982,
+"fr": "Délégation Thala",
+"ar": "معتمدية تالة",
+"state": "Gouvernorat Kasserine",
+"lat": 35.5767,
+"lon": 8.6967
+},
+{
+"osm_id": 7164985,
+"fr": "Délégation Majel Bel Abbès",
+"ar": "معتمدية ماجل بالعباس",
+"state": "Gouvernorat Kasserine",
+"lat": 34.7639,
+"lon": 8.5563
+},
+{
+"osm_id": 7165007,
+"fr": "Délégation Feriana",
+"ar": "معتمدية فريانة",
+"state": "Gouvernorat Kasserine",
+"lat": 35.0307,
+"lon": 8.4565
+},
+{
+"osm_id": 7165016,
+"fr": "Délégation Foussana",
+"ar": "معتمدية فوسانة",
+"state": "Gouvernorat Kasserine",
+"lat": 35.3409,
+"lon": 8.5793
+},
+{
+"osm_id": 7165022,
+"fr": "Délégation El Ayoun",
+"ar": "معتمدية العيون",
+"state": "Gouvernorat Kasserine",
+"lat": 35.49,
+"lon": 8.8881
+},
+{
+"osm_id": 7165234,
+"fr": "Délégation Sbikha",
+"ar": "معتمدية السبيخة",
+"state": "Gouvernorat Kairouan",
+"lat": 35.9522,
+"lon": 10.0144
+},
+{
+"osm_id": 7165235,
+"fr": "Délégation Chebika",
+"ar": "معتمدية الشبيكة",
+"state": "Gouvernorat Kairouan",
+"lat": 35.6591,
+"lon": 9.9072
+},
+{
+"osm_id": 7165237,
+"fr": "Délégation El Alâa",
+"ar": "معتمدية العلاء",
+"state": "Gouvernorat Kairouan",
+"lat": 35.6292,
+"lon": 9.4584
+},
+{
+"osm_id": 7165238,
+"fr": "Délégation Kairouan Sud",
+"ar": "معتمدية القيروان الجنوبية",
+"state": "Gouvernorat Kairouan",
+"lat": 35.576,
+"lon": 10.0932
+},
+{
+"osm_id": 7165239,
+"fr": "Délégation Kairouan Nord",
+"ar": "معتمدية القيروان الشمالية",
+"state": "Gouvernorat Kairouan",
+"lat": 35.7426,
+"lon": 10.1118
+},
+{
+"osm_id": 7165240,
+"fr": "Délégation El Ouslatia",
+"ar": "معتمدية الوسلاتية",
+"state": "Gouvernorat Kairouan",
+"lat": 35.8935,
+"lon": 9.6758
+},
+{
+"osm_id": 7165241,
+"fr": "Délégation Bouhajla",
+"ar": "معتمدية بوحجلة",
+"state": "Gouvernorat Kairouan",
+"lat": 35.3823,
+"lon": 10.056
+},
+{
+"osm_id": 7165243,
+"fr": "Délégation Haffouz",
+"ar": "معتمدية حفوز",
+"state": "Gouvernorat Kairouan",
+"lat": 35.6164,
+"lon": 9.7039
+},
+{
+"osm_id": 7167806,
+"fr": "Délégation Zriba",
+"ar": "معتمدية الزريبة",
+"state": "Gouvernorat Zaghouan",
+"lat": 36.3067,
+"lon": 10.2238
+},
+{
+"osm_id": 7167807,
+"fr": "Délégation El Fahs",
+"ar": "معتمدية الفحص",
+"state": "Gouvernorat Zaghouan",
+"lat": 36.2697,
+"lon": 9.8434
+},
+{
+"osm_id": 7167808,
+"fr": "Délégation Ennadhour",
+"ar": "معتمدية الناظور",
+"state": "Gouvernorat Zaghouan",
+"lat": 36.1118,
+"lon": 10.0061
+},
+{
+"osm_id": 7167809,
+"fr": "Délégation Bir Mcherga",
+"ar": "معتمدية بئر مشارقة",
+"state": "Gouvernorat Zaghouan",
+"lat": 36.528,
+"lon": 9.9629
+},
+{
+"osm_id": 7167810,
+"fr": "Délégation Zaghouan",
+"ar": "معتمدية زغوان",
+"state": "Gouvernorat Zaghouan",
+"lat": 36.411,
+"lon": 10.1891
+},
+{
+"osm_id": 7167811,
+"fr": "Délégation Saouaf",
+"ar": "معتمدية صواف",
+"state": "Gouvernorat Zaghouan",
+"lat": 36.215,
+"lon": 10.1358
+},
+{
+"osm_id": 7169554,
+"fr": "Regueb",
+"ar": "الرقاب",
+"state": "Gouvernorat Sidi Bouzid",
+"lat": 34.8543,
+"lon": 9.845
+},
+{
+"osm_id": 7169573,
+"fr": "Délégation Cebalet Ouled Asker",
+"ar": "معتمدية سبالة أولاد عسكر",
+"state": "Gouvernorat Sidi Bouzid",
+"lat": 35.2283,
+"lon": 9.266
+},
+{
+"osm_id": 7169588,
+"fr": "Délégation Mezzouna",
+"ar": "معتمدية المزونة",
+"state": "Gouvernorat Sidi Bouzid",
+"lat": 34.4628,
+"lon": 9.7564
+},
+{
+"osm_id": 7169593,
+"fr": "Délégation Menzel Bouzaïane",
+"ar": "معتمدية منزل بوزيان",
+"state": "Gouvernorat Sidi Bouzid",
+"lat": 34.6284,
+"lon": 9.4094
+},
+{
+"osm_id": 7169618,
+"fr": "Délégation Souk Jedid",
+"ar": "معتمدية سوق الجديد",
+"state": "Gouvernorat Sidi Bouzid",
+"lat": 34.8674,
+"lon": 9.5536
+},
+{
+"osm_id": 7169644,
+"fr": "Délégation Bir El Hafey",
+"ar": "معتمدية بئر الحفي",
+"state": "Gouvernorat Sidi Bouzid",
+"lat": 34.8742,
+"lon": 9.2611
+},
+{
+"osm_id": 7169656,
+"fr": "Délégation Sidi Bouzid Ouest",
+"ar": "معتمدية سيدي بوزيد الغربية",
+"state": "Gouvernorat Sidi Bouzid",
+"lat": 34.9855,
+"lon": 9.3913
+},
+{
+"osm_id": 7169659,
+"fr": "Délégation Sidi Ali Ben Aoûn",
+"ar": "معتمدية سيدي علي بن عون",
+"state": "Gouvernorat Sidi Bouzid",
+"lat": 34.8237,
+"lon": 9.1192
+},
+{
+"osm_id": 7169662,
+"fr": "Délégation Ouled Haffouz",
+"ar": "معتمدية أولاد حفوز",
+"state": "Gouvernorat Sidi Bouzid",
+"lat": 35.0999,
+"lon": 9.8568
+},
+{
+"osm_id": 7169666,
+"fr": "Délégation Jelma",
+"ar": "معتمدية جلمة",
+"state": "Gouvernorat Sidi Bouzid",
+"lat": 35.3295,
+"lon": 9.382
+},
+{
+"osm_id": 7169669,
+"fr": "Délégation Meknassy",
+"ar": "معتمدية المكناسي",
+"state": "Gouvernorat Sidi Bouzid",
+"lat": 34.6348,
+"lon": 9.6378
+},
+{
+"osm_id": 7172879,
+"fr": "Délégation Regueb",
+"ar": "معتمدية ‫الرقاب‬",
+"state": "Gouvernorat Sidi Bouzid",
+"lat": 34.8187,
+"lon": 9.7975
+},
+{
+"osm_id": 7172930,
+"fr": "Délégation Essaida",
+"ar": "معتمدية السعيدة‬",
+"state": "Gouvernorat Sidi Bouzid",
+"lat": 34.9589,
+"lon": 9.928
+},
+{
+"osm_id": 7174544,
+"fr": "Délégation Ezzahra",
+"ar": "معتمدية الزهراء",
+"state": "Gouvernorat Ben Arous",
+"lat": 36.7476,
+"lon": 10.3029
+},
+{
+"osm_id": 7174545,
+"fr": "Délégation Mohamedia",
+"ar": "معتمدية المحمدية",
+"state": "Gouvernorat Ben Arous",
+"lat": 36.6448,
+"lon": 10.1283
+},
+{
+"osm_id": 7174546,
+"fr": "Délégation La Nouvelle Médina",
+"ar": "معتمدية المدينة الجديدة",
+"state": "Gouvernorat Ben Arous",
+"lat": 36.7341,
+"lon": 10.251
+},
+{
+"osm_id": 7174547,
+"fr": "Délégation El Mourouj",
+"ar": "معتمدية المروج",
+"state": "Gouvernorat Ben Arous",
+"lat": 36.7198,
+"lon": 10.2184
+},
+{
+"osm_id": 7174548,
+"fr": "Délégation Ben Arous",
+"ar": "معتمدية بن عروس",
+"state": "Gouvernorat Ben Arous",
+"lat": 36.7489,
+"lon": 10.2272
+},
+{
+"osm_id": 7174549,
+"fr": "Délégation Bou Mhel El Bassatine",
+"ar": "معتمدية بومهل البساتين",
+"state": "Gouvernorat Ben Arous",
+"lat": 36.7155,
+"lon": 10.2868
+},
+{
+"osm_id": 7174550,
+"fr": "Délégation Hammam Lif",
+"ar": "معتمدية حمام الأنف",
+"state": "Gouvernorat Ben Arous",
+"lat": 36.7188,
+"lon": 10.3381
+},
+{
+"osm_id": 7174551,
+"fr": "Délégation Hammam Chott",
+"ar": "معتمدية حمام الشط",
+"state": "Gouvernorat Ben Arous",
+"lat": 36.6845,
+"lon": 10.3853
+},
+{
+"osm_id": 7174552,
+"fr": "Délégation Radès",
+"ar": "معتمدية رادس",
+"state": "Gouvernorat Ben Arous",
+"lat": 36.7761,
+"lon": 10.277
+},
+{
+"osm_id": 7174553,
+"fr": "Délégation Fouchana",
+"ar": "معتمدية فوشانة",
+"state": "Gouvernorat Ben Arous",
+"lat": 36.6937,
+"lon": 10.1908
+},
+{
+"osm_id": 7174554,
+"fr": "Délégation Mornag",
+"ar": "معتمدية مرناق",
+"state": "Gouvernorat Ben Arous",
+"lat": 36.5857,
+"lon": 10.2535
+},
+{
+"osm_id": 7174555,
+"fr": "Délégation Megrine",
+"ar": "معتمدية مقرين",
+"state": "Gouvernorat Ben Arous",
+"lat": 36.7715,
+"lon": 10.2369
+},
+{
+"osm_id": 7189386,
+"fr": "Délégation Béja Sud",
+"ar": "معتمدية باجة الجنوبية",
+"state": "Gouvernorat Béja",
+"lat": 36.6362,
+"lon": 9.1845
+},
+{
+"osm_id": 7189387,
+"fr": "Délégation Béja Nord",
+"ar": "معتمدية باجة الشمالية",
+"state": "Gouvernorat Béja",
+"lat": 36.8043,
+"lon": 9.2268
+},
+{
+"osm_id": 7189388,
+"fr": "Délégation Teboursouk",
+"ar": "معتمدية تبرسق",
+"state": "Gouvernorat Béja",
+"lat": 36.4585,
+"lon": 9.215
+},
+{
+"osm_id": 7189389,
+"fr": "Délégation Testour",
+"ar": "معتمدية تستور",
+"state": "Gouvernorat Béja",
+"lat": 36.5932,
+"lon": 9.43
+},
+{
+"osm_id": 7189390,
+"fr": "Délégation Tibar",
+"ar": "معتمدية تيبار",
+"state": "Gouvernorat Béja",
+"lat": 36.5187,
+"lon": 9.0932
+},
+{
+"osm_id": 7189391,
+"fr": "Délégation Amdoun",
+"ar": "معتمدية عمدون",
+"state": "Gouvernorat Béja",
+"lat": 36.7774,
+"lon": 9.0275
+},
+{
+"osm_id": 7189392,
+"fr": "Délégation Goubellat",
+"ar": "معتمدية قبلاط",
+"state": "Gouvernorat Béja",
+"lat": 36.5288,
+"lon": 9.695
+},
+{
+"osm_id": 7189393,
+"fr": "Délégation Medjez El Bab",
+"ar": "معتمدية مجاز الباب",
+"state": "Gouvernorat Béja",
+"lat": 36.7101,
+"lon": 9.6173
+},
+{
+"osm_id": 7189394,
+"fr": "Délégation Nefza",
+"ar": "معتمدية نفزة",
+"state": "Gouvernorat Béja",
+"lat": 36.988,
+"lon": 9.0725
+},
+{
+"osm_id": 7201228,
+"fr": "Délégation Chebba",
+"ar": "معتمدية الشابة",
+"state": "Gouvernorat Mahdia",
+"lat": 35.2246,
+"lon": 11.0726
+},
+{
+"osm_id": 7201229,
+"fr": "Délégation Melloulech",
+"ar": "معتمدية ملولش",
+"state": "Gouvernorat Mahdia",
+"lat": 35.1787,
+"lon": 10.9971
+},
+{
+"osm_id": 7201322,
+"fr": "Délégation Echrarda",
+"ar": "معتمدية الشراردة",
+"state": "Gouvernorat Kairouan",
+"lat": 35.1513,
+"lon": 10.0895
+},
+{
+"osm_id": 7201324,
+"fr": "Délégation Nasrallah",
+"ar": "معتمدية نصر الله",
+"state": "Gouvernorat Kairouan",
+"lat": 35.3374,
+"lon": 9.8231
+},
+{
+"osm_id": 7204561,
+"fr": "Délégation Manouba‬‬",
+"ar": "معتمدية منوبة‬",
+"state": "Gouvernorat La Manouba",
+"lat": 36.8116,
+"lon": 10.0835
+},
+{
+"osm_id": 7204580,
+"fr": "Délégation Douar Hicher",
+"ar": "معتمدية دوار هيشر",
+"state": "Gouvernorat La Manouba",
+"lat": 36.8364,
+"lon": 10.0825
+},
+{
+"osm_id": 7204582,
+"fr": "Délégation Oued Ellil",
+"ar": "معتمدية وادي اللیل‬",
+"state": "Gouvernorat La Manouba",
+"lat": 36.8297,
+"lon": 10.0233
+},
+{
+"osm_id": 7204596,
+"fr": "Délégation Djedaïda",
+"ar": "معتمدية الجديدة",
+"state": "Gouvernorat La Manouba",
+"lat": 36.8537,
+"lon": 9.9309
+},
+{
+"osm_id": 7204598,
+"fr": "Délégation Tebourba",
+"ar": "معتمدية طبربة",
+"state": "Gouvernorat La Manouba",
+"lat": 36.8741,
+"lon": 9.7318
+},
+{
+"osm_id": 7204605,
+"fr": "Délégation El Battane",
+"ar": "معتمدية البطان",
+"state": "Gouvernorat La Manouba",
+"lat": 36.7706,
+"lon": 9.7484
+},
+{
+"osm_id": 7204609,
+"fr": "Délégation Borj El Amri",
+"ar": "معتمدية برج العامري",
+"state": "Gouvernorat La Manouba",
+"lat": 36.6762,
+"lon": 9.8486
+},
+{
+"osm_id": 7204611,
+"fr": "Délégation Mornaguia",
+"ar": "معتمدية المرناقية",
+"state": "Gouvernorat La Manouba",
+"lat": 36.6758,
+"lon": 9.9774
+},
+{
+"osm_id": 11318400,
+"fr": "Délégation Hajeb El Ayoun",
+"ar": "معتمدية حاجب العيون",
+"state": "Gouvernorat Kairouan",
+"lat": 35.4168,
+"lon": 9.5615
+},
+{
+"osm_id": 12584562,
+"fr": "Délégation Sidi Bouzid Est",
+"ar": "معتمدية سيدي بوزيد الشرقية",
+"state": "Gouvernorat Sidi Bouzid",
+"lat": 35.0724,
+"lon": 9.6054
+}
+]
+}

@@ -1,0 +1,42 @@
+# /etc/systemd/system/louage-portal.service
+# Portail chauffeurs. Démarre seulement si le volume chiffré est monté et si la configuration passe la vérification.
+[Unit]
+Description=Louage Express - portail chauffeurs
+After=network-online.target louage-kyc.service
+Wants=network-online.target
+# Le volume chiffré doit être déverrouillé et monté AVANT le démarrage : sinon l'application écrirait sur le disque non chiffré.
+RequiresMountsFor=/srv/louage
+
+[Service]
+Type=simple
+User=louage
+Group=louage
+WorkingDirectory=/opt/louage-express/driver-portal
+# systemd lit ce fichier en tant que root (chmod 600, propriétaire root) : le compte "louage" n'a pas besoin d'y accéder.
+EnvironmentFile=/etc/louage/portal.env
+# Le préfixe "+" exécute la vérification avec les droits root pour qu'elle puisse lire le fichier d'environnement.
+ExecStartPre=+/usr/bin/node /opt/louage-express/driver-portal/deploy/check-config.js /etc/louage/portal.env
+ExecStart=/usr/bin/node server.js
+Restart=on-failure
+RestartSec=5
+
+# --- Durcissement : l'application ne peut écrire que dans le volume de données ---
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/srv/louage/data
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+RestrictNamespaces=true
+LockPersonality=true
+SystemCallFilter=@system-service
+CapabilityBoundingSet=
+UMask=0077
+# Pas de fichier « core dump » : il contiendrait des données déchiffrées.
+LimitCORE=0
+
+[Install]
+WantedBy=multi-user.target

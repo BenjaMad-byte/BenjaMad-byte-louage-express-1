@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ar" dir="rtl" data-title="title_interview">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>مقابلة — Louage Express | Entretien</title>
+  <meta name="description" content="احجز مقابلة قصيرة بالهاتف أو بالفيديو · Réservez un entretien par téléphone ou en visio">
+  <meta name="theme-color" content="#003934" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#031f1c" media="(prefers-color-scheme: dark)">
+  <link rel="canonical" href="%PUBLIC_URL%/interview">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Louage Express">
+  <meta property="og:locale" content="ar_TN">
+  <meta property="og:locale:alternate" content="fr_TN">
+  <meta property="og:title" content="مقابلة — Louage Express | Entretien">
+  <meta property="og:description" content="احجز مقابلة قصيرة بالهاتف أو بالفيديو · Réservez un entretien par téléphone ou en visio">
+  <meta property="og:url" content="%PUBLIC_URL%/interview">
+  <meta property="og:image" content="%PUBLIC_URL%/img/og-share.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="لواج على طريق ساحلي عند شروق الشمس · Un louage sur une route côtière au lever du soleil">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="/styles.css">
+  <script type="module" src="/common.js"></script>
+  <script type="module" src="/interview.js"></script>
+</head>
+<body>
+  <noscript><div class="noscript"><strong>هذا الموقع يحتاج إلى جافاسكريبت.</strong> فعّله في المتصفح ثم أعد تحميل الصفحة.<br><strong>Ce site a besoin de JavaScript.</strong> Activez-le dans votre navigateur puis rechargez la page.</div></noscript>
+  <a class="skip" href="#main" data-i18n="skip"></a>
+  <header id="site-header"></header>
+  <main id="main">
+    <div id="form-view">
+      <h1 data-i18n="iv_title"></h1>
+      <p class="lead" data-i18n="iv_intro"></p>
+      <div id="banner" class="banner error" role="alert" hidden></div>
+
+      <form id="iv" novalidate>
+        <fieldset>
+          <legend data-i18n="iv_pick"></legend>
+          <div id="slots" class="days" aria-live="polite"></div>
+          <div class="err" data-err="slot" role="alert"></div>
+        </fieldset>
+
+        <fieldset>
+          <div class="grid-2">
+            <div class="field">
+              <label for="name"><span data-i18n="iv_name"></span> *</label>
+              <input id="name" name="name" type="text" autocomplete="name" maxlength="80" required>
+              <div class="err" data-err="name" role="alert"></div>
+            </div>
+            <div class="field">
+              <label for="phone"><span data-i18n="iv_phone"></span> *</label>
+              <input id="phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel-national" dir="ltr" maxlength="20" required>
+              <div class="hint" data-i18n="f_phone_hint"></div>
+              <div class="err" data-err="phone" role="alert"></div>
+            </div>
+          </div>
+          <div class="field">
+            <label for="ref" data-i18n="iv_ref"></label>
+            <input id="ref" name="ref" type="text" dir="ltr" maxlength="12" autocapitalize="characters" placeholder="LX-XXXXXXXX">
+            <div class="err" data-err="ref" role="alert"></div>
+          </div>
+          <div class="field">
+            <label for="question" data-i18n="iv_question"></label>
+            <textarea id="question" name="question" maxlength="500" data-i18n-ph="iv_question_ph"></textarea>
+          </div>
+        </fieldset>
+
+        <button class="btn" type="submit" id="submit" data-i18n="iv_book"></button>
+      </form>
+    </div>
+
+    <section id="done-view" class="panel" hidden>
+      <h1 data-i18n="iv_ok_title"></h1>
+      <div>
+        <div class="label" data-i18n="iv_ok_when"></div>
+        <div id="done-when"></div>
+      </div>
+      <div>
+        <div class="label" data-i18n="iv_ok_link"></div>
+        <a id="done-link" class="ltr" rel="noopener noreferrer" target="_blank"></a>
+      </div>
+      <p data-i18n="iv_ok_hint"></p>
+    </section>
+
+    <p id="wa" hidden><a id="wa-link" class="btn secondary" rel="noopener noreferrer" target="_blank" data-i18n="iv_whatsapp"></a></p>
+  </main>
+  <footer data-i18n="foot"></footer>
+</body>
+</html>

@@ -1,0 +1,33 @@
+# /etc/systemd/system/louage-kyc.service
+# Backend de vérification d'identité (OCR + reconnaissance faciale). Joignable UNIQUEMENT depuis la machine (HOST=127.0.0.1).
+[Unit]
+Description=Louage Express - backend KYC
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=louage
+Group=louage
+WorkingDirectory=/opt/louage-express/backend
+EnvironmentFile=/etc/louage/kyc.env
+ExecStart=/usr/bin/node src/server.js
+Restart=on-failure
+RestartSec=5
+
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+RestrictNamespaces=true
+LockPersonality=true
+CapabilityBoundingSet=
+UMask=0077
+LimitCORE=0
+
+[Install]
+WantedBy=multi-user.target

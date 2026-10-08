@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Louage Express — Maquette Dashboard & App</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .tap-btn:active { transform: scale(0.96); }
+</style>
+</head>
+<body class="bg-slate-100 text-slate-900 min-h-screen">
+
+<header class="bg-emerald-700 text-white px-6 py-4 flex items-center justify-between shadow">
+  <h1 class="text-xl font-bold">🚐 Louage Express — Maquette Opérationnelle</h1>
+  <div class="flex gap-2" id="tabs">
+    <button data-tab="gare" class="tab-btn px-4 py-2 rounded-lg bg-emerald-800 font-medium">Dashboard Gare</button>
+    <button data-tab="chauffeur" class="tab-btn px-4 py-2 rounded-lg bg-emerald-600/60 font-medium">App Chauffeur</button>
+    <button data-tab="passager" class="tab-btn px-4 py-2 rounded-lg bg-emerald-600/60 font-medium">App Passager</button>
+  </div>
+</header>
+
+<main class="max-w-5xl mx-auto p-6">
+
+  <!-- ============ DASHBOARD GARE ============ -->
+  <section id="panel-gare" class="tab-panel space-y-6">
+    <div class="bg-white rounded-2xl shadow p-6">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-lg font-bold">File d'attente — Ligne Tunis → Sousse</h2>
+        <span class="text-xs text-slate-500">Rafraîchissement auto (3s)</span>
+      </div>
+      <div id="queue-list" class="space-y-3"></div>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow p-6">
+      <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+        🆘 Alertes SOS <span id="sos-count" class="text-xs bg-red-100 text-red-700 px-2 py-0.5 rounded-full">0</span>
+      </h2>
+      <div id="sos-list" class="space-y-2 text-sm"></div>
+    </div>
+  </section>
+
+  <!-- ============ APP CHAUFFEUR ============ -->
+  <section id="panel-chauffeur" class="tab-panel hidden">
+    <div class="max-w-sm mx-auto bg-black rounded-[2.5rem] p-3 shadow-2xl">
+      <div class="bg-slate-900 rounded-[2rem] p-5 text-white min-h-[560px] flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-sm text-slate-400">Louage N°1 · 123 TUN 4567</span>
+          <span id="drv-status" class="text-xs font-semibold px-2 py-1 rounded-full bg-emerald-600">EN REMPLISSAGE</span>
+        </div>
+
+        <button id="btn-network" class="w-full mb-4 flex items-center justify-between px-3 py-2 rounded-xl bg-emerald-900/40 border border-emerald-600 text-left">
+          <span class="flex items-center gap-2 text-sm font-semibold">
+            <span id="net-dot" class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+            <span id="net-label">4G — Connecté</span>
+          </span>
+          <span id="net-pending" class="hidden text-xs bg-amber-500 text-black font-bold px-2 py-0.5 rounded-full">0 en attente</span>
+        </button>
+
+        <div class="text-center mb-6">
+          <div class="text-xs text-slate-400 uppercase tracking-wide">Rang dans la file</div>
+          <div id="drv-rank" class="text-5xl font-black text-emerald-400">#1</div>
+        </div>
+
+        <div class="bg-slate-800 rounded-2xl p-4 mb-6 text-center">
+          <div class="text-xs text-slate-400 mb-1">Sièges occupés</div>
+          <div id="drv-seats" class="text-4xl font-black">0 / 8</div>
+        </div>
+
+        <button id="btn-board" class="tap-btn w-full py-6 rounded-2xl bg-emerald-500 text-2xl font-black mb-4 active:bg-emerald-600 transition">
+          + 1 PASSAGER
+        </button>
+
+        <div class="flex-1"></div>
+
+        <button id="btn-sos" class="tap-btn w-full py-5 rounded-2xl bg-red-600 text-lg font-black tracking-wide active:bg-red-700 transition">
+          🆘 SOS — 3 CLICS
+        </button>
+        <p class="text-center text-[10px] text-slate-500 mt-2">Déclenchement sans regarder l'écran · 3 clics rapides</p>
+        <p id="sos-offline-note" class="hidden text-center text-[10px] text-amber-400 mt-1">Mode dégradé : bascule SMS de secours (Police 197/SAMU 198) le temps de la coupure.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ APP PASSAGER ============ -->
+  <section id="panel-passager" class="tab-panel hidden">
+    <div class="max-w-sm mx-auto bg-black rounded-[2.5rem] p-3 shadow-2xl">
+      <div class="bg-white rounded-[2rem] p-5 min-h-[560px] flex flex-col">
+        <h3 class="text-lg font-bold mb-1">Tunis → Sousse</h3>
+        <p class="text-sm text-slate-500 mb-6">Billet "First-Available Seat" · Départ imminent</p>
+
+        <div class="mb-4">
+          <label class="text-xs font-semibold text-slate-500">Acompte SVA</label>
+          <div class="flex gap-2 mt-1">
+            <button data-amount="1.5" class="amount-btn flex-1 py-3 rounded-xl border-2 border-emerald-600 text-emerald-700 font-bold">1,500 DT</button>
+            <button data-amount="2.0" class="amount-btn flex-1 py-3 rounded-xl border-2 border-slate-200 text-slate-500 font-bold">2,000 DT</button>
+          </div>
+        </div>
+
+        <button id="btn-reserve" class="tap-btn w-full py-5 rounded-2xl bg-emerald-600 text-white text-xl font-black mb-6">
+          RÉSERVER MAINTENANT
+        </button>
+
+        <div id="pax-status" class="flex-1 flex flex-col items-center justify-center text-center text-slate-400">
+          <p>Aucune réservation en cours</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+const API = "http://localhost:4000/api/v1";
+const LINE_ID = "line-tunis-sousse";
+const DRIVER_LOUAGE_ID = "louage-1";
+let isOnline = true; // déclaré ici (avant tout appel) pour éviter la TDZ avec refreshQueue()
+
+// ---- tabs ----
+document.querySelectorAll(".tab-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".tab-btn").forEach(b => b.classList.replace("bg-emerald-800", "bg-emerald-600/60"));
+    btn.classList.replace("bg-emerald-600/60", "bg-emerald-800");
+    document.querySelectorAll(".tab-panel").forEach(p => p.classList.add("hidden"));
+    document.getElementById("panel-" + btn.dataset.tab).classList.remove("hidden");
+  });
+});
+document.querySelector('.tab-btn[data-tab="gare"]').classList.replace("bg-emerald-600/60", "bg-emerald-800");
+
+// ---- Dashboard Gare ----
+async function refreshQueue() {
+  try {
+    const r = await fetch(`${API}/admin/queue/${LINE_ID}`);
+    const data = await r.json();
+    const list = document.getElementById("queue-list");
+    list.innerHTML = data.queue.map(q => `
+      <div class="flex items-center justify-between border rounded-xl p-3 ${q.status === 'complet_parti' ? 'bg-slate-100 opacity-60' : 'bg-emerald-50'}">
+        <div class="flex items-center gap-3">
+          <span class="w-8 h-8 flex items-center justify-center rounded-full bg-emerald-600 text-white font-bold text-sm">#${q.rank}</span>
+          <div>
+            <div class="font-semibold">${q.plate}</div>
+            <div class="text-xs text-slate-500 uppercase">${q.status.replace(/_/g,' ')}</div>
+          </div>
+        </div>
+        <div class="text-right">
+          <div class="font-bold">${q.seatsTaken} / ${q.capacity}</div>
+          <div class="w-24 h-2 bg-slate-200 rounded-full mt-1 overflow-hidden">
+            <div class="h-full bg-emerald-500" style="width:${(q.seatsTaken/q.capacity*100)}%"></div>
+          </div>
+        </div>
+      </div>
+    `).join("");
+
+    // driver panel sync (ne pas écraser l'affichage optimiste pendant une coupure)
+    const mine = data.queue.find(q => q.louageId === DRIVER_LOUAGE_ID);
+    if (mine) {
+      document.getElementById("drv-rank").textContent = "#" + mine.rank;
+      document.getElementById("drv-status").textContent = mine.status.replace(/_/g,' ').toUpperCase();
+      if (isOnline) {
+        document.getElementById("drv-seats").textContent = `${mine.seatsTaken} / ${mine.capacity}`;
+      }
+    }
+  } catch (e) { console.error(e); }
+}
+
+async function refreshSos() {
+  try {
+    const r = await fetch(`${API}/admin/sos-logs`);
+    const data = await r.json();
+    document.getElementById("sos-count").textContent = data.logs.length;
+    const list = document.getElementById("sos-list");
+    list.innerHTML = data.logs.slice().reverse().map(l => `
+      <div class="border-l-4 border-red-500 bg-red-50 rounded p-2">
+        <span class="font-semibold">Louage ${l.louageId}</span> — ${l.triggerType} —
+        GPS ${l.lat.toFixed?.(4) ?? l.lat}, ${l.lon.toFixed?.(4) ?? l.lon}
+        <span class="text-slate-400"> · ${new Date(l.createdAt).toLocaleTimeString()}</span>
+      </div>
+    `).join("") || `<p class="text-slate-400">Aucune alerte</p>`;
+  } catch (e) { console.error(e); }
+}
+
+refreshQueue(); refreshSos();
+setInterval(() => { refreshQueue(); refreshSos(); }, 3000);
+
+// ---- App Chauffeur : offline-first buffer (simule SQLite local) ----
+let offlineBuffer = []; // { clientActionId, type, payload, clientCreatedAt }
+let localSeatBump = 0;  // affichage optimiste pendant coupure
+
+function uid() { return "act-" + Date.now() + "-" + Math.random().toString(36).slice(2, 8); }
+
+function renderNetworkUI() {
+  const dot = document.getElementById("net-dot");
+  const label = document.getElementById("net-label");
+  const pending = document.getElementById("net-pending");
+  const sosNote = document.getElementById("sos-offline-note");
+  if (isOnline) {
+    dot.className = "w-2.5 h-2.5 rounded-full bg-emerald-400";
+    label.textContent = "4G — Connecté";
+    sosNote.classList.add("hidden");
+  } else {
+    dot.className = "w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse";
+    label.textContent = "Hors-ligne — 4G coupée";
+    sosNote.classList.remove("hidden");
+  }
+  if (offlineBuffer.length > 0) {
+    pending.classList.remove("hidden");
+    pending.textContent = `${offlineBuffer.length} en attente`;
+  } else {
+    pending.classList.add("hidden");
+  }
+}
+
+document.getElementById("btn-network").addEventListener("click", async () => {
+  isOnline = !isOnline;
+  renderNetworkUI();
+  if (isOnline && offlineBuffer.length > 0) {
+    await syncOfflineBuffer();
+  }
+});
+
+async function syncOfflineBuffer() {
+  const toSync = [...offlineBuffer];
+  offlineBuffer = [];
+  localSeatBump = 0;
+  renderNetworkUI();
+  try {
+    const r = await fetch(`${API}/sync/offline-buffer`, {
+      method: "POST", headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({ louageId: DRIVER_LOUAGE_ID, driverId: "driver-1", actions: toSync })
+    });
+    const data = await r.json();
+    console.log("Sync offline-buffer:", data);
+    if (data.conflicts > 0) {
+      alert(`Sync terminée : ${data.applied} actions appliquées, ${data.conflicts} rejetées (siège déjà complet).`);
+    }
+    refreshQueue(); refreshSos();
+  } catch (e) {
+    console.error("Échec sync, buffer restauré", e);
+    offlineBuffer = toSync;
+    renderNetworkUI();
+  }
+}
+
+document.getElementById("btn-board").addEventListener("click", async () => {
+  if (!isOnline) {
+    offlineBuffer.push({ clientActionId: uid(), type: "board_passenger", payload: {}, clientCreatedAt: new Date().toISOString() });
+    localSeatBump++;
+    const seatsEl = document.getElementById("drv-seats");
+    const [taken, cap] = seatsEl.textContent.split("/").map(s => parseInt(s));
+    seatsEl.textContent = `${Math.min(taken + 1, cap)} / ${cap} (local)`;
+    renderNetworkUI();
+    return;
+  }
+  try {
+    const r = await fetch(`${API}/driver/board`, {
+      method: "POST", headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({ louageId: DRIVER_LOUAGE_ID })
+    });
+    if (r.ok) refreshQueue();
+  } catch (e) { console.error(e); }
+});
+
+let sosClicks = 0, sosTimer = null;
+document.getElementById("btn-sos").addEventListener("click", async () => {
+  sosClicks++;
+  clearTimeout(sosTimer);
+  sosTimer = setTimeout(() => { sosClicks = 0; }, 1500);
+  if (sosClicks >= 3) {
+    sosClicks = 0;
+    if (!isOnline) {
+      offlineBuffer.push({
+        clientActionId: uid(), type: "sos_trigger",
+        payload: { lat: 36.75, lon: 10.22, triggerType: "physical_button", encryptedAudioChunk: "sim" },
+        clientCreatedAt: new Date().toISOString()
+      });
+      renderNetworkUI();
+      alert("🆘 SOS capturé hors-ligne — GPS mis en buffer local + bascule SMS de secours. Sync auto au retour réseau.");
+      return;
+    }
+    await fetch(`${API}/driver/sos`, {
+      method: "POST", headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({ louageId: DRIVER_LOUAGE_ID, driverId: "driver-1", triggerType: "physical_button", lat: 36.75, lon: 10.22 })
+    });
+    refreshSos();
+    alert("🆘 SOS déclenché — GPS + audio chiffré transmis aux secours.");
+  }
+});
+
+renderNetworkUI();
+
+// ---- App Passager ----
+let selectedAmount = 1.5;
+document.querySelectorAll(".amount-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    selectedAmount = parseFloat(btn.dataset.amount);
+    document.querySelectorAll(".amount-btn").forEach(b => {
+      b.classList.remove("border-emerald-600","text-emerald-700");
+      b.classList.add("border-slate-200","text-slate-500");
+    });
+    btn.classList.remove("border-slate-200","text-slate-500");
+    btn.classList.add("border-emerald-600","text-emerald-700");
+  });
+});
+
+document.getElementById("btn-reserve").addEventListener("click", async () => {
+  const statusEl = document.getElementById("pax-status");
+  statusEl.innerHTML = `<p class="animate-pulse">Recherche du louage disponible…</p>`;
+  try {
+    const r = await fetch(`${API}/reservations`, {
+      method: "POST", headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({ passengerId: "pax-" + Date.now(), lineId: LINE_ID, depositAmountDt: selectedAmount })
+    });
+    const data = await r.json();
+    if (!r.ok) { statusEl.innerHTML = `<p class="text-red-600">${data.error}</p>`; return; }
+
+    statusEl.innerHTML = `<p class="text-emerald-600 font-semibold">Louage ${data.louage.plate} attribué ✓</p><p class="text-xs mt-1">Prélèvement SVA en cours…</p>`;
+
+    // simulate SVA callback confirmation
+    setTimeout(async () => {
+      const cbRes = await fetch(`${API}/sva/callback`, {
+        method: "POST", headers: {"Content-Type":"application/json"},
+        body: JSON.stringify({ reservationId: data.reservation.id, operator: "Ooredoo", status: "success" })
+      });
+      const cbData = await cbRes.json();
+      statusEl.innerHTML = `
+        <div class="text-center">
+          <div class="text-4xl mb-2">✅</div>
+          <div class="font-bold text-lg">${cbData.reservation.qrCode}</div>
+          <p class="text-xs text-slate-500 mt-1">Montrez ce code au Louage ${data.louage.plate}</p>
+        </div>`;
+      refreshQueue();
+    }, 1500);
+  } catch (e) {
+    statusEl.innerHTML = `<p class="text-red-600">Erreur réseau — backend démarré ?</p>`;
+  }
+});
+</script>
+</body>
+</html>

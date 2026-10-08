@@ -1,0 +1,90 @@
+# Intégration continue : à chaque proposition de modification et sur la branche principale.
+# Deux paquets (driver-portal, driver-app), chacun avec trois contrôles indépendants (un échec n'en cache pas un autre) :
+#   - checks : hygiène du dépôt, tests serveur (driver-portal avec seuils de couverture)
+#   - e2e    : parcours complets dans un vrai navigateur (Chrome, installé sur les machines GitHub)
+#   - audit  : vulnérabilités connues des dépendances de production
+# Le même enchaînement tourne en local avec : npm run ci  (dans driver-portal/ ou driver-app/)
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  schedule:
+    - cron: "17 5 * * 1" # chaque lundi : une faille publiée dans une dépendance se voit même sans modification du code
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read # le strict nécessaire : ce workflow ne publie rien et n'utilise aucun secret
+
+jobs:
+  checks:
+    name: Hygiène, tests (${{ matrix.package }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        package: [driver-portal, driver-app]
+    defaults:
+      run:
+        working-directory: ${{ matrix.package }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: ${{ matrix.package }}/package-lock.json
+      - run: npm ci
+      - name: Hygiène du dépôt (fins de ligne, CSS, syntaxe, secrets, traductions, liens, variables)
+        run: npm run check
+      - name: Tests serveur
+        # driver-portal a des seuils de couverture (lignes/branches/fonctions) ; driver-app n'en a pas encore.
+        run: npm run test:coverage --if-present || npm test
+
+  e2e:
+    name: Navigateur Chrome (${{ matrix.package }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        package: [driver-portal, driver-app]
+    defaults:
+      run:
+        working-directory: ${{ matrix.package }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: ${{ matrix.package }}/package-lock.json
+      - run: npm ci
+      - name: Parcours dans le navigateur
+        env:
+          E2E_CHANNEL: chrome
+          E2E_REQUIRE_BROWSER: "1" # sans navigateur, échec franc plutôt que des tests « ignorés » qui passeraient pour verts
+        run: npm run test:e2e
+
+  audit:
+    name: Dépendances (vulnérabilités connues, ${{ matrix.package }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        package: [driver-portal, driver-app]
+    defaults:
+      run:
+        working-directory: ${{ matrix.package }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npm audit --omit=dev --audit-level=high

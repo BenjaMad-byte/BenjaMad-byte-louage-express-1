@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Réservation : démonstration — Louage Express</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <script type="module" src="/passager.js"></script>
+</head>
+<body>
+  <main id="app">
+    <section class="card">
+      <h1>Réserver une place</h1>
+      <p class="note"><strong>Page de démonstration.</strong> L'application passager n'existe pas encore et aucun opérateur n'est connecté : le paiement est simulé.</p>
+    </section>
+    <form id="form" class="card" novalidate hidden>
+      <div class="field"><label for="line">Ligne</label><select id="line"></select></div>
+      <div class="field"><label for="from">Montée</label><select id="from"></select></div>
+      <div class="field"><label for="to">Descente</label><select id="to"></select></div>
+      <div class="field"><label for="phone">Votre numéro de téléphone</label><input id="phone" type="tel" inputmode="numeric" autocomplete="tel-national" dir="ltr" maxlength="20" required></div>
+      <div class="field"><label for="operator">Opérateur</label><select id="operator"><option value="tt">Tunisie Telecom</option><option value="ooredoo">Ooredoo</option><option value="orange">Orange</option></select></div>
+      <div class="field"><label for="deposit">Acompte</label><select id="deposit"><option value="1500">1,500 DT</option><option value="2000">2,000 DT</option></select></div>
+      <div id="error" class="err" role="alert"></div>
+      <button type="submit" class="btn primary">Réserver</button>
+    </form>
+    <section id="empty" class="card" hidden><p>Aucun louage n'est disponible pour le moment.</p></section>
+    <section id="ticket" class="card" hidden aria-live="polite">
+      <div class="label">Votre code</div>
+      <div class="big" id="code"></div>
+      <p id="status"></p>
+      <p id="plate" class="note"></p>
+      <button type="button" class="btn secondary" id="settle" hidden>Simuler la réponse de l'opérateur</button>
+      <button type="button" class="btn secondary" id="cancel">Annuler la réservation</button>
+    </section>
+  </main>
+</body>
+</html>

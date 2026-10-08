@@ -1,0 +1,35 @@
+# /etc/caddy/Caddyfile — HTTPS automatique (certificat Let's Encrypt obtenu et renouvelé tout seul).
+# Remplacer inscription.exemple.tn par ton nom de domaine (l'enregistrement DNS A/AAAA doit pointer vers ce serveur).
+inscription.exemple.tn {
+	encode zstd gzip
+
+	# Même limite que l'application (36 Mo) : un envoi démesuré est refusé avant d'atteindre Node.
+	request_body {
+		max_size 40MB
+	}
+
+	# Caddy transmet Host et X-Forwarded-Proto/For tout seul : exactement ce qu'attendent TRUST_PROXY=1,
+	# le contrôle d'origine (anti-CSRF) et le HTTPS forcé de l'application.
+	reverse_proxy 127.0.0.1:4100 {
+		health_uri /healthz
+		health_interval 30s
+	}
+
+	header -Server
+
+	# Journal d'accès SANS paramètres d'URL ni en-têtes d'authentification.
+	log {
+		output file /var/log/caddy/louage-access.log {
+			roll_size 20MiB
+			roll_keep 10
+		}
+		format filter {
+			# La recherche de la console admin (?q=nom ou téléphone) ne doit pas atterrir dans les journaux.
+			request>uri query {
+				delete q
+			}
+			request>headers>Authorization delete
+			request>headers>Cookie delete
+		}
+	}
+}

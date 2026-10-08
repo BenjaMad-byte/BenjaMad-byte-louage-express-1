@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ar" dir="rtl" data-title="title_status">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>متابعة الطلب — Louage Express | Suivi de ma demande</title>
+  <meta name="description" content="تابع طلبك برقم المرجع ورقم هاتفك · Suivez votre demande avec votre référence et votre téléphone">
+  <meta name="theme-color" content="#003934" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#031f1c" media="(prefers-color-scheme: dark)">
+  <link rel="canonical" href="%PUBLIC_URL%/status">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Louage Express">
+  <meta property="og:locale" content="ar_TN">
+  <meta property="og:locale:alternate" content="fr_TN">
+  <meta property="og:title" content="متابعة الطلب — Louage Express | Suivi de ma demande">
+  <meta property="og:description" content="تابع طلبك برقم المرجع ورقم هاتفك · Suivez votre demande avec votre référence et votre téléphone">
+  <meta property="og:url" content="%PUBLIC_URL%/status">
+  <meta property="og:image" content="%PUBLIC_URL%/img/og-share.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="لواج على طريق ساحلي عند شروق الشمس · Un louage sur une route côtière au lever du soleil">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="/styles.css">
+  <script type="module" src="/common.js"></script>
+  <script type="module" src="/status.js"></script>
+</head>
+<body>
+  <noscript><div class="noscript"><strong>هذا الموقع يحتاج إلى جافاسكريبت.</strong> فعّله في المتصفح ثم أعد تحميل الصفحة.<br><strong>Ce site a besoin de JavaScript.</strong> Activez-le dans votre navigateur puis rechargez la page.</div></noscript>
+  <a class="skip" href="#main" data-i18n="skip"></a>
+  <header id="site-header"></header>
+  <main id="main">
+    <h1 data-i18n="st_title"></h1>
+    <p class="lead" data-i18n="st_intro"></p>
+    <div id="banner" class="banner error" role="alert" hidden></div>
+
+    <form id="st" novalidate>
+      <fieldset>
+        <div class="grid-2">
+          <div class="field">
+            <label for="ref" data-i18n="st_ref"></label>
+            <input id="ref" name="ref" type="text" dir="ltr" maxlength="12" autocapitalize="characters" placeholder="LX-XXXXXXXX" required>
+          </div>
+          <div class="field">
+            <label for="phone" data-i18n="st_phone"></label>
+            <input id="phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel-national" dir="ltr" maxlength="20" required>
+          </div>
+        </div>
+      </fieldset>
+      <button class="btn" type="submit" data-i18n="st_check"></button>
+    </form>
+
+    <section id="result" class="panel" hidden aria-live="polite">
+      <div><span id="badge" class="badge"></span></div>
+      <p id="detail"></p>
+      <div id="note-box" hidden>
+        <div class="label" data-i18n="st_note"></div>
+        <p id="note"></p>
+      </div>
+      <div id="iv-box" hidden>
+        <div class="label" data-i18n="st_interview_booked"></div>
+        <div id="iv-when"></div>
+        <a id="iv-link" class="ltr" rel="noopener noreferrer" target="_blank"></a>
+      </div>
+      <div class="actions" id="book" hidden>
+        <a class="btn" href="/interview" data-i18n="ok_book"></a>
+      </div>
+      <div class="erase">
+        <button type="button" class="btn secondary small danger" id="erase-open" aria-expanded="false" aria-controls="erase-panel" data-i18n="er_open"></button>
+        <div id="erase-panel" hidden>
+          <p data-i18n="er_warn"></p>
+          <button type="button" class="btn secondary small" id="erase-send" data-i18n="otp_send"></button>
+          <div id="erase-step" class="field" hidden>
+            <label for="erase_code" data-i18n="otp_code"></label>
+            <input id="erase_code" type="text" inputmode="numeric" autocomplete="one-time-code" dir="ltr" maxlength="6">
+            <div class="hint" id="erase-hint"></div>
+            <button type="button" class="btn secondary small danger" id="erase-confirm" data-i18n="er_confirm"></button>
+          </div>
+          <div class="err" id="erase-err" role="alert"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer data-i18n="foot"></footer>
+</body>
+</html>

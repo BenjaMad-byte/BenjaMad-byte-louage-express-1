@@ -1,0 +1,28 @@
+# Mises à jour automatiques des dépendances : une proposition par semaine, passée dans la CI avant d'être fusionnée.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /driver-portal
+    schedule:
+      interval: weekly
+    groups:
+      minor-and-patch:
+        update-types: [minor, patch]
+  - package-ecosystem: npm
+    directory: /driver-app
+    schedule:
+      interval: weekly
+    groups:
+      minor-and-patch:
+        update-types: [minor, patch]
+  - package-ecosystem: npm
+    directory: /backend
+    schedule:
+      interval: weekly
+    groups:
+      minor-and-patch:
+        update-types: [minor, patch]
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly

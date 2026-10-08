@@ -1,0 +1,11 @@
+# Fins de ligne : LF partout dans le dépôt, quel que soit le poste (Windows compris).
+# Un script shell ou un fichier systemd en CRLF casse sur un serveur Linux.
+* text=auto eol=lf
+*.sh text eol=lf
+*.service text eol=lf
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.ico binary
+*.woff2 binary

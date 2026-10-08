@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Administration — Louage Express</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/admin.css">
+  <script type="module" src="/admin.js"></script>
+</head>
+<body class="admin">
+  <div class="livery" aria-hidden="true"></div>
+  <main>
+    <h1>Administration — inscriptions chauffeurs</h1>
+
+    <form id="gate" class="panel">
+      <div id="gate-token">
+        <label for="token">Jeton d'administration</label>
+        <input id="token" type="password" autocomplete="off" required>
+        <p class="note">Installation initiale : ce jeton sert à créer le premier compte, puis il ne donne plus aucun accès.</p>
+      </div>
+      <div id="gate-account" hidden>
+        <div class="field"><label for="username">Identifiant</label><input id="username" autocomplete="username" autocapitalize="none" spellcheck="false"></div>
+        <div class="field"><label for="password">Mot de passe</label><input id="password" type="password" autocomplete="current-password"></div>
+        <div class="field"><label for="code">Code de l'application d'authentification, ou code de secours</label><input id="code" inputmode="numeric" autocomplete="one-time-code" dir="ltr" maxlength="12"></div>
+        <p class="note">Première connexion avec un mot de passe provisoire : laissez le code vide.</p>
+      </div>
+      <button class="btn" type="submit">Se connecter</button>
+      <div id="gate-err" class="err" role="alert"></div>
+    </form>
+
+    <section id="setup" class="panel" hidden></section>
+
+    <div id="app" hidden>
+      <div id="sos-banner" class="sos-banner" role="alert" hidden></div>
+      <div class="toolbar">
+        <div class="tabs" role="tablist">
+          <button role="tab" id="tab-apps" aria-selected="true">Demandes</button>
+          <button role="tab" id="tab-ivs" aria-selected="false">Entretiens à venir</button>
+          <button role="tab" id="tab-net" aria-selected="false">Réseau par gouvernorat</button>
+          <button role="tab" id="tab-ops" aria-selected="false">Exploitation</button>
+          <button role="tab" id="tab-acc" aria-selected="false">Comptes</button>
+        </div>
+        <span id="whoami" class="note"></span>
+        <button id="logout" class="btn secondary small" type="button">Se déconnecter</button>
+      </div>
+
+      <section id="view-apps">
+        <div id="status-chips" class="chips" role="group" aria-label="Filtrer par statut"></div>
+        <div class="filters">
+          <label class="filter"><span>Gouvernorat</span><select id="f-gov"></select></label>
+          <label class="filter"><span>Type de ligne</span>
+            <select id="f-line">
+              <option value="">Tous les types</option>
+              <option value="regional">Régional</option>
+              <option value="interregional">Interrégional</option>
+              <option value="rural">Rural</option>
+              <option value="national">National</option>
+            </select>
+          </label>
+          <label class="filter"><span>Identité (KYC)</span><select id="f-kyc"></select></label>
+          <label class="filter"><span>Trier par</span>
+            <select id="f-sort">
+              <option value="created_desc">Plus récents d'abord</option>
+              <option value="created_asc">Plus anciens d'abord</option>
+              <option value="name">Nom (A → Z)</option>
+              <option value="governorate">Gouvernorat (A → Z)</option>
+            </select>
+          </label>
+          <label class="filter wide"><span>Recherche</span><input id="f-q" type="text" placeholder="Nom, téléphone, référence ou CIN" autocomplete="off"></label>
+        </div>
+        <div class="toolbar">
+          <p id="apps-summary" class="note" role="status"></p>
+          <button id="f-reset" class="btn secondary small" type="button">Réinitialiser les filtres</button>
+        </div>
+        <div class="table-wrap"><table id="apps"><thead><tr>
+          <th>Référence</th><th>Nom</th><th>Téléphone</th><th>Gouvernorat</th><th>Ligne</th><th>Statut</th><th>Identité (KYC)</th><th>Reçue le</th>
+        </tr></thead><tbody></tbody></table></div>
+        <div id="apps-empty" class="note" hidden>Aucun dossier ne correspond à ces filtres.</div>
+        <div id="pager" class="toolbar" hidden>
+          <button id="pg-prev" class="btn secondary small" type="button">← Précédent</button>
+          <span id="pg-info" class="note" role="status"></span>
+          <button id="pg-next" class="btn secondary small" type="button">Suivant →</button>
+        </div>
+
+        <section id="detail" class="panel" hidden></section>
+      </section>
+
+      <section id="view-ivs" hidden>
+        <div class="table-wrap"><table id="ivs"><thead><tr>
+          <th>Créneau (heure de Tunis)</th><th>Nom</th><th>Téléphone</th><th>Question</th><th>Lien</th><th></th>
+        </tr></thead><tbody></tbody></table></div>
+        <div id="ivs-empty" class="note" hidden>Aucun entretien à venir.</div>
+      </section>
+
+      <section id="view-ops" hidden></section>
+
+      <section id="view-acc" hidden></section>
+
+      <section id="view-net" hidden>
+        <div class="toolbar">
+          <p class="note" id="net-note"></p>
+          <button id="net-csv" class="btn secondary small" type="button">Exporter en CSV</button>
+        </div>
+        <div class="table-wrap"><table id="net"><thead><tr>
+          <th>Gouvernorat de départ</th><th>Chauffeurs</th><th>Lignes régionales</th><th>Lignes interrégionales</th><th>Louages nationaux</th><th>Lignes rurales</th>
+        </tr></thead><tbody></tbody></table></div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

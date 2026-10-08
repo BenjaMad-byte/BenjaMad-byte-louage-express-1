@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="ar" dir="rtl" data-title="title_register">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>التسجيل — Louage Express | Inscription</title>
+  <meta name="description" content="املأ الاستمارة من هاتفك في 5 دقائق · Inscription chauffeur en 5 minutes, depuis votre téléphone">
+  <meta name="theme-color" content="#003934" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#031f1c" media="(prefers-color-scheme: dark)">
+  <link rel="canonical" href="%PUBLIC_URL%/register">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Louage Express">
+  <meta property="og:locale" content="ar_TN">
+  <meta property="og:locale:alternate" content="fr_TN">
+  <meta property="og:title" content="التسجيل — Louage Express | Inscription">
+  <meta property="og:description" content="املأ الاستمارة من هاتفك في 5 دقائق · Inscription chauffeur en 5 minutes, depuis votre téléphone">
+  <meta property="og:url" content="%PUBLIC_URL%/register">
+  <meta property="og:image" content="%PUBLIC_URL%/img/og-share.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="لواج على طريق ساحلي عند شروق الشمس · Un louage sur une route côtière au lever du soleil">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="/styles.css">
+  <script type="module" src="/common.js"></script>
+  <script type="module" src="/register.js"></script>
+</head>
+<body>
+  <noscript><div class="noscript"><strong>هذا الموقع يحتاج إلى جافاسكريبت.</strong> فعّله في المتصفح ثم أعد تحميل الصفحة.<br><strong>Ce site a besoin de JavaScript.</strong> Activez-le dans votre navigateur puis rechargez la page.</div></noscript>
+  <a class="skip" href="#main" data-i18n="skip"></a>
+  <header id="site-header"></header>
+  <main id="main">
+    <div id="form-view">
+      <h1 data-i18n="reg_title"></h1>
+      <p class="lead" data-i18n="reg_intro"></p>
+      <p class="note" data-i18n="draft_hint"></p>
+      <div id="banner" class="banner error" role="alert" hidden></div>
+      <div id="draft-notice" class="banner info draft-notice" role="status" hidden>
+        <span id="draft-text"></span>
+        <button type="button" class="btn secondary small" id="draft-clear" data-i18n="draft_clear"></button>
+      </div>
+      <div id="stamps" class="stamps" role="group" data-i18n-label="stamps_nav" aria-label=""></div>
+
+      <form id="reg" novalidate>
+        <fieldset id="sec-you">
+          <legend data-i18n="sec_you"></legend>
+          <div class="field">
+            <label for="full_name"><span data-i18n="f_name"></span> *</label>
+            <input id="full_name" name="full_name" type="text" autocomplete="name" maxlength="80" required>
+            <div class="err" data-err="full_name" role="alert"></div>
+          </div>
+          <div class="grid-2">
+            <div class="field">
+              <label for="phone"><span data-i18n="f_phone"></span> *</label>
+              <input id="phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel-national" dir="ltr" maxlength="20" required>
+              <div class="hint" data-i18n="f_phone_hint"></div>
+              <div class="err" data-err="phone" role="alert"></div>
+            </div>
+            <div class="field">
+              <label for="cin"><span data-i18n="f_cin"></span> *</label>
+              <input id="cin" name="cin" type="text" inputmode="numeric" dir="ltr" maxlength="12" required>
+              <div class="hint" data-i18n="f_cin_hint"></div>
+              <div class="err" data-err="cin" role="alert"></div>
+            </div>
+          </div>
+          <div class="otp" id="otp">
+            <div id="otp-ok" class="banner ok" hidden data-i18n="otp_verified"></div>
+            <button type="button" class="btn secondary small" id="otp-send" data-i18n="otp_send"></button>
+            <div id="otp-step" class="field" hidden>
+              <label for="otp_code" data-i18n="otp_code"></label>
+              <input id="otp_code" name="otp_code" type="text" inputmode="numeric" autocomplete="one-time-code" dir="ltr" maxlength="6">
+              <div class="hint" id="otp-hint"></div>
+              <button type="button" class="btn small" id="otp-verify" data-i18n="otp_verify"></button>
+            </div>
+            <div class="err" data-err="otp_code" role="alert"></div>
+          </div>
+        </fieldset>
+
+        <fieldset id="sec-vehicle">
+          <legend data-i18n="sec_vehicle"></legend>
+          <div class="field">
+            <label for="plate"><span data-i18n="f_plate"></span> *</label>
+            <input id="plate" name="plate" type="text" dir="ltr" maxlength="20" autocapitalize="characters" required>
+            <div class="hint" data-i18n="f_plate_hint"></div>
+            <div class="err" data-err="plate" role="alert"></div>
+          </div>
+          <div class="grid-2">
+            <div class="field">
+              <label for="governorate"><span data-i18n="f_gov"></span> *</label>
+              <select id="governorate" name="governorate" required></select>
+              <div class="err" data-err="governorate" role="alert"></div>
+            </div>
+            <div class="field">
+              <label for="station"><span data-i18n="f_station"></span> *</label>
+              <input id="station" name="station" type="text" maxlength="80" required>
+              <div class="hint" data-i18n="f_station_hint"></div>
+              <div class="err" data-err="station" role="alert"></div>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset id="sec-line">
+          <legend data-i18n="sec_line"></legend>
+          <div class="field">
+            <span class="label" id="line-type-label"><span data-i18n="f_line_type"></span> *</span>
+            <div class="choices stack" role="radiogroup" aria-labelledby="line-type-label">
+              <label class="choice"><input type="radio" name="line_type" value="regional" required><span><strong data-i18n="line_regional"></strong><small data-i18n="line_regional_d"></small></span></label>
+              <label class="choice"><input type="radio" name="line_type" value="interregional"><span><strong data-i18n="line_interregional"></strong><small data-i18n="line_interregional_d"></small></span></label>
+              <label class="choice"><input type="radio" name="line_type" value="rural"><span><strong data-i18n="line_rural"></strong><small data-i18n="line_rural_d"></small></span></label>
+              <label class="choice"><input type="radio" name="line_type" value="national"><span><strong data-i18n="line_national"></strong><small data-i18n="line_national_d"></small></span></label>
+            </div>
+            <div class="err" data-err="line_type" role="alert"></div>
+          </div>
+          <div class="grid-2">
+            <div class="field">
+              <label for="line_from"><span data-i18n="f_line_from"></span> *</label>
+              <input id="line_from" name="line_from" type="text" maxlength="60" required list="line-from-list" autocomplete="off">
+              <datalist id="line-from-list"></datalist>
+              <div class="hint" data-i18n="f_line_from_hint"></div>
+              <div class="hint" id="line-national-hint" data-i18n="line_national_hint" hidden></div>
+              <div class="err" data-err="line_from" role="alert"></div>
+            </div>
+            <div class="field" id="line-to-field">
+              <label for="line_to_gov"><span data-i18n="f_line_to"></span> *</label>
+              <select id="line_to_gov" name="line_to_gov" required></select>
+              <div class="hint" id="line-to-hint" data-i18n="f_line_to_same" hidden></div>
+              <div class="err" data-err="line_to_gov" role="alert"></div>
+            </div>
+          </div>
+          <div class="field">
+            <label for="line_via"><span data-i18n="f_line_via"></span></label>
+            <input id="line_via" name="line_via" type="text" maxlength="200" autocomplete="off">
+            <div class="hint" data-i18n="f_line_via_hint"></div>
+            <div class="err" data-err="line_via" role="alert"></div>
+          </div>
+          <label class="consent">
+            <input type="checkbox" name="pickup_en_route" value="true">
+            <span data-i18n="pickup_en_route"></span>
+          </label>
+          <label class="consent">
+            <input type="checkbox" name="leaves_partial" value="true">
+            <span data-i18n="leaves_partial"></span>
+          </label>
+        </fieldset>
+
+        <fieldset id="sec-docs">
+          <legend data-i18n="sec_docs"></legend>
+          <p class="note" data-i18n="docs_hint"></p>
+          <div class="file field">
+            <label for="cin_front"><span data-i18n="d_cin_front"></span> *</label>
+            <input id="cin_front" name="cin_front" type="file" accept="image/*">
+            <div class="picked" data-picked="cin_front"></div>
+            <div class="err" data-err="cin_front" role="alert"></div>
+          </div>
+          <div class="file field">
+            <label for="cin_back"><span data-i18n="d_cin_back"></span> *</label>
+            <input id="cin_back" name="cin_back" type="file" accept="image/*,application/pdf">
+            <div class="picked" data-picked="cin_back"></div>
+            <div class="err" data-err="cin_back" role="alert"></div>
+          </div>
+          <div class="file field">
+            <label for="permis"><span data-i18n="d_permis"></span> *</label>
+            <input id="permis" name="permis" type="file" accept="image/*,application/pdf">
+            <div class="picked" data-picked="permis"></div>
+            <div class="err" data-err="permis" role="alert"></div>
+          </div>
+          <div class="file field">
+            <label for="licence"><span data-i18n="d_licence"></span></label>
+            <input id="licence" name="licence" type="file" accept="image/*,application/pdf">
+            <div class="hint" data-i18n="d_licence_hint"></div>
+            <div class="picked" data-picked="licence"></div>
+            <div class="err" data-err="licence" role="alert"></div>
+          </div>
+        </fieldset>
+
+        <fieldset id="sec-selfie">
+          <legend data-i18n="sec_selfie"></legend>
+          <p class="note" data-i18n="selfie_hint"></p>
+          <div id="selfie-box"></div>
+          <div class="err" data-err="selfies" role="alert"></div>
+        </fieldset>
+
+        <fieldset id="sec-consent">
+          <legend data-i18n="sec_consent"></legend>
+          <p class="consent-link"><a href="/privacy" target="_blank" rel="noopener" data-i18n="consent_link"></a></p>
+          <label class="consent">
+            <input type="checkbox" name="consent" value="true">
+            <span data-i18n="consent"></span>
+          </label>
+          <div class="err" data-err="consent" role="alert"></div>
+          <label class="consent">
+            <input type="checkbox" name="consent_biometric" value="true">
+            <span data-i18n="consent_bio"></span>
+          </label>
+          <div class="err" data-err="consent_biometric" role="alert"></div>
+        </fieldset>
+
+        <button class="btn" type="submit" id="submit" data-i18n="submit"></button>
+      </form>
+    </div>
+
+    <section id="done-view" class="panel" hidden>
+      <h1 data-i18n="ok_title"></h1>
+      <div id="done-stamps" class="stamps ticket" role="img" data-i18n-label="stamps_all" aria-label=""></div>
+      <div>
+        <div class="label" data-i18n="ok_ref"></div>
+        <div class="ref" id="done-ref"></div>
+      </div>
+      <p data-i18n="ok_keep"></p>
+      <div class="actions">
+        <button class="btn secondary small" type="button" id="copy" data-i18n="copy"></button>
+        <a class="btn" href="/interview" data-i18n="ok_book"></a>
+        <a class="btn secondary" href="/status" data-i18n="ok_track"></a>
+      </div>
+    </section>
+  </main>
+  <footer data-i18n="foot"></footer>
+</body>
+</html>

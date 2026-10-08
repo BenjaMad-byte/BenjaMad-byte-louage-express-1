@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="robots" content="noindex, nofollow">
+  <title>لواج إكسبريس — السوّاق · Louage Express — Chauffeur</title>
+  <meta name="description" content="Application chauffeur de louage : file d'attente, places, SOS, hors ligne.">
+  <meta name="theme-color" content="#003934" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#031f1c" media="(prefers-color-scheme: dark)">
+  <!-- iOS : le manifest seul ne suffit pas, Safari a besoin de ces balises pour installer en plein écran sans barre d'adresse. -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="لواج إكسبريس">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="/styles.css">
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <noscript><div class="noscript"><strong>هذا التطبيق يحتاج إلى جافاسكريبت.</strong> فعّله في المتصفح.<br><strong>Cette application a besoin de JavaScript.</strong> Activez-le dans votre navigateur.</div></noscript>
+  <div id="net" class="netbar on" role="status"></div>
+  <main id="app"></main>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>

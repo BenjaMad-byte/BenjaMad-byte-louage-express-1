@@ -1,0 +1,24 @@
+# Dépendances et données : jamais dans git
+node_modules/
+**/node_modules/
+data/
+**/data/
+data-demo/
+**/data-demo/
+.env
+*.env
+!*.env.example
+
+# Fichiers de poste
+.DS_Store
+Thumbs.db
+tmp-*.png
+*.log
+
+# Config locale Claude Code (agents/skills/règles ECC) : outillage de poste, pas du code projet
+.claude/
+
+# Sauvegardes et clés : ne doivent jamais être versionnées
+*.tar.age
+*.key
+*.pem

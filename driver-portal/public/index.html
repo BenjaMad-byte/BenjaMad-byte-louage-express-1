@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="ar" dir="rtl" data-title="title_home">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Louage Express — تسجيل سائقي اللواج | Inscription chauffeurs</title>
+  <meta name="description" content="سجّل من هاتفك وانتظر أقل في المحطة · Inscription à distance pour les chauffeurs de louage">
+  <meta name="theme-color" content="#003934" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#031f1c" media="(prefers-color-scheme: dark)">
+  <link rel="canonical" href="%PUBLIC_URL%/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Louage Express">
+  <meta property="og:locale" content="ar_TN">
+  <meta property="og:locale:alternate" content="fr_TN">
+  <meta property="og:title" content="Louage Express — تسجيل سائقي اللواج | Inscription chauffeurs">
+  <meta property="og:description" content="سجّل من هاتفك وانتظر أقل في المحطة · Inscription à distance pour les chauffeurs de louage">
+  <meta property="og:url" content="%PUBLIC_URL%/">
+  <meta property="og:image" content="%PUBLIC_URL%/img/og-share.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="لواج على طريق ساحلي عند شروق الشمس · Un louage sur une route côtière au lever du soleil">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="preload" as="image" href="/img/hero-1376.webp" type="image/webp" media="(min-width: 601px)">
+  <script type="module" src="/common.js"></script>
+</head>
+<body class="home">
+  <noscript><div class="noscript"><strong>هذا الموقع يحتاج إلى جافاسكريبت.</strong> فعّله في المتصفح ثم أعد تحميل الصفحة.<br><strong>Ce site a besoin de JavaScript.</strong> Activez-le dans votre navigateur puis rechargez la page.</div></noscript>
+  <a class="skip" href="#main" data-i18n="skip"></a>
+  <header id="site-header"></header>
+  <main id="main">
+    <section class="hero-cine" aria-labelledby="home-h1">
+      <picture>
+        <source media="(max-width: 600px)" type="image/webp" srcset="/img/hero-m-480.webp 480w, /img/hero-m-640.webp 640w" sizes="100vw">
+        <img src="/img/hero-1376.webp" srcset="/img/hero-800.webp 800w, /img/hero-1376.webp 1376w" sizes="100vw" width="1376" height="768" fetchpriority="high" decoding="async" data-i18n-alt="home_img_alt" alt="">
+      </picture>
+      <div class="hero-text">
+        <h1 id="home-h1" data-i18n="home_title"></h1>
+        <p class="lead" data-i18n="home_sub"></p>
+        <div class="actions">
+          <a class="btn" href="/register" data-i18n="home_cta"></a>
+          <a class="btn secondary" href="/status" data-i18n="home_cta2"></a>
+        </div>
+        <p class="note" data-i18n="home_open"></p>
+        <p class="img-note" data-i18n="home_img_note"></p>
+      </div>
+    </section>
+
+    <section class="scene" aria-labelledby="gare-h2">
+      <div class="scene-inner">
+        <div class="scene-text">
+          <h2 id="gare-h2" data-i18n="gare_title"></h2>
+          <p class="lead" data-i18n="gare_sub"></p>
+          <svg class="queue" viewBox="0 0 252 50" role="img" data-i18n-label="gare_queue_alt" aria-label="">
+            <g><use href="/emblems.svg#louage" x="174" y="8" width="78" height="40"/><circle cx="188" cy="10" r="10" class="rank first"/><text x="188" y="14.5" class="rank-n">1</text></g>
+            <g class="dim"><use href="/emblems.svg#louage" x="87" y="8" width="78" height="40"/><circle cx="101" cy="10" r="10" class="rank"/><text x="101" y="14.5" class="rank-n">2</text></g>
+            <g class="dim"><use href="/emblems.svg#louage" x="0" y="8" width="78" height="40"/><circle cx="14" cy="10" r="10" class="rank"/><text x="14" y="14.5" class="rank-n">3</text></g>
+          </svg>
+          <p class="note" data-i18n="gare_rule"></p>
+        </div>
+        <figure class="scene-fig">
+          <picture>
+            <source type="image/webp" srcset="/img/gare-480.webp 480w, /img/gare-800.webp 800w, /img/gare-1376.webp 1376w" sizes="(min-width: 900px) 55vw, 100vw">
+            <img src="/img/gare-800.webp" width="1376" height="768" loading="lazy" decoding="async" data-i18n-alt="gare_img_alt" alt="">
+          </picture>
+          <figcaption data-i18n="home_img_note"></figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="route" aria-labelledby="route-h2">
+      <div class="route-inner">
+        <h2 id="route-h2" data-i18n="route_title"></h2>
+        <p class="lead" data-i18n="route_sub"></p>
+        <ol class="stops" aria-label="">
+        <li class="stop">
+          <svg class="em bizerte" viewBox="0 0 64 64" aria-hidden="true"><use href="/emblems.svg#bizerte"/></svg>
+          <strong data-i18n="c_bizerte"></strong>
+          <span data-i18n="c_bizerte_d"></span>
+        </li>
+        <li class="stop">
+          <svg class="em tunis" viewBox="0 0 64 64" aria-hidden="true"><use href="/emblems.svg#tunis"/></svg>
+          <strong data-i18n="c_tunis"></strong>
+          <span data-i18n="c_tunis_d"></span>
+        </li>
+        <li class="stop">
+          <svg class="em nabeul" viewBox="0 0 64 64" aria-hidden="true"><use href="/emblems.svg#nabeul"/></svg>
+          <strong data-i18n="c_nabeul"></strong>
+          <span data-i18n="c_nabeul_d"></span>
+        </li>
+        <li class="stop">
+          <svg class="em sousse" viewBox="0 0 64 64" aria-hidden="true"><use href="/emblems.svg#sousse"/></svg>
+          <strong data-i18n="c_sousse"></strong>
+          <span data-i18n="c_sousse_d"></span>
+        </li>
+        <li class="stop">
+          <svg class="em kairouan" viewBox="0 0 64 64" aria-hidden="true"><use href="/emblems.svg#kairouan"/></svg>
+          <strong data-i18n="c_kairouan"></strong>
+          <span data-i18n="c_kairouan_d"></span>
+        </li>
+        <li class="stop">
+          <svg class="em sfax" viewBox="0 0 64 64" aria-hidden="true"><use href="/emblems.svg#sfax"/></svg>
+          <strong data-i18n="c_sfax"></strong>
+          <span data-i18n="c_sfax_d"></span>
+        </li>
+        <li class="stop">
+          <svg class="em gafsa" viewBox="0 0 64 64" aria-hidden="true"><use href="/emblems.svg#gafsa"/></svg>
+          <strong data-i18n="c_gafsa"></strong>
+          <span data-i18n="c_gafsa_d"></span>
+        </li>
+        <li class="stop">
+          <svg class="em tozeur" viewBox="0 0 64 64" aria-hidden="true"><use href="/emblems.svg#tozeur"/></svg>
+          <strong data-i18n="c_tozeur"></strong>
+          <span data-i18n="c_tozeur_d"></span>
+        </li>
+        <li class="stop">
+          <svg class="em djerba" viewBox="0 0 64 64" aria-hidden="true"><use href="/emblems.svg#djerba"/></svg>
+          <strong data-i18n="c_djerba"></strong>
+          <span data-i18n="c_djerba_d"></span>
+        </li>
+        <li class="stop">
+          <svg class="em tataouine" viewBox="0 0 64 64" aria-hidden="true"><use href="/emblems.svg#tataouine"/></svg>
+          <strong data-i18n="c_tataouine"></strong>
+          <span data-i18n="c_tataouine_d"></span>
+        </li>
+        </ol>
+        <h3 class="govs-title" data-i18n="govs_title"></h3>
+        <p class="note" data-i18n="govs_sub"></p>
+        <ul class="govs">
+          <li data-i18n-gov="0"></li>
+          <li data-i18n-gov="1"></li>
+          <li data-i18n-gov="2"></li>
+          <li data-i18n-gov="3"></li>
+          <li data-i18n-gov="4"></li>
+          <li data-i18n-gov="5"></li>
+          <li data-i18n-gov="6"></li>
+          <li data-i18n-gov="7"></li>
+          <li data-i18n-gov="8"></li>
+          <li data-i18n-gov="9"></li>
+          <li data-i18n-gov="10"></li>
+          <li data-i18n-gov="11"></li>
+          <li data-i18n-gov="12"></li>
+          <li data-i18n-gov="13"></li>
+          <li data-i18n-gov="14"></li>
+          <li data-i18n-gov="15"></li>
+          <li data-i18n-gov="16"></li>
+          <li data-i18n-gov="17"></li>
+          <li data-i18n-gov="18"></li>
+          <li data-i18n-gov="19"></li>
+          <li data-i18n-gov="20"></li>
+          <li data-i18n-gov="21"></li>
+          <li data-i18n-gov="22"></li>
+          <li data-i18n-gov="23"></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="dawn" aria-labelledby="steps-h2">
+      <div class="dawn-inner">
+        <h2 id="steps-h2" data-i18n="steps_title"></h2>
+        <p class="lead" data-i18n="steps_sub"></p>
+        <ol class="steps stamped">
+          <li>
+            <svg class="em tunis" viewBox="0 0 64 64" aria-hidden="true"><use href="/emblems.svg#tunis"/></svg>
+            <strong data-i18n="step1_t"></strong><span data-i18n="step1_d"></span>
+          </li>
+          <li>
+            <svg class="em kairouan" viewBox="0 0 64 64" aria-hidden="true"><use href="/emblems.svg#kairouan"/></svg>
+            <strong data-i18n="step2_t"></strong><span data-i18n="step2_d"></span>
+          </li>
+          <li>
+            <svg class="em tozeur" viewBox="0 0 64 64" aria-hidden="true"><use href="/emblems.svg#tozeur"/></svg>
+            <strong data-i18n="step3_t"></strong><span data-i18n="step3_d"></span>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="trust" aria-labelledby="trust-h2">
+      <div class="trust-inner">
+        <svg class="em shield trust-icon" viewBox="0 0 64 64" aria-hidden="true"><use href="/emblems.svg#shield"/></svg>
+        <div>
+          <h2 id="trust-h2" data-i18n="trust_title"></h2>
+          <p class="lead" data-i18n="trust_sub"></p>
+          <ul class="checks">
+            <li data-i18n="trust_1"></li>
+            <li data-i18n="trust_2"></li>
+            <li data-i18n="trust_3"></li>
+            <li data-i18n="trust_4"></li>
+            <li data-i18n="trust_5"></li>
+          </ul>
+          <div class="actions">
+            <a class="btn" href="/register" data-i18n="trust_cta"></a>
+          </div>
+          <p class="note"><span data-i18n="trust_ask"></span> <a href="/interview" data-i18n="trust_ask_link"></a></p>
+        </div>
+      </div>
+    </section>
+
+    <div class="page">
+    <h2 data-i18n="perks_title"></h2>
+    <ul class="perks">
+      <li data-i18n="perk1"></li>
+      <li data-i18n="perk2"></li>
+      <li data-i18n="perk3"></li>
+      <li data-i18n="perk4"></li>
+    </ul>
+
+    <h2 data-i18n="faq_title"></h2>
+    <details><summary data-i18n="faq1_q"></summary><p data-i18n="faq1_a"></p></details>
+    <details><summary data-i18n="faq2_q"></summary><p data-i18n="faq2_a"></p></details>
+    <details><summary data-i18n="faq3_q"></summary><p data-i18n="faq3_a"></p></details>
+    <details><summary data-i18n="faq4_q"></summary><p><span data-i18n="faq4_a"></span> <a href="/interview" data-i18n="nav_interview"></a></p></details>
+    </div>
+  </main>
+  <footer data-i18n="foot"></footer>
+</body>
+</html>
