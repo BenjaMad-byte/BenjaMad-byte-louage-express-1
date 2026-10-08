@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Louage Express — Chauffeur</string>
+    <string name="title_activity_main">Louage Express — Chauffeur</string>
+    <string name="package_name">tn.louageexpress.chauffeur</string>
+    <string name="custom_url_scheme">tn.louageexpress.chauffeur</string>
+</resources>

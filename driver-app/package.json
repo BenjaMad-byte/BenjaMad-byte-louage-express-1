@@ -20,6 +20,9 @@
     "helmet": "^7.1.0"
   },
   "devDependencies": {
+    "@capacitor/android": "^8.5.3",
+    "@capacitor/cli": "^8.5.3",
+    "@capacitor/core": "^8.5.3",
     "axe-core": "^4.14.0",
     "playwright-core": "^1.63.0"
   }

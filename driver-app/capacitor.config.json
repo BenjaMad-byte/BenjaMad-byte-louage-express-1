@@ -1,0 +1,10 @@
+{
+  "appId": "tn.louageexpress.chauffeur",
+  "appName": "Louage Express — Chauffeur",
+  "webDir": "public",
+  "server": {
+    "url": "https://benjamad-byte-louage-express-1.onrender.com",
+    "cleartext": false,
+    "androidScheme": "https"
+  }
+}
