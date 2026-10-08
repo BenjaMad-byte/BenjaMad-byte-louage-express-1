@@ -17,7 +17,9 @@ jobs:
           distribution: temurin
           java-version: "17"
 
-      - uses: android-actions/setup-android@v3
+      # ubuntu-latest fournit déjà le SDK Android (ANDROID_HOME) : pas besoin d'une action tierce pour l'installer.
+      - name: Accepter les licences du SDK Android (déjà installé sur ce runner)
+        run: yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null || true
 
       - name: Rendre gradlew exécutable
         run: chmod +x ./gradlew
