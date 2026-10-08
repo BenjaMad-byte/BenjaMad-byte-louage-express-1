@@ -265,6 +265,21 @@ export function createApp({
   });
   app.use("/api/ops", ops);
 
+  // ---------------------------------------------------------------- compte de test (jamais en production : pas de vrai site d'inscription connecté pendant les tests)
+  if (process.env.NODE_ENV !== "production") {
+    app.post("/api/dev/seed-driver", async (_req, res) => {
+      const driver = auth.upsertDriver({
+        ref: "DEV-TEST-1", full_name: "Chauffeur Test", phone: "90000000", plate: "100 TUN 1000",
+        governorate: "Gafsa", station: "Gare de Redeyef", line_type: "regional", line_from: "Redeyef", line_to_gov: "Gafsa",
+        line_via: ["Métlaoui"], pickup_en_route: true, leaves_partial: false, approved_at: new Date().toISOString(), lang: "fr",
+      });
+      const password = "chauffeur-test-2026";
+      const { token } = auth.createActivation(driver.id);
+      const r = await auth.finishActivation({ token, password, device: "seed" });
+      res.json({ plate: driver.plate, password, ok: !r.error, error: r.error });
+    });
+  }
+
   // ---------------------------------------------------------------- application (fichiers statiques)
   const publicDir = path.join(here, "public");
   // __BUILD__ du service worker = empreinte des fichiers de l'application : un fichier modifié change le service worker, donc la nouvelle version s'installe d'un bloc.
