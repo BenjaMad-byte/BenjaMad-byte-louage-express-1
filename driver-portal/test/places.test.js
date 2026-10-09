@@ -43,6 +43,13 @@ test("recherche dans un gouvernorat : français, arabe, variantes et alias donne
   assert.equal(idx.find("", ["Gafsa"]), null);
 });
 
+test("coordonnées (géorepérage) : présentes quand connues, absentes (pas null) sinon — ne change rien pour qui ne les demande pas", () => {
+  const withCoords = createPlaceIndex(DATA, ALIASES, { Gafsa: { Redeyef: [34.353, 8.1948] } });
+  assert.deepEqual(withCoords.find("Redeyef", ["Gafsa"]), { fr: "Redeyef", ar: "الرديف", governorate: "Gafsa", lat: 34.353, lon: 8.1948 });
+  assert.deepEqual(withCoords.find("Metlaoui", ["Gafsa"]), { fr: "Metlaoui", ar: "المتلوي", governorate: "Gafsa" }, "pas de coordonnée connue : pas de lat/lon, pas null");
+  assert.deepEqual(idx.find("Redeyef", ["Gafsa"]), { fr: "Redeyef", ar: "الرديف", governorate: "Gafsa" }, "sans coords du tout (3e argument omis) : comportement inchangé");
+});
+
 test("hors contexte : une ville unique est trouvée dans tout le pays ; un nom partagé par deux gouvernorats reste ambigu", () => {
   assert.equal(idx.find("El Jem")?.governorate, "Mahdia");
   assert.equal(idx.find("Jem")?.fr, "El Jem");

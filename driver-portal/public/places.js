@@ -1,7 +1,7 @@
 // Villes (délégations et chefs-lieux) de chaque gouvernorat, en arabe et en français : suggestions de saisie et fusion des orthographes.
 // Module sans accès au navigateur : le formulaire s'en sert pour proposer des villes, le serveur pour reconnaître « الرديف », « Redeyef »
 // et « redeyef » comme la même ville. La saisie libre reste toujours permise : une ville inconnue n'est jamais refusée.
-import { PLACES, ALIASES } from "./places-data.js";
+import { PLACES, ALIASES, COORDS } from "./places-data.js";
 
 const LATIN_MARKS = /[̀-ͯ]/g;
 const ARABIC_MARKS = /[ً-ٰٟـ]/g; // voyelles brèves et tatwil
@@ -32,16 +32,18 @@ export function matchKey(text) {
 /**
  * @param {Record<string, [string, string][]>} data  gouvernorat → [[nom français, nom arabe], ...]
  * @param {Record<string, string[]>} aliases        nom français → variantes d'écriture courantes
+ * @param {Record<string, Record<string, [number, number]>>} coords  gouvernorat → nom français → [latitude, longitude]
  */
-export function createPlaceIndex(data, aliases = {}) {
-  const byGov = new Map(); // gouvernorat → Map(clé → { fr, ar })
+export function createPlaceIndex(data, aliases = {}, coords = {}) {
+  const byGov = new Map(); // gouvernorat → Map(clé → { fr, ar, lat, lon })
   for (const [gov, list] of Object.entries(data)) {
     const keys = new Map();
     const seen = new Set();
     for (const [fr, ar] of list) {
       if (seen.has(fr)) throw new Error(`doublon dans ${gov} : « ${fr} » est listée deux fois`);
       seen.add(fr);
-      const entry = { fr, ar };
+      const point = coords[gov]?.[fr];
+      const entry = { fr, ar, lat: point?.[0] ?? null, lon: point?.[1] ?? null };
       for (const name of new Set([fr, ar])) {
         const key = matchKey(name);
         const existing = keys.get(key);
@@ -67,22 +69,25 @@ export function createPlaceIndex(data, aliases = {}) {
     /**
      * Retrouve une ville à partir de ce que le chauffeur a tapé (français, arabe, variante). `governorates` = contexte, par ordre de priorité.
      * Sans contexte : trouvée seulement si le nom est unique dans tout le pays (jamais de deviner en cas d'ambiguïté).
-     * @returns {{fr: string, ar: string, governorate: string} | null}
+     * `lat`/`lon` présents seulement quand la coordonnée est connue (géorepérage) : absents, pas `null`, pour ne rien changer
+     * à la forme attendue par ce qui n'en a pas besoin.
+     * @returns {{fr: string, ar: string, governorate: string, lat?: number, lon?: number} | null}
      */
     find(text, governorates) {
       const key = matchKey(text);
       if (!key) return null;
+      const toResult = (entry, gov) => ({ fr: entry.fr, ar: entry.ar, governorate: gov, ...(entry.lat != null ? { lat: entry.lat, lon: entry.lon } : {}) });
       if (governorates?.length) {
         for (const gov of governorates) {
           const entry = byGov.get(gov)?.get(key);
-          if (entry) return { fr: entry.fr, ar: entry.ar, governorate: gov };
+          if (entry) return toResult(entry, gov);
         }
         return null;
       }
       const hits = [];
       for (const [gov, keys] of byGov) {
         const entry = keys.get(key);
-        if (entry) hits.push({ fr: entry.fr, ar: entry.ar, governorate: gov });
+        if (entry) hits.push(toResult(entry, gov));
       }
       return hits.length === 1 ? hits[0] : null;
     },
@@ -117,4 +122,4 @@ export function createPlaceIndex(data, aliases = {}) {
   };
 }
 
-export const places = createPlaceIndex(PLACES, ALIASES);
+export const places = createPlaceIndex(PLACES, ALIASES, COORDS);

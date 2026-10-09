@@ -89,6 +89,7 @@ def governorate_of(state):
 
 rows = json.load(open(SRC, encoding="utf-8"))["delegations"]
 by_gov = defaultdict(list)
+coords = defaultdict(dict)  # gouvernorat -> { nom français: (lat, lon) }, pour le géorepérage (arrivée détectée automatiquement)
 seen = set()
 problems = []
 for r in rows:
@@ -103,8 +104,10 @@ for r in rows:
         continue
     seen.add((gov, fr))
     by_gov[gov].append([fr, ar])
+    coords[gov][fr] = (r["lat"], r["lon"])
 
 # Chef-lieu : une entrée portant le nom du gouvernorat (ex. « Gafsa »), absente de la liste des délégations quand elles s'appellent « Gafsa Nord / Sud ».
+# Coordonnées approchées (aucune délégation OSM distincte n'existe sous ce nom) : centre moyen des délégations du gouvernorat.
 for gov, gov_ar in zip(GOVERNORATES, GOVERNORATES_AR):
     names = {plain(fr) for fr, _ in by_gov[gov]}
     count = len(by_gov[gov])
@@ -112,6 +115,9 @@ for gov, gov_ar in zip(GOVERNORATES, GOVERNORATES_AR):
         problems.append(f"{gov} : {count} délégations, {EXPECTED[gov]} attendues")
     if plain(gov) not in names:
         by_gov[gov].insert(0, [gov, gov_ar])
+        lats = [c[0] for c in coords[gov].values()]
+        lons = [c[1] for c in coords[gov].values()]
+        coords[gov][gov] = (round(sum(lats) / len(lats), 4), round(sum(lons) / len(lons), 4))
     by_gov[gov].sort(key=lambda p: (plain(p[0]) != plain(gov), p[0]))
 
 if problems:
@@ -131,6 +137,14 @@ lines.append("};")
 lines.append("")
 lines.append("// Variantes d'écriture d'une même ville (nom français officiel → variantes). Enrichi au fil des saisies réelles non reconnues.")
 lines.append("export const ALIASES = " + json.dumps(ALIASES, ensure_ascii=False, indent=2) + ";")
-open(OUT, "w", encoding="utf-8").write("\n".join(lines) + "\n")
+lines.append("")
+lines.append("// Coordonnées [latitude, longitude] de chaque délégation (centre de la relation administrative OSM ; le chef-lieu, qui n'a pas")
+lines.append("// sa propre délégation, est une moyenne approchée). Sert au géorepérage (détecter une arrivée sans geste du chauffeur).")
+lines.append("export const COORDS = {")
+for gov in GOVERNORATES:
+    items = ", ".join(f"{json.dumps(fr, ensure_ascii=False)}: [{lat}, {lon}]" for fr, (lat, lon) in coords[gov].items())
+    lines.append(f"  {json.dumps(gov, ensure_ascii=False)}: {{{items}}},")
+lines.append("};")
+open(OUT, "w", encoding="utf-8", newline="\n").write("\n".join(lines) + "\n")  # LF, pas CRLF (dépôt en LF, voir .gitattributes)
 total = sum(len(v) for v in by_gov.values())
 print(f"{OUT} : {total} villes ({total - sum(EXPECTED.values())} chefs-lieux ajoutés), 24 gouvernorats")
