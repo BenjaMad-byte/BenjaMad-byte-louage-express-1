@@ -65,7 +65,7 @@ export function applyLocal(state, action) {
       return withTrip((t) => E.confirmOnboard(t, payload.boardingId));
     case "set_capacity":
       if (trip) return rejected("trip_in_progress");
-      if (!Number.isInteger(payload.capacity) || payload.capacity < 1 || payload.capacity > 20) return rejected("bad_capacity");
+      if (!Number.isInteger(payload.capacity) || payload.capacity < 1 || payload.capacity > 8) return rejected("bad_capacity"); // un louage ne dépasse jamais 8 places
       next.driver.capacity = payload.capacity;
       return done();
     case "sos":

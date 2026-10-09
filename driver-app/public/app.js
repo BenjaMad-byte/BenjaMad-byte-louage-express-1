@@ -256,14 +256,14 @@ function homeScreen() {
       h("h1", {}, t("home_title")),
       h("p", { class: "note" }, t("home_hint")),
       h("div", { class: "field" }, h("label", { for: "cap" }, t("capacity")),
-        h("select", { id: "cap", onchange: (e) => act("set_capacity", { capacity: Number(e.target.value) }) }, Array.from({ length: 20 }, (_, i) => i + 1).map((n) => h("option", { value: n, selected: n === d.capacity }, n)))),
+        h("select", { id: "cap", onchange: (e) => act("set_capacity", { capacity: Number(e.target.value) }) }, Array.from({ length: 8 }, (_, i) => i + 1).map((n) => h("option", { value: n, selected: n === d.capacity }, n)))),
       h("div", { class: "field" },
         h("label", {}, t("route_direction")),
         h("button", { type: "button", class: "btn secondary", id: "swap-direction", onclick: () => { queueReversed = !queueReversed; queueVia = null; render(); } },
           `⇄ ${planned[0]} → ${planned[planned.length - 1]}`)),
       h("div", { class: "field" },
         h("label", { for: "via" }, t("route_via")),
-        h("input", { id: "via", dir: "ltr", value: planned.slice(1, -1).join(" → "), oninput: (e) => { queueVia = e.target.value.split("→").map((s) => s.trim()).filter(Boolean); } }),
+        h("input", { id: "via", dir: "ltr", list: "places-list", value: planned.slice(1, -1).join(" → "), oninput: (e) => { queueVia = e.target.value.split("→").map((s) => s.trim()).filter(Boolean); } }),
         h("p", { class: "note" }, t("route_via_hint"))),
       h("button", { type: "button", class: "btn primary huge", id: "join", onclick: async () => {
         const stops = plannedStops();
@@ -511,6 +511,15 @@ export function render() {
   ].filter(Boolean));
 }
 
+/** Suggestions pour « passe par » : toutes les délégations du pays (même base que le site d'inscription). Échoue en silence hors ligne. */
+async function loadPlacesDatalist() {
+  try {
+    const r = await fetch("/api/places");
+    const { places: list } = await r.json();
+    document.body.append(h("datalist", { id: "places-list" }, list.map((p) => h("option", { value: p.fr, label: p.governorate }))));
+  } catch { /* pas grave : le champ reste une saisie libre sans suggestions */ }
+}
+
 // ---------------------------------------------------------------- démarrage
 async function boot() {
   store = await openStore();
@@ -532,6 +541,7 @@ async function boot() {
   setInterval(() => { if (token && !document.hidden) sync.flush().then(() => {}, () => {}); }, 20_000);
   try { await navigator.serviceWorker?.register("/sw.js"); } catch { /* sans service worker : fonctionne en ligne, pas d'ouverture hors ligne */ }
   if (token) sync.flush().then(() => {}, () => {});
+  loadPlacesDatalist();
   window.__lx = { act, get view() { return view; }, get pending() { return pendingCount; } }; // observé par les tests navigateur
 }
 

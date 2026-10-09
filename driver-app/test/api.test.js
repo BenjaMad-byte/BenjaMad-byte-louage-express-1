@@ -348,6 +348,13 @@ test("exploitation : clé requise, vue d'ensemble des files, synchronisation, r�
   assert.equal((await call("POST", "/api/ops/drivers/sync", { key: OPS })).status, 503);
 });
 
+test("villes proposées pour « passe par » : toutes les délégations du pays, avec leur gouvernorat, sans authentification", async () => {
+  const r = await json(await call("GET", "/api/places"));
+  assert.equal(r.status, 200);
+  assert.ok(r.body.places.length > 250, "les 264 délégations du pays");
+  assert.deepEqual(r.body.places.find((p) => p.fr === "Oum El Araies"), { fr: "Oum El Araies", ar: "أم العرائس", governorate: "Gafsa" });
+});
+
 test("sécurité : écriture depuis un autre site refusée, jamais de cache sur l'API, en-têtes stricts, API inconnue en JSON", async () => {
   const res = await call("POST", "/api/auth/login", { body: { plate: "000 TUN 0000", password: "n'importe quoi" }, headers: { Origin: "https://evil.example" } });
   assert.equal(res.status, 403);

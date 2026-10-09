@@ -96,6 +96,12 @@ export function createPlaceIndex(data, aliases = {}) {
       const head = list.find(([fr]) => matchKey(fr) === matchKey(governorate))?.[index]; // chef-lieu : même nom que le gouvernorat (« Manouba » pour « La Manouba »)
       return [...(head ? [head] : []), ...names.filter((n) => n !== head).sort((a, b) => a.localeCompare(b, locale))];
     },
+    /** Toutes les délégations du pays, avec leur gouvernorat (pour une suggestion de saisie qui ne se limite pas à un seul gouvernorat). */
+    all() {
+      const out = [];
+      for (const [gov, list] of Object.entries(data)) for (const [fr, ar] of list) out.push({ fr, ar, governorate: gov });
+      return out.sort((a, b) => a.fr.localeCompare(b.fr, "fr"));
+    },
   };
 }
 

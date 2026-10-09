@@ -132,7 +132,7 @@ export function createActionService({ db, sos, hooks = noHooks, now = Date.now }
 
     set_capacity(driver, action) {
       const capacity = action.payload.capacity;
-      if (!isInt(capacity, 1, 20)) return reject("bad_capacity");
+      if (!isInt(capacity, 1, 8)) return reject("bad_capacity"); // un louage ne dépasse jamais 8 places
       if (needTrip(driver)) return reject("trip_in_progress"); // la capacité d'un voyage commencé ne change pas
       db.prepare("UPDATE drivers SET capacity = ? WHERE id = ?").run(capacity, driver.id);
       return { status: "applied" };

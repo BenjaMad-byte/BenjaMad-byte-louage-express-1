@@ -18,6 +18,7 @@ import { createDriverAuth } from "./auth.js";
 import { createSosService } from "./sos.js";
 import { createActionService, buildState, MAX_BATCH } from "./actions.js";
 import { tripsOfLine } from "./trips.js";
+import { places } from "../driver-portal/public/places.js";
 import { createReservations } from "./reservations.js";
 import { createSva, signCallback, verifyCallbackSignature, OPERATORS, DEPOSITS_MILLIMES } from "./sva.js";
 import * as E from "./public/engine.js";
@@ -154,6 +155,11 @@ export function createApp({
   // ---------------------------------------------------------------- chauffeur
   const state = (driver) => buildState(db, driver, { now, emergency, codeOf: reservations.codeOfBoarding });
   app.get("/api/driver/state", limiter(60_000, 120, true), requireDriver, (req, res) => res.json(state(req.driver)));
+
+  // Suggestion de saisie pour « passe par » : toutes les délégations du pays, avec leur gouvernorat (même base que le site d'inscription).
+  // Donnée de référence publique (pas de donnée personnelle), mise en cache longtemps par le navigateur.
+  const allPlaces = places.all();
+  app.get("/api/places", limiter(60_000, 30), (_req, res) => res.set("Cache-Control", "public, max-age=86400").json({ places: allPlaces }));
 
   // Rejeu des actions faites hors ligne (et envoi de chaque action en ligne) : voir actions.js pour les règles.
   app.post("/api/driver/sync", limiter(60_000, 120, true), requireDriver, (req, res) => {

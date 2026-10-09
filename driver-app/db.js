@@ -31,7 +31,7 @@ db.exec(`
     line_via         TEXT NOT NULL DEFAULT '[]',
     pickup_en_route  INTEGER NOT NULL DEFAULT 0,
     leaves_partial   INTEGER NOT NULL DEFAULT 0,
-    capacity         INTEGER NOT NULL DEFAULT 8 CHECK (capacity BETWEEN 1 AND 20),
+    capacity         INTEGER NOT NULL DEFAULT 8 CHECK (capacity BETWEEN 1 AND 8),
     active           INTEGER NOT NULL DEFAULT 1,
     password_hash    TEXT,                          -- NULL = compte pas encore activé (aucune connexion possible)
     failed_attempts  INTEGER NOT NULL DEFAULT 0,

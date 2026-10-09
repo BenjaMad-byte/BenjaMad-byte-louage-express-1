@@ -59,6 +59,15 @@ test("suggestions : dans la langue de l'interface, le chef-lieu d'abord, sans do
   assert.deepEqual(idx.suggestions("", "fr"), []);
 });
 
+test("all() : toutes les délégations du pays, avec leur gouvernorat, triées", () => {
+  const all = idx.all();
+  assert.equal(all.length, 10, "une entrée par ville, tous gouvernorats confondus");
+  assert.deepEqual(all.find((p) => p.fr === "Redeyef"), { fr: "Redeyef", ar: "الرديف", governorate: "Gafsa" });
+  const names = all.map((p) => p.fr);
+  assert.deepEqual(names, [...names].sort((a, b) => a.localeCompare(b, "fr")), "triée alphabétiquement");
+  assert.equal(all.filter((p) => p.fr === "Sidi El Hani").length, 2, "même nom dans deux gouvernorats : les deux apparaissent");
+});
+
 test("alias : ne peuvent pas faire fusionner deux villes différentes", () => {
   assert.throws(() => createPlaceIndex({ Gafsa: [["Redeyef", "الرديف"], ["Metlaoui", "المتلوي"]] }, { Metlaoui: ["Redeyef"] }), /alias.*Redeyef/i);
   assert.throws(() => createPlaceIndex({ Gafsa: [["Redeyef", "الرديف"], ["Redeyef", "الرديف"]] }, {}), /doublon/i);
