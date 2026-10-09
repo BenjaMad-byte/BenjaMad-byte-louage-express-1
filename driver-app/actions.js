@@ -44,7 +44,7 @@ export function createActionService({ db, sos, hooks = noHooks, now = Date.now }
       if (openTripOf(db, driver.id)) return reject("already_in_queue");
       let stops = defaultStops(driver);
       if (action.payload.stops !== undefined) {
-        stops = cleanStops(action.payload.stops);
+        stops = cleanStops(action.payload.stops, [driver.governorate, driver.line_to_gov].filter(Boolean));
         if (!stops) return reject("bad_stops");
       }
       const trip = createTrip(db, driver, { stops, now: iso() });

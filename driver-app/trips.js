@@ -40,16 +40,21 @@ export function ensureLine(db, driver, stops) {
   return Number(db.prepare("INSERT INTO lines (key, from_gov, from_name, to_gov, line_type) VALUES (?,?,?,?,?)").run(l.key, l.from_gov, l.from_name, l.to_gov, l.line_type).lastInsertRowid);
 }
 
+/** Nom officiel d'une ville si elle est reconnue (variantes d'écriture comprises, « Om Larayes » = « Oum El Araies ») ; sinon le texte tel quel : une ville inconnue n'est jamais refusée. */
+export function officialName(name, contextGovs = []) {
+  return places.find(name, contextGovs)?.fr ?? places.find(name)?.fr ?? name;
+}
+
 /** Arrêts par défaut d'un voyage : départ, arrêts en route déclarés (noms officiels quand ils sont reconnus), arrivée. */
 export function defaultStops(driver) {
   const from = resolveStop(driver.line_from ?? driver.station, [driver.governorate]).name;
   let via = [];
   try { via = JSON.parse(driver.line_via ?? "[]"); } catch { /* circuit illisible : aucun arrêt intermédiaire */ }
-  const official = (name) => places.find(name, [driver.governorate, driver.line_to_gov].filter(Boolean))?.fr ?? places.find(name)?.fr ?? name;
+  const contextGovs = [driver.governorate, driver.line_to_gov].filter(Boolean);
   const seen = new Set([matchKey(from)]);
   const stops = [from];
   for (const v of via) {
-    const name = official(String(v));
+    const name = officialName(String(v), contextGovs);
     if (seen.has(matchKey(name))) continue;
     seen.add(matchKey(name));
     stops.push(name);
@@ -58,11 +63,12 @@ export function defaultStops(driver) {
   return stops.slice(0, MAX_STOPS);
 }
 
-/** Arrêts proposés par le chauffeur : 2 à 8 noms non vides, le premier est la gare de départ. */
-export function cleanStops(input) {
+/** Arrêts proposés par le chauffeur : 2 à 8 noms non vides (ramenés au nom officiel quand reconnus), le premier est la gare de départ. */
+export function cleanStops(input, contextGovs = []) {
   if (!Array.isArray(input) || input.length < 2 || input.length > MAX_STOPS) return null;
   const names = input.map((s) => String(s ?? "").replace(/\s+/g, " ").trim().slice(0, STOP_NAME_MAX));
-  return names.every(Boolean) ? names : null;
+  if (!names.every(Boolean)) return null;
+  return names.map((name) => officialName(name, contextGovs));
 }
 
 // ---------------------------------------------------------------- voyages

@@ -76,6 +76,16 @@ test("lignes proposées aux passagers : un chauffeur qui fait le trajet retour (
   assert.deepEqual(byFrom.Gafsa.stops, ["Gafsa", "Metlaoui", "Redeyef"]);
 });
 
+test("arrêt tapé par le chauffeur : une variante d'écriture reconnue (« Om Larayes ») est ramenée au nom officiel (« Oum El Araies »)", async () => {
+  const d = portalDriver();
+  const driver = app.locals.auth.upsertDriver(d);
+  const row = db.prepare("SELECT * FROM drivers WHERE id = ?").get(driver.id);
+  const res = app.locals.actions.apply(row, act("join_queue", { stops: ["Gafsa", "Om Larayes", "Redeyef"] }));
+  assert.equal(res.status, "applied");
+  const out = await (await fetch(base + "/api/passenger/lines")).json();
+  assert.deepEqual(out.lines[0].stops, ["Gafsa", "Oum El Araies", "Redeyef"]);
+});
+
 test("réservation : la place est retenue dans le voyage du n° 1, le paiement est demandé, rien n'est confirmé avant le retour de l'opérateur", async () => {
   const a = driverInQueue();
   const r = await reserve("97111222");
