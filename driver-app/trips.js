@@ -7,21 +7,34 @@ const MAX_STOPS = 8;
 const STOP_NAME_MAX = 60;
 
 // ---------------------------------------------------------------- lignes
-/** Clé de ligne : gare de départ reconnue (même reconnaissance de villes que le site d'inscription) + gouvernorat d'arrivée. « Redeyef » et « الرديف » donnent la même ligne. */
-export function lineKeyFor(driver) {
-  const hit = places.find(driver.line_from ?? "", [driver.governorate]);
-  const fromKey = hit ? `@${hit.governorate}|${hit.fr}` : `~${matchKey(driver.line_from ?? driver.station)}`;
+/** Résout un nom de ville vers son nom officiel + gouvernorat (repli sur le texte brut, gouvernorat inconnu, si la ville n'est pas reconnue). */
+function resolveStop(name, contextGovs = []) {
+  const hit = places.find(name ?? "", contextGovs) ?? places.find(name ?? "");
+  return hit ? { name: hit.fr, governorate: hit.governorate } : { name: name ?? "", governorate: null };
+}
+
+/**
+ * Clé de ligne : dérivée des arrêts RÉELLEMENT utilisés pour ce voyage, pas seulement de la ligne déclarée à l'inscription.
+ * Un chauffeur qui fait le trajet retour (ou par un autre village) doit apparaître sur une ligne différente, pour que les
+ * passagers et la file d'attente ne mélangent jamais les deux sens. Sans `stops`, utilise les arrêts par défaut du chauffeur.
+ */
+export function lineKeyFor(driver, stops) {
+  const theStops = stops ?? defaultStops(driver);
+  const from = resolveStop(theStops[0], [driver.governorate]);
+  const to = resolveStop(theStops[theStops.length - 1], [driver.governorate, driver.line_to_gov].filter(Boolean));
+  const fromGov = from.governorate ?? driver.governorate;
+  const fromKey = from.governorate ? `@${fromGov}|${from.name}` : `~${matchKey(from.name)}`;
   return {
-    key: `${driver.governorate}|${fromKey}|${driver.line_to_gov ?? "*"}`,
-    from_gov: driver.governorate,
-    from_name: hit?.fr ?? driver.line_from ?? driver.station,
-    to_gov: driver.line_to_gov ?? null,
+    key: `${fromGov}|${fromKey}|${to.governorate ?? "*"}`,
+    from_gov: fromGov,
+    from_name: from.name,
+    to_gov: to.governorate,
     line_type: driver.line_type ?? null,
   };
 }
 
-export function ensureLine(db, driver) {
-  const l = lineKeyFor(driver);
+export function ensureLine(db, driver, stops) {
+  const l = lineKeyFor(driver, stops);
   const found = db.prepare("SELECT id FROM lines WHERE key = ?").get(l.key);
   if (found) return found.id;
   return Number(db.prepare("INSERT INTO lines (key, from_gov, from_name, to_gov, line_type) VALUES (?,?,?,?,?)").run(l.key, l.from_gov, l.from_name, l.to_gov, l.line_type).lastInsertRowid);
@@ -29,7 +42,7 @@ export function ensureLine(db, driver) {
 
 /** Arrêts par défaut d'un voyage : départ, arrêts en route déclarés (noms officiels quand ils sont reconnus), arrivée. */
 export function defaultStops(driver) {
-  const from = lineKeyFor(driver).from_name;
+  const from = resolveStop(driver.line_from ?? driver.station, [driver.governorate]).name;
   let via = [];
   try { via = JSON.parse(driver.line_via ?? "[]"); } catch { /* circuit illisible : aucun arrêt intermédiaire */ }
   const official = (name) => places.find(name, [driver.governorate, driver.line_to_gov].filter(Boolean))?.fr ?? places.find(name)?.fr ?? name;
@@ -94,7 +107,7 @@ export function saveTrip(db, trip) {
 
 /** Met le chauffeur dans la file de sa ligne, en dernière position. */
 export function createTrip(db, driver, { stops, now }) {
-  const lineId = ensureLine(db, driver);
+  const lineId = ensureLine(db, driver, stops);
   const seq = (db.prepare("SELECT COALESCE(MAX(queue_seq), 0) + 1 AS n FROM trips WHERE line_id = ?").get(lineId).n);
   const id = crypto.randomUUID();
   db.prepare("INSERT INTO trips (id, driver_id, line_id, status, queue_seq, capacity, stops, current_stop, created_at) VALUES (?,?,?,?,?,?,?,0,?)")

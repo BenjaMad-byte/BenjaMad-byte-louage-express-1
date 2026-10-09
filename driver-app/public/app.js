@@ -225,23 +225,50 @@ function otherDestination(trip) {
 // ---------------------------------------------------------------- écrans
 function header() {
   const d = view.driver;
+  const stops = view.trip ? view.trip.stops : view.defaultStops; // le sens réel du voyage en cours, pas toujours celui déclaré à l'inscription
   return h("header", { class: "top" },
-    h("div", {}, h("strong", {}, d.name), h("div", { class: "note" }, h("bdi", {}, d.plate), " · ", `${d.line.from} → ${d.line.toGov ?? t("free_destination")}`)),
+    h("div", {}, h("strong", {}, d.name), h("div", { class: "note" }, h("bdi", {}, d.plate), " · ", `${stops[0]} → ${stops[stops.length - 1]}`)),
     h("div", { class: "top-actions" },
       h("button", { type: "button", class: "mini", onclick: toggleLang }, t("lang_other")),
       h("button", { type: "button", class: "mini", onclick: logout }, t("logout"))));
 }
 
+/**
+ * Un chauffeur refait le trajet dans les deux sens : avant d'entrer dans la file, il choisit le sens et peut changer l'itinéraire
+ * (ex. retour par un autre village). `queueVia` capture la saisie du chauffeur dès la première frappe (`oninput`, pas seulement à
+ * la validation) : sans ça, une synchronisation en arrière-plan qui redessine l'écran pendant la frappe effacerait le champ.
+ */
+let queueReversed = false;
+let queueVia = null; // null = pas encore modifié par le chauffeur : suit l'itinéraire par défaut du sens choisi
+function plannedStops() {
+  const base = view.defaultStops;
+  const oriented = queueReversed ? [...base].reverse() : base;
+  const via = queueVia ?? oriented.slice(1, -1);
+  return [oriented[0], ...via, oriented[oriented.length - 1]];
+}
+function resetQueuePlan() { queueReversed = false; queueVia = null; }
+
 function homeScreen() {
   const d = view.driver;
+  const planned = plannedStops();
   return [
     h("section", { class: "card" },
       h("h1", {}, t("home_title")),
       h("p", { class: "note" }, t("home_hint")),
       h("div", { class: "field" }, h("label", { for: "cap" }, t("capacity")),
         h("select", { id: "cap", onchange: (e) => act("set_capacity", { capacity: Number(e.target.value) }) }, Array.from({ length: 20 }, (_, i) => i + 1).map((n) => h("option", { value: n, selected: n === d.capacity }, n)))),
-      h("p", { class: "note" }, `${t("stops")} : ${view.defaultStops.join(" → ")}`),
-      h("button", { type: "button", class: "btn primary huge", id: "join", onclick: () => act("join_queue") }, t("join_queue")),
+      h("div", { class: "field" },
+        h("label", {}, t("route_direction")),
+        h("button", { type: "button", class: "btn secondary", id: "swap-direction", onclick: () => { queueReversed = !queueReversed; queueVia = null; render(); } },
+          `⇄ ${planned[0]} → ${planned[planned.length - 1]}`)),
+      h("div", { class: "field" },
+        h("label", { for: "via" }, t("route_via")),
+        h("input", { id: "via", dir: "ltr", value: planned.slice(1, -1).join(" → "), oninput: (e) => { queueVia = e.target.value.split("→").map((s) => s.trim()).filter(Boolean); } }),
+        h("p", { class: "note" }, t("route_via_hint"))),
+      h("button", { type: "button", class: "btn primary huge", id: "join", onclick: async () => {
+        const stops = plannedStops();
+        if (await act("join_queue", { stops })) resetQueuePlan();
+      } }, t("join_queue")),
       geoGranted ? null : h("button", { type: "button", class: "btn secondary", onclick: async () => { await getPosition(8000); render(); } }, t("allow_position")),
       geoGranted ? null : h("p", { class: "note" }, t("allow_position_why"))),
   ];
@@ -441,6 +468,7 @@ async function onLoggedIn(plate, newToken) {
   await store.set("token", newToken);
   token = newToken;
   loginStep = { plate: "", busy: false, error: "" };
+  resetQueuePlan();
   await sync.flush();
   server = await store.get("server");
   await recompute();

@@ -63,6 +63,19 @@ test("lignes proposées aux passagers : seulement celles qui ont un louage, sans
   assert.ok(!dump.includes(d.full_name) && !dump.includes(d.phone) && !dump.includes(d.plate));
 });
 
+test("lignes proposées aux passagers : un chauffeur qui fait le trajet retour (arrêts inversés) apparaît sur une AUTRE ligne que l'aller, jamais mélangé", async () => {
+  driverInQueue(); // Redeyef → Gafsa, par défaut
+  const back = app.locals.auth.upsertDriver(portalDriver());
+  const backDriver = db.prepare("SELECT * FROM drivers WHERE id = ?").get(back.id);
+  const res = app.locals.actions.apply(backDriver, act("join_queue", { stops: ["Gafsa", "Metlaoui", "Redeyef"] }));
+  assert.equal(res.status, "applied");
+  const out = await (await fetch(base + "/api/passenger/lines")).json();
+  const byFrom = Object.fromEntries(out.lines.map((l) => [l.from, l]));
+  assert.deepEqual(Object.keys(byFrom).sort(), ["Gafsa", "Redeyef"], "deux lignes distinctes, pas une file mélangée");
+  assert.deepEqual(byFrom.Redeyef.stops, ["Redeyef", "Metlaoui", "Gafsa"]);
+  assert.deepEqual(byFrom.Gafsa.stops, ["Gafsa", "Metlaoui", "Redeyef"]);
+});
+
 test("réservation : la place est retenue dans le voyage du n° 1, le paiement est demandé, rien n'est confirmé avant le retour de l'opérateur", async () => {
   const a = driverInQueue();
   const r = await reserve("97111222");
