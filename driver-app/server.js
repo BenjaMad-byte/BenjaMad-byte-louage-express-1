@@ -158,7 +158,7 @@ export function createApp({
 
   // Suggestion de saisie pour « passe par » : toutes les délégations du pays, avec leur gouvernorat (même base que le site d'inscription).
   // Donnée de référence publique (pas de donnée personnelle), mise en cache longtemps par le navigateur.
-  const allPlaces = places.all();
+  const allPlaces = places.allWithAliases();
   app.get("/api/places", limiter(60_000, 30), (_req, res) => res.set("Cache-Control", "public, max-age=86400").json({ places: allPlaces }));
 
   // Rejeu des actions faites hors ligne (et envoi de chaque action en ligne) : voir actions.js pour les règles.

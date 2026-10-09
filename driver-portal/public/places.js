@@ -102,6 +102,18 @@ export function createPlaceIndex(data, aliases = {}) {
       for (const [gov, list] of Object.entries(data)) for (const [fr, ar] of list) out.push({ fr, ar, governorate: gov });
       return out.sort((a, b) => a.fr.localeCompare(b.fr, "fr"));
     },
+    /** Comme all(), avec en plus les variantes d'écriture latines connues (« Om Larayes »), pour qu'une suggestion de saisie
+     * les propose aussi telles quelles — pas les variantes arabes, inutiles dans un champ saisi en alphabet latin. */
+    allWithAliases() {
+      const base = this.all();
+      const extra = [];
+      for (const [fr, variants] of Object.entries(aliases)) {
+        const hit = base.find((p) => p.fr === fr);
+        if (!hit) continue;
+        for (const variant of variants) if (!/[؀-ۿ]/.test(variant)) extra.push({ fr: variant, ar: hit.ar, governorate: hit.governorate });
+      }
+      return [...base, ...extra].sort((a, b) => a.fr.localeCompare(b.fr, "fr"));
+    },
   };
 }
 

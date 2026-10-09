@@ -68,6 +68,14 @@ test("all() : toutes les délégations du pays, avec leur gouvernorat, triées",
   assert.equal(all.filter((p) => p.fr === "Sidi El Hani").length, 2, "même nom dans deux gouvernorats : les deux apparaissent");
 });
 
+test("allWithAliases() : les variantes d'écriture latines apparaissent aussi, pas les arabes", () => {
+  const all = idx.allWithAliases();
+  assert.equal(all.length, 12, "10 délégations + 2 variantes latines d'Oum El Araies (l'arabe est exclue)");
+  assert.deepEqual(all.find((p) => p.fr === "Om Larayes"), { fr: "Om Larayes", ar: "أم العرائس", governorate: "Gafsa" });
+  assert.ok(all.some((p) => p.fr === "Oum Larayes"));
+  assert.ok(!all.some((p) => p.fr === "أم لعرايس"), "pas de variante arabe dans la liste");
+});
+
 test("alias : ne peuvent pas faire fusionner deux villes différentes", () => {
   assert.throws(() => createPlaceIndex({ Gafsa: [["Redeyef", "الرديف"], ["Metlaoui", "المتلوي"]] }, { Metlaoui: ["Redeyef"] }), /alias.*Redeyef/i);
   assert.throws(() => createPlaceIndex({ Gafsa: [["Redeyef", "الرديف"], ["Redeyef", "الرديف"]] }, {}), /doublon/i);

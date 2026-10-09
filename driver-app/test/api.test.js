@@ -353,6 +353,7 @@ test("villes proposées pour « passe par » : toutes les délégations du pays,
   assert.equal(r.status, 200);
   assert.ok(r.body.places.length > 250, "les 264 délégations du pays");
   assert.deepEqual(r.body.places.find((p) => p.fr === "Oum El Araies"), { fr: "Oum El Araies", ar: "أم العرائس", governorate: "Gafsa" });
+  assert.ok(r.body.places.some((p) => p.fr === "Om Larayes" && p.governorate === "Gafsa"), "variante d'écriture proposée aussi, pas seulement l'orthographe officielle");
 });
 
 test("sécurité : écriture depuis un autre site refusée, jamais de cache sur l'API, en-têtes stricts, API inconnue en JSON", async () => {
