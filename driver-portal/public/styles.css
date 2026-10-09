@@ -290,6 +290,10 @@ input[dir="ltr"] { text-align: start; }
 @media (min-width: 640px) { .choices.stack { grid-template-columns: 1fr 1fr; } }
 .choice input:checked + span { border-color: var(--blue); background: var(--blue-soft); }
 .choice input:focus-visible + span { outline: 3px solid var(--focus); outline-offset: 2px; }
+/* Suggestion de circuit : un bouton, pas une case à cocher (pas d'<input> à l'intérieur) — on enlève juste le style natif du <button>. */
+button.choice { display: block; width: 100%; background: none; border: 0; padding: 0; margin: 0; font: inherit; text-align: inherit; }
+button.choice:focus-visible span { outline: 3px solid var(--focus); outline-offset: 2px; }
+button.choice:hover span { border-color: var(--blue); }
 
 .file { display: grid; gap: 6px; }
 .file input[type="file"] { width: 100%; font: inherit; padding: 10px; border: 2px dashed var(--line); border-radius: var(--radius); background: var(--paper); min-height: 52px; }

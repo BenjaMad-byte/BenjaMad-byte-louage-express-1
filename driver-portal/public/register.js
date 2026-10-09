@@ -61,6 +61,36 @@ function renderLineTo() {
   document.getElementById("line-national-hint").hidden = !national;
 }
 
+/** Circuits déjà déclarés par d'autres chauffeurs du même gouvernorat : un clic remplit type + villes d'un coup. */
+let circuitsCache = { governorate: null, list: [] };
+async function renderCircuitSuggestions() {
+  const box = document.getElementById("circuit-suggestions");
+  const governorate = form.elements.governorate.value;
+  if (!governorate) { box.hidden = true; box.replaceChildren(); return; }
+  if (circuitsCache.governorate !== governorate) {
+    const { ok, data } = await api(`/api/circuits?governorate=${encodeURIComponent(governorate)}`);
+    circuitsCache = { governorate, list: ok ? data.circuits : [] };
+  }
+  const list = circuitsCache.list;
+  box.hidden = list.length === 0;
+  if (!list.length) return;
+  const typeLabel = { regional: t("line_regional"), interregional: t("line_interregional"), rural: t("line_rural"), national: t("line_national") };
+  box.replaceChildren(
+    h("p", { class: "hint" }, t("f_circuit_suggest_hint")),
+    h("div", { class: "choices stack" }, list.map((c) => h("button", { type: "button", class: "choice", onclick: () => applyCircuit(c) },
+      h("span", {},
+        h("strong", {}, `${c.from} → ${c.type === "national" ? typeLabel.national : c.to_gov}`),
+        h("small", {}, [typeLabel[c.type], c.via.length ? c.via.join(", ") : null, `${c.drivers} ${t("f_circuit_drivers")}`].filter(Boolean).join(" · ")))))));
+}
+function applyCircuit(c) {
+  form.querySelector(`input[name="line_type"][value="${c.type}"]`).checked = true;
+  form.elements.line_from.value = c.from;
+  form.elements.line_via.value = c.via.join(", ");
+  renderLineTo();
+  if (c.type === "interregional") form.elements.line_to_gov.value = c.to_gov;
+  stamps.refresh();
+}
+
 // ---------------------------------------------------------------------------
 // Vérification du téléphone par SMS
 // ---------------------------------------------------------------------------
@@ -239,7 +269,7 @@ function restoreDraft() {
   } else {
     const f = draft.fields;
     for (const name of ["full_name", "phone", "plate", "station", "line_from", "line_via"]) if (f[name]) form.elements[name].value = f[name];
-    if (GOVERNORATES.includes(f.governorate)) form.elements.governorate.value = f.governorate;
+    if (GOVERNORATES.includes(f.governorate)) { form.elements.governorate.value = f.governorate; renderCircuitSuggestions(); }
     const radio = f.line_type && form.querySelector(`input[name="line_type"][value="${f.line_type}"]`); // valeur déjà limitée à 4 types connus
     if (radio) radio.checked = true;
     for (const name of ["pickup_en_route", "leaves_partial"]) if (typeof f[name] === "boolean") form.elements[name].checked = f[name];
@@ -272,6 +302,7 @@ document.getElementById("draft-clear").addEventListener("click", () => {
 document.addEventListener("langchange", () => { renderGovernorates(); renderOtp(); stamps.refresh(); renderDraftNotice(); });
 form.addEventListener("change", (e) => {
   if (e.target.name === "line_type" || e.target.name === "governorate") renderLineTo();
+  if (e.target.name === "governorate") renderCircuitSuggestions();
   if (FILE_KINDS.includes(e.target.name)) {
     const f = e.target.files[0];
     document.querySelector(`[data-picked="${e.target.name}"]`).textContent = f ? `${t("file_chosen")} : ${f.name}` : "";

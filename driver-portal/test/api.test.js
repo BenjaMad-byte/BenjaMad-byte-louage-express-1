@@ -118,6 +118,26 @@ test("circuit incohérent (régional vers un autre gouvernorat) → 400 sur line
   assert.equal((await res.json()).fields.line_to_gov, "line_regional_same_gov");
 });
 
+test("circuits : les lignes déjà déclarées par d'autres chauffeurs sont proposées, groupées par gouvernorat", async () => {
+  const circuit = { governorate: "Gafsa", station: "Gare de Redeyef", line_type: "regional", line_from: "Redeyef", line_to_gov: "Gafsa", line_via: "Metlaoui" };
+  const r1 = await post("/api/applications", await appForm({ phone: "55222333", cin: "33333333", ...circuit }, { token: "fresh" }));
+  const r2 = await post("/api/applications", await appForm({ phone: "55222444", cin: "33333344", ...circuit }, { token: "fresh" }));
+  assert.deepEqual([r1.status, r2.status], [201, 201]);
+  try {
+    const res = await fetch(`${base}/api/circuits?governorate=Gafsa`);
+    assert.equal(res.status, 200);
+    const { circuits } = await res.json();
+    const found = circuits.find((c) => c.from === "Redeyef" && c.to_gov === "Gafsa");
+    assert.ok(found, JSON.stringify(circuits));
+    assert.deepEqual([found.type, found.via, found.drivers], ["regional", ["Metlaoui"], 2]);
+    assert.equal((await fetch(`${base}/api/circuits?governorate=Narnia`)).status, 400, "gouvernorat inconnu");
+    assert.deepEqual((await (await fetch(`${base}/api/circuits?governorate=Kébili`)).json()).circuits, [], "aucun chauffeur déclaré là-bas");
+  } finally {
+    // Les tests suivants comptent des fichiers et des lignes dans l'ordre : on nettoie ce qu'on a ajouté.
+    for (const r of [r1, r2]) await admin(`/applications/${(await r.json()).ref}`, { method: "DELETE" });
+  }
+});
+
 test("selfie anormalement lourd (> 2 Mo) refusé", async () => {
   const fd = await appForm({ phone: "55111222", cin: "11111111" }, { selfies: 1 });
   fd.append("selfie_2", new Blob([Buffer.concat([PNG, Buffer.alloc(2 * 1024 * 1024 + 1, 9)])], { type: "image/png" }), "big.png");

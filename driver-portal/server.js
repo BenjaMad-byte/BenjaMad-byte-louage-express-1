@@ -7,7 +7,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { db, UPLOAD_DIR } from "./db.js";
-import { validateApplication, newRef, normalizeRef, normalizePhone, sniffMime, EXT, clean } from "./validate.js";
+import { validateApplication, newRef, normalizeRef, normalizePhone, sniffMime, EXT, clean, GOVERNORATES } from "./validate.js";
 import { listSlots } from "./slots.js";
 import { buildNetwork, networkCsv } from "./network.js";
 import { parseListQuery, queryApplications } from "./adminList.js";
@@ -377,6 +377,20 @@ export function createApp({
   const takenSlots = () => new Set(db.prepare("SELECT slot_start FROM interviews WHERE status = 'booked'").all().map((r) => r.slot_start));
 
   app.get("/api/slots", (_req, res) => res.json({ slots: listSlots(takenSlots()) }));
+
+  // Circuits déjà déclarés par d'autres chauffeurs du même gouvernorat, pour pré-remplir le formulaire d'un coup plutôt que
+  // tout retaper (et pour que les orthographes se regroupent : buildNetwork() les ramène déjà au nom officiel reconnu).
+  // Jamais de nom ni de téléphone : seulement type de circuit, villes et nombre de chauffeurs.
+  app.get("/api/circuits", limiter(60_000, 60), (req, res) => {
+    const governorate = String(req.query.governorate ?? "");
+    if (!GOVERNORATES.includes(governorate)) return res.status(400).json({ error: "invalid_governorate" });
+    const entry = buildNetwork(networkRows()).find((g) => g.governorate === governorate);
+    const circuits = [...(entry?.regional ?? []), ...(entry?.interregional ?? []), ...(entry?.rural ?? []), ...(entry?.national ?? [])]
+      .sort((a, b) => b.drivers - a.drivers)
+      .slice(0, 6)
+      .map((l) => ({ type: l.type, from: l.from, to_gov: l.to_gov, via: l.via.map((v) => v.city), drivers: l.drivers }));
+    res.json({ circuits });
+  });
 
   app.post("/api/interviews", limiter(60 * 60 * 1000, 10), (req, res) => {
     const name = clean(req.body?.name, 80);
