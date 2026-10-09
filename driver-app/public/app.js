@@ -355,7 +355,7 @@ function loginScreen() {
   } },
     h("h1", {}, t("login_title")),
     h("div", { class: "field" }, h("label", { for: "plate" }, t("login_plate")), h("input", { id: "plate", dir: "ltr", autocomplete: "username", maxlength: "20", required: true, value: s.plate })),
-    h("div", { class: "field" }, h("label", { for: "password" }, t("login_password")), h("input", { id: "password", type: "password", autocomplete: "current-password", required: true })),
+    h("div", { class: "field" }, h("label", { for: "password" }, t("login_password")), h("input", { id: "password", type: "password", dir: "ltr", autocomplete: "current-password", required: true })),
     s.error ? h("div", { class: "err", role: "alert" }, errMessage(s.error)) : null,
     h("button", { type: "submit", class: "btn primary", disabled: s.busy }, t("login_go")),
     h("button", { type: "button", class: "mini", onclick: () => { recoverStep = { stage: "phone", phone: "", busy: false, error: "" }; authScreen = "recover"; render(); } }, t("login_forgot")),
@@ -402,7 +402,7 @@ function activationScreen() {
   } },
     h("h1", {}, t("activation_title")),
     h("p", { class: "note" }, t("activation_hello", { name: s.name, plate: s.plate })),
-    h("div", { class: "field" }, h("label", { for: "newpw" }, t("activation_password")), h("input", { id: "newpw", type: "password", autocomplete: "new-password", minlength: "6", required: true })),
+    h("div", { class: "field" }, h("label", { for: "newpw" }, t("activation_password")), h("input", { id: "newpw", type: "password", dir: "ltr", autocomplete: "new-password", minlength: "6", required: true })),
     s.error ? h("div", { class: "err", role: "alert" }, errMessage(s.error)) : null,
     h("button", { type: "submit", class: "btn primary", disabled: s.busy }, t("activation_go")));
   return [form];
@@ -450,7 +450,7 @@ function recoverScreen() {
   } },
     h("h1", {}, t("recover_title")),
     h("div", { class: "field" }, h("label", { for: "rcode" }, t("recover_code")), h("input", { id: "rcode", inputmode: "numeric", autocomplete: "one-time-code", dir: "ltr", maxlength: "6", required: true })),
-    h("div", { class: "field" }, h("label", { for: "rpassword" }, t("recover_password")), h("input", { id: "rpassword", type: "password", autocomplete: "new-password", minlength: "6", required: true })),
+    h("div", { class: "field" }, h("label", { for: "rpassword" }, t("recover_password")), h("input", { id: "rpassword", type: "password", dir: "ltr", autocomplete: "new-password", minlength: "6", required: true })),
     s.error ? h("div", { class: "err", role: "alert" }, errMessage(s.error)) : null,
     h("button", { type: "submit", class: "btn primary", disabled: s.busy }, t("recover_go")),
     h("button", { type: "button", class: "mini", onclick: () => { authScreen = "login"; render(); } }, t("recover_back")));
