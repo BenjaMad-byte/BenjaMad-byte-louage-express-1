@@ -140,6 +140,25 @@ function getPosition(timeoutMs = 2500) {
   });
 }
 
+// ---------------------------------------------------------------- position en direct pendant un voyage (géorepérage, position du voyageur)
+// Jamais une action de la file de synchronisation hors ligne : une position dépassée ne vaut rien à rejouer plus tard.
+let reportingPosition = false; // un envoi lent ne doit pas en chevaucher un second
+async function reportPositionIfEnRoute() {
+  if (!token || !view?.trip || view.trip.status !== "en_route" || reportingPosition || document.hidden) return;
+  reportingPosition = true;
+  try {
+    const fix = await getPosition(8000);
+    if (!fix || !token) return; // déconnecté pendant l'attente de la position : ne rien envoyer
+    const r = await fetch("/api/driver/position", { method: "POST", headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` }, body: JSON.stringify({ lat: fix.lat, lon: fix.lon, accuracy: fix.accuracy }) });
+    if (!r.ok) return;
+    const data = await r.json();
+    server = data.state;
+    await recompute();
+    render();
+    if (data.arrived) vibrate([80, 40, 80]);
+  } catch { /* hors ligne ou GPS indisponible : le prochain passage réessaiera */ } finally { reportingPosition = false; }
+}
+
 // ---------------------------------------------------------------- SOS : 3 appuis rapprochés
 let sosTaps = [];
 function onSosTap() {
@@ -539,10 +558,11 @@ async function boot() {
   window.addEventListener("beforeinstallprompt", (e) => { e.preventDefault(); installEvent = e; if (!token) render(); });
   document.addEventListener("visibilitychange", () => { if (!document.hidden && token) sync.flush().then(() => {}, () => {}); });
   setInterval(() => { if (token && !document.hidden) sync.flush().then(() => {}, () => {}); }, 20_000);
+  setInterval(() => { reportPositionIfEnRoute().then(() => {}, () => {}); }, 25_000);
   try { await navigator.serviceWorker?.register("/sw.js"); } catch { /* sans service worker : fonctionne en ligne, pas d'ouverture hors ligne */ }
   if (token) sync.flush().then(() => {}, () => {});
   loadPlacesDatalist();
-  window.__lx = { act, get view() { return view; }, get pending() { return pendingCount; } }; // observé par les tests navigateur
+  window.__lx = { act, reportPositionIfEnRoute, get view() { return view; }, get pending() { return pendingCount; } }; // observé par les tests navigateur
 }
 
 boot();

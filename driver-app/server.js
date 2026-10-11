@@ -156,6 +156,17 @@ export function createApp({
   const state = (driver) => buildState(db, driver, { now, emergency, codeOf: reservations.codeOfBoarding });
   app.get("/api/driver/state", limiter(60_000, 120, true), requireDriver, (req, res) => res.json(state(req.driver)));
 
+  // Position envoyée automatiquement pendant un voyage (toutes les ~25 s, voir public/app.js) : déclenche « arrivé » tout seul
+  // par géorepérage (le chauffeur n'a jamais à toucher le téléphone en conduisant) et alimente la position montrée au voyageur.
+  app.post("/api/driver/position", limiter(60_000, 150, true), requireDriver, (req, res) => {
+    const lat = Number(req.body?.lat);
+    const lon = Number(req.body?.lon);
+    if (!Number.isFinite(lat) || lat < -90 || lat > 90 || !Number.isFinite(lon) || lon < -180 || lon > 180) return res.status(400).json({ error: "invalid_position" });
+    const accuracy = Number(req.body?.accuracy);
+    const r = actions.reportPosition(req.driver, { lat, lon, accuracy: Number.isFinite(accuracy) ? accuracy : null });
+    res.json({ arrived: r.arrived ?? false, state: state(req.driver) });
+  });
+
   // Suggestion de saisie pour « passe par » : toutes les délégations du pays, avec leur gouvernorat (même base que le site d'inscription).
   // Donnée de référence publique (pas de donnée personnelle), mise en cache longtemps par le navigateur.
   const allPlaces = places.allWithAliases();

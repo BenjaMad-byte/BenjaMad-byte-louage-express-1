@@ -7,10 +7,12 @@ const MAX_STOPS = 8;
 const STOP_NAME_MAX = 60;
 
 // ---------------------------------------------------------------- lignes
-/** Résout un nom de ville vers son nom officiel + gouvernorat (repli sur le texte brut, gouvernorat inconnu, si la ville n'est pas reconnue). */
-function resolveStop(name, contextGovs = []) {
+/** Résout un nom de ville vers son nom officiel + gouvernorat (+ coordonnées quand connues, pour le géorepérage) ;
+ * repli sur le texte brut, sans gouvernorat ni coordonnées, si la ville n'est pas reconnue. */
+export function resolveStop(name, contextGovs = []) {
   const hit = places.find(name ?? "", contextGovs) ?? places.find(name ?? "");
-  return hit ? { name: hit.fr, governorate: hit.governorate } : { name: name ?? "", governorate: null };
+  if (!hit) return { name: name ?? "", governorate: null, lat: null, lon: null };
+  return { name: hit.fr, governorate: hit.governorate, lat: hit.lat ?? null, lon: hit.lon ?? null };
 }
 
 /**
@@ -84,6 +86,9 @@ const rowToTrip = (db, r) => ({
   createdAt: r.created_at,
   departedAt: r.departed_at,
   endedAt: r.ended_at,
+  lastLat: r.last_lat,
+  lastLon: r.last_lon,
+  lastPosAt: r.last_pos_at,
   boardings: db.prepare("SELECT id, from_idx AS \"from\", to_idx AS \"to\", source, status, created_at AS createdAt FROM boardings WHERE trip_id = ? ORDER BY rowid").all(r.id).map((b) => ({ ...b })),
 });
 

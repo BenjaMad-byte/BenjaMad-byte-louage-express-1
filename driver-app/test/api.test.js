@@ -212,6 +212,29 @@ test("entrer dans la file, déclarer des passagers, partir : le serveur applique
   assert.equal((await sync(token, [act("join_queue")])).body.results[0].status, "applied");
 });
 
+test("géorepérage : « arrivé » se déclenche tout seul quand la position entre dans le rayon du prochain arrêt, sans geste du chauffeur", async () => {
+  const token = await loginAs(portalDriver());
+  await sync(token, [act("join_queue"), act("depart")]);
+  // Position imprécise (GPS faible) exactement sur Métlaoui : ne déclenche rien, mais reste enregistrée.
+  let r = await json(await call("POST", "/api/driver/position", { token, body: { lat: 34.2352, lon: 8.3747, accuracy: 500 } }));
+  assert.deepEqual([r.status, r.body.arrived, r.body.state.trip.currentStop], [200, false, 0]);
+
+  // Loin de tout arrêt (Tunis) : pas de déclenchement.
+  r = await json(await call("POST", "/api/driver/position", { token, body: { lat: 36.8065, lon: 10.1815, accuracy: 20 } }));
+  assert.deepEqual([r.body.arrived, r.body.state.trip.currentStop], [false, 0]);
+
+  // Position précise, exactement sur Métlaoui (le prochain arrêt, index 1) : arrivée automatique.
+  r = await json(await call("POST", "/api/driver/position", { token, body: { lat: 34.2352, lon: 8.3747, accuracy: 20 } }));
+  assert.deepEqual([r.status, r.body.arrived, r.body.state.trip.currentStop], [200, true, 1]);
+
+  // Rejoué (ping suivant, toujours sur place) : idempotent, ne redéclenche rien (déjà arrivé).
+  r = await json(await call("POST", "/api/driver/position", { token, body: { lat: 34.2352, lon: 8.3747, accuracy: 20 } }));
+  assert.deepEqual([r.body.arrived, r.body.state.trip.currentStop], [false, 1]);
+
+  assert.equal((await call("POST", "/api/driver/position", { token, body: { lat: 999, lon: 8.37 } })).status, 400, "latitude impossible");
+  assert.equal((await call("POST", "/api/driver/position")).status, 401, "sans jeton");
+});
+
 test("jamais plus de passagers que de places : l'action en trop est rejetée avec sa raison", async () => {
   const token = await loginAs(portalDriver());
   await sync(token, [act("set_capacity", { capacity: 3 }), act("join_queue")]);

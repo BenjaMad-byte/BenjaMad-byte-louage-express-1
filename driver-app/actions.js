@@ -5,12 +5,25 @@
 //  - jamais de dépassement de capacité silencieux : une action impossible est rejetée avec sa raison ;
 //  - le SOS passe toujours, sans règle de conflit.
 import * as E from "./public/engine.js";
-import { cleanStops, createTrip, defaultStops, lineKeyFor, loadTrip, openTripOf, queuePosition, saveTrip } from "./trips.js";
+import { cleanStops, createTrip, defaultStops, lineKeyFor, loadTrip, openTripOf, queuePosition, resolveStop, saveTrip } from "./trips.js";
 
 export const MAX_BATCH = 200;
 const ID = /^[A-Za-z0-9_-]{8,64}$/;
 const TYPES = ["join_queue", "leave_queue", "board", "alight", "arrive", "depart", "finish", "confirm_boarding", "set_capacity", "sos", "sos_cancel"];
 const isInt = (v, min, max) => Number.isInteger(v) && v >= min && v <= max;
+
+// ---------------------------------------------------------------- géorepérage (arrivée détectée sans geste du chauffeur)
+const ARRIVAL_RADIUS_KM = 2; // rayon autour du centre de la ville : assez large pour une gare excentrée, assez serré pour ne pas déclencher trop tôt
+const MIN_ACCURACY_M = 300; // position GPS trop imprécise (> 300 m) : jamais utilisée pour déclencher une arrivée toute seule
+const EARTH_RADIUS_KM = 6371;
+/** Distance à vol d'oiseau entre deux points (km). */
+function haversineKm(lat1, lon1, lat2, lon2) {
+  const toRad = (d) => (d * Math.PI) / 180;
+  const dLat = toRad(lat2 - lat1);
+  const dLon = toRad(lon2 - lon1);
+  const a = Math.sin(dLat / 2) ** 2 + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) ** 2;
+  return 2 * EARTH_RADIUS_KM * Math.asin(Math.min(1, Math.sqrt(a)));
+}
 
 const noHooks = { displaced() {}, noShow() {}, boarded() {} };
 
@@ -38,6 +51,30 @@ export function createActionService({ db, sos, hooks = noHooks, now = Date.now }
 
   const reject = (reason) => ({ status: "rejected", reason });
   const needTrip = (driver) => openTripOf(db, driver.id);
+
+  /**
+   * Position reçue du téléphone (toutes les ~25 s pendant un voyage, voir public/app.js) : jamais une action de la file de
+   * synchronisation (pas d'historique utile, une position dépassée ne vaut rien) — enregistrée tout de suite, en direct.
+   * Déclenche « arrivé » TOUT SEUL si le chauffeur entre dans le rayon du prochain arrêt, sans qu'il touche le téléphone.
+   * Une position trop imprécise (> 300 m, GPS faible) ne déclenche jamais, mais reste enregistrée (pour la position affichée
+   * au voyageur, où l'imprécision importe moins qu'un déclenchement intempestif).
+   */
+  function reportPosition(driver, { lat, lon, accuracy }) {
+    const trip = needTrip(driver);
+    if (!trip) return { stored: false };
+    db.prepare("UPDATE trips SET last_lat = ?, last_lon = ?, last_pos_at = ? WHERE id = ?").run(lat, lon, iso(), trip.id);
+    if (trip.status !== "en_route") return { stored: true, arrived: false };
+    if (Number.isFinite(accuracy) && accuracy > MIN_ACCURACY_M) return { stored: true, arrived: false };
+    const nextIdx = trip.currentStop + 1;
+    if (nextIdx >= trip.stops.length) return { stored: true, arrived: false };
+    const stop = resolveStop(trip.stops[nextIdx], [driver.governorate, driver.line_to_gov].filter(Boolean));
+    if (stop.lat == null) return { stored: true, arrived: false }; // ville non reconnue : pas de coordonnée, pas de déclenchement automatique
+    const distanceKm = haversineKm(lat, lon, stop.lat, stop.lon);
+    if (distanceKm > ARRIVAL_RADIUS_KM) return { stored: true, arrived: false, distanceKm };
+    const { trip: next, result } = E.arriveAt(trip, nextIdx);
+    if (result.status === "applied") commit(next, result);
+    return { stored: true, arrived: result.status === "applied", stop: stop.name, distanceKm };
+  }
 
   const handlers = {
     join_queue(driver, action) {
@@ -174,7 +211,7 @@ export function createActionService({ db, sos, hooks = noHooks, now = Date.now }
     return ordered.map((a) => apply(driver, a));
   }
 
-  return { apply, applyBatch };
+  return { apply, applyBatch, reportPosition };
 }
 
 // ---------------------------------------------------------------- état envoyé à l'application

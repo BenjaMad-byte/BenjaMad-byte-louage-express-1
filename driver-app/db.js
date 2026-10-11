@@ -86,7 +86,10 @@ db.exec(`
     current_stop INTEGER NOT NULL DEFAULT 0,
     created_at   TEXT NOT NULL,
     departed_at  TEXT,
-    ended_at     TEXT
+    ended_at     TEXT,
+    last_lat     REAL,     -- dernière position connue (toutes les ~25 s pendant le voyage) : géorepérage + position affichée au voyageur
+    last_lon     REAL,
+    last_pos_at  TEXT
   );
   CREATE UNIQUE INDEX IF NOT EXISTS ux_trips_one_open_per_driver ON trips(driver_id) WHERE status IN ('queued','en_route');
   CREATE INDEX IF NOT EXISTS ix_trips_line_status ON trips(line_id, status, queue_seq);

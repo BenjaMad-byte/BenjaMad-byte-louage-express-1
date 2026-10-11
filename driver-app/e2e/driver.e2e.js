@@ -163,6 +163,30 @@ test("départ et arrivée : confirmation par double appui, descente automatique 
   await context.close();
 });
 
+test("géorepérage : « arrivé » se déclenche tout seul quand le téléphone entre dans le rayon de Métlaoui, sans toucher l'écran", { timeout: 90_000 }, async (t) => {
+  if (skip) return t.skip(skip);
+  const context = await newContext(browser, { geolocation: { latitude: 34.353, longitude: 8.1948 } }); // Redeyef, le départ
+  const page = await context.newPage();
+  await loginViaUi(page, env, portalDriver());
+  await page.locator("#join").click();
+  await page.locator("#board").click();
+  await page.waitForFunction(() => document.querySelector("#seats")?.innerText.startsWith("1 /"));
+  await page.getByRole("button", { name: F.depart }).click();
+  await page.getByRole("button", { name: F.press_again }).first().click();
+  await page.waitForFunction(() => document.querySelector("[data-screen]")?.dataset.screen === "route");
+
+  assert.equal(await page.evaluate(() => window.__lx.view.trip.currentStop), 0, "pas encore bougé");
+
+  // Le GPS entre dans le rayon de Métlaoui (le prochain arrêt) : arrivée automatique, sans aucun clic.
+  // (le seuil de précision, lui, est déjà couvert au niveau serveur dans test/api.test.js : fixer une précision précise ici
+  // via l'émulation Chromium ne change rien de fiable, le navigateur pouvant réutiliser la position précédente en cache.)
+  await context.setGeolocation({ latitude: 34.2352, longitude: 8.3747, accuracy: 15 });
+  await page.evaluate(() => window.__lx.reportPositionIfEnRoute());
+  await page.waitForFunction(() => window.__lx.view.trip.currentStop === 1);
+  await page.getByRole("button", { name: F.arrived_at.replace("{stop}", "Gafsa") }).waitFor();
+  await context.close();
+});
+
 test("SOS : 3 appuis rapides = alerte enregistrée avec la position, SMS à la permanence ; annulation possible", { timeout: 90_000 }, async (t) => {
   if (skip) return t.skip(skip);
   env.db.exec("DELETE FROM sos_events");
