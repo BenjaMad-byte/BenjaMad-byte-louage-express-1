@@ -247,7 +247,7 @@ test("géorepérage : alerte seulement si quelqu'un monte ou descend à cet arr�
   assert.deepEqual([r.body.arrived, r.body.alighting, r.body.toBoard, r.body.stop], [true, 1, 0, "Metlaoui"]);
 });
 
-test("petits colis : un choix, visible des voyageurs, verrouillé une fois en file comme la capacité", async () => {
+test("petits colis : un choix, visible des voyageurs, modifiable jusqu'au départ (contrairement à la capacité, pas figé au véhicule)", async () => {
   const token = await loginAs(portalDriver());
   let r = await sync(token, [act("set_parcels", { accepts: true })]);
   assert.deepEqual([r.body.results[0].status, r.body.state.driver.acceptsParcels], ["applied", true]);
@@ -256,10 +256,14 @@ test("petits colis : un choix, visible des voyageurs, verrouillé une fois en fi
   assert.equal(r.body.state.trip.acceptsParcels, true, "copié dans le voyage à l'entrée en file");
 
   r = await sync(token, [act("set_parcels", { accepts: false })]);
-  assert.equal(r.body.results[0].reason, "trip_in_progress", "ne change plus une fois en file, comme la capacité");
+  assert.deepEqual([r.body.results[0].status, r.body.state.driver.acceptsParcels, r.body.state.trip.acceptsParcels], ["applied", false, false], "encore à la gare : le choix change, dans le profil ET le voyage affiché aux passagers");
 
   r = await sync(token, [act("set_parcels", { accepts: "oui" })]);
   assert.equal(r.body.results[0].reason, "bad_parcels");
+
+  await sync(token, [act("depart")]);
+  r = await sync(token, [act("set_parcels", { accepts: true })]);
+  assert.equal(r.body.results[0].reason, "trip_in_progress", "parti de la gare : ne change plus");
 });
 
 test("jamais plus de passagers que de places : l'action en trop est rejetée avec sa raison", async () => {

@@ -341,6 +341,12 @@ function queueScreen(trip) {
     otherDestination(trip),
     stopsStrip(trip),
     passengerList(trip),
+    // Encore modifiable ici (à la gare) : contrairement à la capacité, accepter des colis n'est pas fixé au véhicule, verrouillé seulement au départ (routeScreen).
+    h("div", { class: "field" },
+      h("label", {}, t("parcels_label")),
+      h("button", { type: "button", class: `btn secondary${trip.acceptsParcels ? " on" : ""}`, id: "parcels-toggle", onclick: () => act("set_parcels", { accepts: !trip.acceptsParcels }) },
+        trip.acceptsParcels ? t("parcels_on") : t("parcels_off")),
+      h("p", { class: "note" }, t("parcels_hint"))),
     h("div", { class: "row two" },
       confirmButton("depart", t("depart"), t("press_again"), () => act("depart"), "btn go"),
       trip.boardings.some((b) => b.status === "onboard") ? null : confirmButton("leave", t("leave_queue"), t("press_again"), () => act("leave_queue"), "btn secondary")),

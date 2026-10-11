@@ -69,9 +69,10 @@ export function applyLocal(state, action) {
       next.driver.capacity = payload.capacity;
       return done();
     case "set_parcels":
-      if (trip) return rejected("trip_in_progress");
       if (typeof payload.accepts !== "boolean") return rejected("bad_parcels");
+      if (trip && trip.status !== "queued") return rejected("trip_in_progress");
       next.driver.acceptsParcels = payload.accepts;
+      if (trip) trip.acceptsParcels = payload.accepts;
       return done();
     case "sos":
       next.openSos = (next.openSos ?? 0) + 1;

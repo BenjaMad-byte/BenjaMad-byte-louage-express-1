@@ -181,11 +181,14 @@ export function createActionService({ db, sos, hooks = noHooks, now = Date.now }
     },
 
     // Accepte les petits colis à transporter (visible des voyageurs sur la ligne) : un choix, jamais une obligation.
-    // Fixé à l'entrée en file comme la capacité, pour la même raison (la place dans le coffre ne change pas en route).
+    // Contrairement à la capacité, ce n'est pas une contrainte physique : reste modifiable tant que le louage est encore
+    // à la gare (file d'attente), seulement verrouillé une fois parti (en_route), là où le changer n'aurait plus de sens.
     set_parcels(driver, action) {
       if (typeof action.payload.accepts !== "boolean") return reject("bad_parcels");
-      if (needTrip(driver)) return reject("trip_in_progress");
+      const trip = needTrip(driver);
+      if (trip && trip.status !== "queued") return reject("trip_in_progress");
       db.prepare("UPDATE drivers SET accepts_parcels = ? WHERE id = ?").run(action.payload.accepts ? 1 : 0, driver.id);
+      if (trip) db.prepare("UPDATE trips SET accepts_parcels = ? WHERE id = ?").run(action.payload.accepts ? 1 : 0, trip.id);
       return { status: "applied" };
     },
 
