@@ -235,6 +235,18 @@ test("géorepérage : « arrivé » se déclenche tout seul quand la position en
   assert.equal((await call("POST", "/api/driver/position")).status, 401, "sans jeton");
 });
 
+test("géorepérage : alerte seulement si quelqu'un monte ou descend à cet arrêt, silence si tout le monde va plus loin", async () => {
+  const token = await loginAs(portalDriver());
+  await sync(token, [act("join_queue"), act("board", { from: 0, to: 2 }), act("depart")]); // un seul passager, direct jusqu'à Gafsa
+  let r = await json(await call("POST", "/api/driver/position", { token, body: { lat: 34.2352, lon: 8.3747, accuracy: 20 } }));
+  assert.deepEqual([r.body.arrived, r.body.alighting, r.body.toBoard], [true, 0, 0], "personne à Métlaoui : rien à signaler");
+
+  const token2 = await loginAs(portalDriver());
+  await sync(token2, [act("join_queue"), act("board", { from: 0, to: 1 }), act("depart")]); // ce passager descend à Métlaoui
+  r = await json(await call("POST", "/api/driver/position", { token: token2, body: { lat: 34.2352, lon: 8.3747, accuracy: 20 } }));
+  assert.deepEqual([r.body.arrived, r.body.alighting, r.body.toBoard, r.body.stop], [true, 1, 0, "Metlaoui"]);
+});
+
 test("jamais plus de passagers que de places : l'action en trop est rejetée avec sa raison", async () => {
   const token = await loginAs(portalDriver());
   await sync(token, [act("set_capacity", { capacity: 3 }), act("join_queue")]);

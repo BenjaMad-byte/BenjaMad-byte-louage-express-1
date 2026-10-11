@@ -164,7 +164,7 @@ export function createApp({
     if (!Number.isFinite(lat) || lat < -90 || lat > 90 || !Number.isFinite(lon) || lon < -180 || lon > 180) return res.status(400).json({ error: "invalid_position" });
     const accuracy = Number(req.body?.accuracy);
     const r = actions.reportPosition(req.driver, { lat, lon, accuracy: Number.isFinite(accuracy) ? accuracy : null });
-    res.json({ arrived: r.arrived ?? false, state: state(req.driver) });
+    res.json({ arrived: r.arrived ?? false, stop: r.stop ?? null, alighting: r.alighting ?? 0, toBoard: r.toBoard ?? 0, state: state(req.driver) });
   });
 
   // Suggestion de saisie pour « passe par » : toutes les délégations du pays, avec leur gouvernorat (même base que le site d'inscription).

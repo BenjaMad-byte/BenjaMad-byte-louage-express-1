@@ -72,8 +72,13 @@ export function createActionService({ db, sos, hooks = noHooks, now = Date.now }
     const distanceKm = haversineKm(lat, lon, stop.lat, stop.lon);
     if (distanceKm > ARRIVAL_RADIUS_KM) return { stored: true, arrived: false, distanceKm };
     const { trip: next, result } = E.arriveAt(trip, nextIdx);
-    if (result.status === "applied") commit(next, result);
-    return { stored: true, arrived: result.status === "applied", stop: stop.name, distanceKm };
+    if (result.status !== "applied") return { stored: true, arrived: false, distanceKm };
+    commit(next, result);
+    // Rien à faire ici (tout le monde va plus loin) : pas la peine de déranger le chauffeur, l'arrivée se note toute seule.
+    // Un passager monte ou descend ici : lui seul mérite une alerte qui se voit et se sent, pour ne pas rouler devant sans s'arrêter.
+    const alighting = trip.boardings.filter((b) => b.status === "onboard" && b.to === nextIdx).length;
+    const toBoard = trip.boardings.filter((b) => b.status === "reserved" && b.from === nextIdx).length;
+    return { stored: true, arrived: true, stop: stop.name, distanceKm, alighting, toBoard };
   }
 
   const handlers = {

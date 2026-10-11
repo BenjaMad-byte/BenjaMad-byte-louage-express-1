@@ -283,6 +283,17 @@ test("arrêt intermédiaire, cas limite : le louage vient JUSTE d'arriver à Mé
   assert.equal(db.prepare("SELECT trip_id FROM reservations WHERE passenger_phone = '97000005'").get().trip_id, tripOf(a), "le louage présent à Métlaoui, pas celui encore à la gare de Redeyef");
 });
 
+test("géorepérage : alerte complète quand un passager descend ET un autre monte au même arrêt (jamais silencieux dans ce cas)", async () => {
+  const a = driverInQueue();
+  doAct(a, "board", { from: 0, to: 1 }); // descend à Métlaoui
+  doAct(a, "depart");
+  const r = await reserve("97000006", { from: "Metlaoui" }); // montera à Métlaoui
+  assert.equal(r.status, 201);
+  const row = db.prepare("SELECT * FROM drivers WHERE id = ?").get(a.id);
+  const pos = app.locals.actions.reportPosition(row, { lat: 34.2352, lon: 8.3747, accuracy: 20 });
+  assert.deepEqual([pos.arrived, pos.alighting, pos.toBoard, pos.stop], [true, 1, 1, "Metlaoui"]);
+});
+
 test("garde-fous : opérateur, acompte, arrêts, ligne, téléphone, trop de réservations ouvertes ; jamais de retenue fantôme", async () => {
   driverInQueue();
   const bad = async (over, error, status = 400) => { const r = await reserve("97111222", over); assert.deepEqual([r.status, r.body.error], [status, error], JSON.stringify(over)); };

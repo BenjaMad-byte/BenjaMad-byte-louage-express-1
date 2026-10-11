@@ -49,12 +49,12 @@ function applyLang() {
   document.title = t("app_title");
 }
 let toastTimer;
-function toast(message, kind = "info") {
+function toast(message, kind = "info", durationMs = 5000) {
   toastEl.textContent = message;
   toastEl.className = `toast ${kind}`;
   toastEl.hidden = false;
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => { toastEl.hidden = true; }, 5000);
+  toastTimer = setTimeout(() => { toastEl.hidden = true; }, durationMs);
 }
 
 // ---------------------------------------------------------------- état
@@ -155,7 +155,14 @@ async function reportPositionIfEnRoute() {
     server = data.state;
     await recompute();
     render();
-    if (data.arrived) vibrate([80, 40, 80]);
+    if (!data.arrived) return;
+    const needsStop = data.alighting > 0 || data.toBoard > 0;
+    if (!needsStop) return; // tout le monde va plus loin : rien à signaler, l'arrivée s'est notée toute seule
+    vibrate([250, 120, 250, 120, 250]); // net, répété : un passager attend, pas juste « étape franchie »
+    const parts = [];
+    if (data.alighting) parts.push(t("stop_alight", { n: data.alighting }));
+    if (data.toBoard) parts.push(t("stop_board", { n: data.toBoard }));
+    toast(`${data.stop} : ${parts.join(" · ")}`, "warn", 15_000);
   } catch { /* hors ligne ou GPS indisponible : le prochain passage réessaiera */ } finally { reportingPosition = false; }
 }
 
