@@ -9,7 +9,7 @@ import { cleanStops, createTrip, defaultStops, lineKeyFor, loadTrip, openTripOf,
 
 export const MAX_BATCH = 200;
 const ID = /^[A-Za-z0-9_-]{8,64}$/;
-const TYPES = ["join_queue", "leave_queue", "board", "alight", "arrive", "depart", "finish", "confirm_boarding", "set_capacity", "sos", "sos_cancel"];
+const TYPES = ["join_queue", "leave_queue", "board", "alight", "arrive", "depart", "finish", "confirm_boarding", "set_capacity", "set_parcels", "sos", "sos_cancel"];
 const isInt = (v, min, max) => Number.isInteger(v) && v >= min && v <= max;
 
 // ---------------------------------------------------------------- géorepérage (arrivée détectée sans geste du chauffeur)
@@ -180,6 +180,15 @@ export function createActionService({ db, sos, hooks = noHooks, now = Date.now }
       return { status: "applied" };
     },
 
+    // Accepte les petits colis à transporter (visible des voyageurs sur la ligne) : un choix, jamais une obligation.
+    // Fixé à l'entrée en file comme la capacité, pour la même raison (la place dans le coffre ne change pas en route).
+    set_parcels(driver, action) {
+      if (typeof action.payload.accepts !== "boolean") return reject("bad_parcels");
+      if (needTrip(driver)) return reject("trip_in_progress");
+      db.prepare("UPDATE drivers SET accepts_parcels = ? WHERE id = ?").run(action.payload.accepts ? 1 : 0, driver.id);
+      return { status: "applied" };
+    },
+
     sos(driver, action) {
       const trip = needTrip(driver);
       const { event } = sos.record(driver, trip?.id ?? null, action.payload, { id: action.id, createdAt: action.createdAt });
@@ -227,7 +236,7 @@ export function buildState(db, driver, { now = Date.now, emergency = [], codeOf 
   const openSos = db.prepare("SELECT COUNT(*) AS n FROM sos_events WHERE driver_id = ? AND status IN ('open','ack')").get(driver.id).n;
   return {
     serverTime: new Date(now()).toISOString(),
-    driver: { name: driver.full_name, plate: driver.plate, capacity: driver.capacity, line: { from: line.from_name, toGov: line.to_gov, type: line.line_type }, pickupEnRoute: Boolean(driver.pickup_en_route) },
+    driver: { name: driver.full_name, plate: driver.plate, capacity: driver.capacity, acceptsParcels: Boolean(driver.accepts_parcels), line: { from: line.from_name, toGov: line.to_gov, type: line.line_type }, pickupEnRoute: Boolean(driver.pickup_en_route) },
     defaultStops: defaultStops(driver),
     emergency,
     openSos,
@@ -235,6 +244,7 @@ export function buildState(db, driver, { now = Date.now, emergency = [], codeOf 
       id: trip.id,
       status: trip.status,
       capacity: trip.capacity,
+      acceptsParcels: trip.acceptsParcels,
       stops: trip.stops,
       currentStop: trip.currentStop,
       queueSeq: trip.queueSeq,

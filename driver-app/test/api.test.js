@@ -247,6 +247,21 @@ test("géorepérage : alerte seulement si quelqu'un monte ou descend à cet arr�
   assert.deepEqual([r.body.arrived, r.body.alighting, r.body.toBoard, r.body.stop], [true, 1, 0, "Metlaoui"]);
 });
 
+test("petits colis : un choix, visible des voyageurs, verrouillé une fois en file comme la capacité", async () => {
+  const token = await loginAs(portalDriver());
+  let r = await sync(token, [act("set_parcels", { accepts: true })]);
+  assert.deepEqual([r.body.results[0].status, r.body.state.driver.acceptsParcels], ["applied", true]);
+
+  r = await sync(token, [act("join_queue")]);
+  assert.equal(r.body.state.trip.acceptsParcels, true, "copié dans le voyage à l'entrée en file");
+
+  r = await sync(token, [act("set_parcels", { accepts: false })]);
+  assert.equal(r.body.results[0].reason, "trip_in_progress", "ne change plus une fois en file, comme la capacité");
+
+  r = await sync(token, [act("set_parcels", { accepts: "oui" })]);
+  assert.equal(r.body.results[0].reason, "bad_parcels");
+});
+
 test("jamais plus de passagers que de places : l'action en trop est rejetée avec sa raison", async () => {
   const token = await loginAs(portalDriver());
   await sync(token, [act("set_capacity", { capacity: 3 }), act("join_queue")]);

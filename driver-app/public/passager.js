@@ -39,7 +39,7 @@ async function boot() {
   if (!res.ok) { $("empty").hidden = false; $("empty").textContent = res.status === 503 ? "Les réservations ne sont pas ouvertes." : "Service indisponible."; return; }
   lines = (await res.json()).lines;
   if (!lines.length) { $("empty").hidden = false; return; }
-  options($("line"), lines.map((l) => [l.id, `${l.from} → ${l.toGov ?? "destination libre"}`]));
+  options($("line"), lines.map((l) => [l.id, `${l.from} → ${l.toGov ?? "destination libre"}${l.acceptsParcels ? " (colis acceptés)" : ""}`]));
   fillStops();
   $("form").hidden = false;
   $("line").addEventListener("change", fillStops);

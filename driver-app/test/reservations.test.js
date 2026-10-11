@@ -63,6 +63,21 @@ test("lignes proposées aux passagers : seulement celles qui ont un louage, sans
   assert.ok(!dump.includes(d.full_name) && !dump.includes(d.phone) && !dump.includes(d.plate));
 });
 
+test("lignes proposées aux passagers : les petits colis acceptés se voient, vrai pour la ligne dès qu'UN chauffeur dit oui", async () => {
+  const a = driverInQueue(); // n'accepte pas les colis
+  const before = await (await fetch(base + "/api/passenger/lines")).json();
+  assert.equal(before.lines[0].acceptsParcels, false);
+
+  const dRow = app.locals.auth.upsertDriver(portalDriver());
+  app.locals.actions.apply(dRow, act("set_parcels", { accepts: true }));
+  const b = db.prepare("SELECT * FROM drivers WHERE id = ?").get(dRow.id);
+  assert.equal(app.locals.actions.apply(b, act("join_queue")).status, "applied");
+
+  const after = await (await fetch(base + "/api/passenger/lines")).json();
+  assert.equal(after.lines[0].acceptsParcels, true, "un seul chauffeur de la ligne suffit");
+  doAct(a, "leave_queue");
+});
+
 test("lignes proposées aux passagers : un chauffeur qui fait le trajet retour (arrêts inversés) apparaît sur une AUTRE ligne que l'aller, jamais mélangé", async () => {
   driverInQueue(); // Redeyef → Gafsa, par défaut
   const back = app.locals.auth.upsertDriver(portalDriver());

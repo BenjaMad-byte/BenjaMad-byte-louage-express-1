@@ -79,6 +79,7 @@ const rowToTrip = (db, r) => ({
   driverId: r.driver_id,
   lineId: r.line_id,
   capacity: r.capacity,
+  acceptsParcels: Boolean(r.accepts_parcels),
   stops: JSON.parse(r.stops),
   currentStop: r.current_stop,
   status: r.status,
@@ -121,8 +122,8 @@ export function createTrip(db, driver, { stops, now }) {
   const lineId = ensureLine(db, driver, stops);
   const seq = (db.prepare("SELECT COALESCE(MAX(queue_seq), 0) + 1 AS n FROM trips WHERE line_id = ?").get(lineId).n);
   const id = crypto.randomUUID();
-  db.prepare("INSERT INTO trips (id, driver_id, line_id, status, queue_seq, capacity, stops, current_stop, created_at) VALUES (?,?,?,?,?,?,?,0,?)")
-    .run(id, driver.id, lineId, "queued", seq, driver.capacity, JSON.stringify(stops), now);
+  db.prepare("INSERT INTO trips (id, driver_id, line_id, status, queue_seq, capacity, accepts_parcels, stops, current_stop, created_at) VALUES (?,?,?,?,?,?,?,?,0,?)")
+    .run(id, driver.id, lineId, "queued", seq, driver.capacity, driver.accepts_parcels ? 1 : 0, JSON.stringify(stops), now);
   return loadTrip(db, id);
 }
 

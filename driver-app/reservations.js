@@ -53,7 +53,7 @@ export function createReservations({ db, sva, sms, now = Date.now, holdMs = 3 * 
       const trips = tripsOfLine(db, l.id).filter((t) => !E.CLOSED.includes(t.status));
       if (!trips.length) return null;
       const first = E.orderQueue(trips)[0] ?? trips[0];
-      return { id: l.id, from: l.from_name, toGov: l.to_gov, stops: first.stops, freeAtOrigin: first.status === "queued" ? E.summary(first).freeNow : 0 };
+      return { id: l.id, from: l.from_name, toGov: l.to_gov, stops: first.stops, freeAtOrigin: first.status === "queued" ? E.summary(first).freeNow : 0, acceptsParcels: trips.some((t) => t.acceptsParcels) };
     }).filter(Boolean);
   }
 

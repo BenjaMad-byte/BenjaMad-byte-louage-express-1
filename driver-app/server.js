@@ -178,7 +178,9 @@ export function createApp({
     if (!Array.isArray(list)) return res.status(400).json({ error: "actions_required" });
     if (list.length > MAX_BATCH) return res.status(413).json({ error: "too_many_actions", max: MAX_BATCH });
     const results = actions.applyBatch(req.driver, list);
-    res.json({ results, state: state(req.driver) });
+    // Relu après coup : une action du lot (set_capacity, set_parcels) peut avoir changé la ligne du chauffeur,
+    // et req.driver (lu une fois par le middleware d'authentification, avant le lot) ne le refléterait pas.
+    res.json({ results, state: state(auth.byId(req.driver.id)) });
   });
 
   // ---------------------------------------------------------------- passagers (réservations en ligne)

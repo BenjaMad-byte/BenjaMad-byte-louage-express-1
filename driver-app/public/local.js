@@ -8,7 +8,7 @@ const clone = (o) => (o === null || o === undefined ? o : JSON.parse(JSON.string
 /** Voyage de l'état affiché → voyage du moteur (mêmes champs) et inversement. */
 const toEngine = (t) => ({ ...t, boardings: t.boardings.map((b) => ({ ...b })) });
 const fromEngine = (t, prev) => ({
-  id: t.id, status: t.status, capacity: t.capacity, stops: t.stops, currentStop: t.currentStop, queueSeq: t.queueSeq ?? prev?.queueSeq ?? null,
+  id: t.id, status: t.status, capacity: t.capacity, acceptsParcels: t.acceptsParcels ?? prev?.acceptsParcels ?? false, stops: t.stops, currentStop: t.currentStop, queueSeq: t.queueSeq ?? prev?.queueSeq ?? null,
   boardings: t.boardings.map(({ id, from, to, source, status, createdAt }) => ({ id, from, to, source, status, createdAt: createdAt ?? null })),
   position: prev?.position ?? null, provisional: prev?.provisional ?? false, summary: E.summary(t),
 });
@@ -36,7 +36,7 @@ export function applyLocal(state, action) {
     case "join_queue": {
       if (trip) return rejected("already_in_queue");
       const stops = payload.stops ?? state.defaultStops;
-      next.trip = { id: `local-${action.id}`, status: "queued", capacity: state.driver.capacity, stops, currentStop: 0, queueSeq: null, boardings: [], position: null, provisional: true, summary: E.summary({ capacity: state.driver.capacity, stops, currentStop: 0, boardings: [] }) };
+      next.trip = { id: `local-${action.id}`, status: "queued", capacity: state.driver.capacity, acceptsParcels: Boolean(state.driver.acceptsParcels), stops, currentStop: 0, queueSeq: null, boardings: [], position: null, provisional: true, summary: E.summary({ capacity: state.driver.capacity, stops, currentStop: 0, boardings: [] }) };
       return done();
     }
     case "leave_queue": {
@@ -67,6 +67,11 @@ export function applyLocal(state, action) {
       if (trip) return rejected("trip_in_progress");
       if (!Number.isInteger(payload.capacity) || payload.capacity < 1 || payload.capacity > 8) return rejected("bad_capacity"); // un louage ne dépasse jamais 8 places
       next.driver.capacity = payload.capacity;
+      return done();
+    case "set_parcels":
+      if (trip) return rejected("trip_in_progress");
+      if (typeof payload.accepts !== "boolean") return rejected("bad_parcels");
+      next.driver.acceptsParcels = payload.accepts;
       return done();
     case "sos":
       next.openSos = (next.openSos ?? 0) + 1;

@@ -32,6 +32,7 @@ db.exec(`
     pickup_en_route  INTEGER NOT NULL DEFAULT 0,
     leaves_partial   INTEGER NOT NULL DEFAULT 0,
     capacity         INTEGER NOT NULL DEFAULT 8 CHECK (capacity BETWEEN 1 AND 8),
+    accepts_parcels  INTEGER NOT NULL DEFAULT 0, -- accepte les petits colis à transporter (visible des voyageurs) ; réglable à l'accueil, comme la capacité
     active           INTEGER NOT NULL DEFAULT 1,
     password_hash    TEXT,                          -- NULL = compte pas encore activé (aucune connexion possible)
     failed_attempts  INTEGER NOT NULL DEFAULT 0,
@@ -82,6 +83,7 @@ db.exec(`
     status       TEXT NOT NULL CHECK (status IN ('queued','en_route','done','cancelled')),
     queue_seq    INTEGER NOT NULL,
     capacity     INTEGER NOT NULL,
+    accepts_parcels INTEGER NOT NULL DEFAULT 0, -- copié du chauffeur à l'entrée en file (comme la capacité) : fixé pour tout le voyage
     stops        TEXT NOT NULL,
     current_stop INTEGER NOT NULL DEFAULT 0,
     created_at   TEXT NOT NULL,

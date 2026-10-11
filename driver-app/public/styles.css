@@ -51,6 +51,7 @@ html[lang="ar"] .label { text-transform: none; letter-spacing: 0; }
 @media (prefers-color-scheme: dark) { .btn.go { background: var(--accent); border-color: var(--accent); color: var(--primary-ink); } }
 .btn.huge { min-height: 96px; font-size: 1.7rem; font-weight: 700; width: 100%; }
 .btn.armed { background: var(--warn-soft); color: var(--warn); border-color: var(--warn); }
+.btn.on { color: var(--ok); border-color: var(--ok); }
 .btn.call { background: var(--card); color: var(--ink); border-color: var(--ink); }
 .btn:active, .mini:active { transform: scale(0.97); }
 .btn:disabled { opacity: 0.55; }
