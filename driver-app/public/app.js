@@ -64,6 +64,7 @@ async function recompute() {
   pendingIds = new Set(pending.map((a) => a.id)); // tout de suite : « SOS envoyé » ne doit JAMAIS s'afficher pour une alerte qui attend encore le réseau
   const rebased = server ? rebase(server, pending) : { state: null };
   view = rebased.state;
+  orientForNextTripIfArrived();
 }
 
 /**
@@ -72,7 +73,6 @@ async function recompute() {
  */
 async function act(type, payload = {}) {
   if (!view) return null;
-  const finishedStops = type === "finish" ? view.trip?.stops : null; // capturé AVANT que recompute() ne vide le voyage
   let refusal = null;
   const action = await sync.enqueue(type, payload, (a) => {
     const { result } = applyLocal(view, a);
@@ -86,19 +86,29 @@ async function act(type, payload = {}) {
   }
   vibrate();
   await recompute();
-  if (finishedStops) orientForNextTrip(finishedStops);
   render();
   sync.flush().then(() => {}, () => {});
   return action;
 }
 
-/** Arrivé au bout d'un sens (ex. Redeyef → Gafsa), le prochain tour est presque toujours le retour : on prépare directement
- * ce sens-là à l'accueil, au lieu de faire retoucher le bouton « ⇄ » à chaque voyage. */
-function orientForNextTrip(lastStops) {
+/**
+ * Arrivé au bout d'un sens (ex. Redeyef → Gafsa), le prochain tour est presque toujours le retour : on prépare directement
+ * ce sens-là à l'accueil, au lieu de faire retoucher le bouton « ⇄ » à chaque voyage. Vérifié à chaque recompute() (pas
+ * seulement au clic « Terminer le voyage ») pour couvrir aussi l'arrivée automatique par géorepérage, qui ne passe jamais
+ * par act() côté téléphone (c'est le serveur qui fait avancer le voyage tout seul).
+ */
+let lastTripStops = null;
+function orientForNextTripIfArrived() {
+  const trip = view?.trip;
+  if (trip) {
+    if (trip.currentStop === trip.stops.length - 1) lastTripStops = trip.stops; // au bout : connu dès l'arrivée, pas besoin d'attendre « finish »
+    return;
+  }
+  if (!lastTripStops) return; // pas de voyage, et aucun ne vient de se terminer (ex. juste après la connexion)
   const base = view?.defaultStops;
-  if (!base?.length || !lastStops?.length) return;
-  queueReversed = lastStops[0] === base[0];
+  if (base?.length) queueReversed = lastTripStops[0] === base[0];
   queueVia = null;
+  lastTripStops = null;
 }
 
 function onUpdate({ state }) {
@@ -153,9 +163,11 @@ function getPosition(timeoutMs = 2500) {
 
 // ---------------------------------------------------------------- position en direct pendant un voyage (géorepérage, position du voyageur)
 // Jamais une action de la file de synchronisation hors ligne : une position dépassée ne vaut rien à rejouer plus tard.
+// PAS de garde sur document.hidden ici, contrairement au flush normal : le chauffeur roule justement sans regarder l'écran,
+// c'est tout le but du géorepérage. Le bloquer en arrière-plan aurait annulé la fonctionnalité pour son cas d'usage principal.
 let reportingPosition = false; // un envoi lent ne doit pas en chevaucher un second
 async function reportPositionIfEnRoute() {
-  if (!token || !view?.trip || view.trip.status !== "en_route" || reportingPosition || document.hidden) return;
+  if (!token || !view?.trip || view.trip.status !== "en_route" || reportingPosition) return;
   reportingPosition = true;
   try {
     const fix = await getPosition(8000);
