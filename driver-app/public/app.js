@@ -72,6 +72,7 @@ async function recompute() {
  */
 async function act(type, payload = {}) {
   if (!view) return null;
+  const finishedStops = type === "finish" ? view.trip?.stops : null; // capturé AVANT que recompute() ne vide le voyage
   let refusal = null;
   const action = await sync.enqueue(type, payload, (a) => {
     const { result } = applyLocal(view, a);
@@ -85,9 +86,19 @@ async function act(type, payload = {}) {
   }
   vibrate();
   await recompute();
+  if (finishedStops) orientForNextTrip(finishedStops);
   render();
   sync.flush().then(() => {}, () => {});
   return action;
+}
+
+/** Arrivé au bout d'un sens (ex. Redeyef → Gafsa), le prochain tour est presque toujours le retour : on prépare directement
+ * ce sens-là à l'accueil, au lieu de faire retoucher le bouton « ⇄ » à chaque voyage. */
+function orientForNextTrip(lastStops) {
+  const base = view?.defaultStops;
+  if (!base?.length || !lastStops?.length) return;
+  queueReversed = lastStops[0] === base[0];
+  queueVia = null;
 }
 
 function onUpdate({ state }) {

@@ -160,6 +160,8 @@ test("départ et arrivée : confirmation par double appui, descente automatique 
   await page.getByRole("button", { name: F.press_again }).click();
   await page.waitForFunction(() => document.querySelector("[data-screen]")?.dataset.screen === "home");
   await page.waitForFunction(() => window.__lx.pending === 0);
+  // Arrivé à Gafsa : le prochain tour est presque toujours le retour, proposé directement sans retoucher le bouton.
+  await page.getByRole("button", { name: "⇄ Gafsa → Redeyef" }).waitFor();
   await context.close();
 });
 
