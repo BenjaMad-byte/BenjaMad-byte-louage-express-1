@@ -39,7 +39,7 @@ export const DICT = {
     route_direction: "الوجهة (اضغط باش تبدّل)",
     route_via: "تمرّ بـ (اختياري)",
     route_via_hint: "افصل المدن بفاصلة (,). خالي = طريق مباشر.",
-    parcels_label: "نحمل كلزاكي صغيرة ؟",
+    parcels_label: "نحمل كولي صغيرة ؟",
     parcels_on: "ايه، نحمل",
     parcels_off: "لا، ما نحملش",
     parcels_hint: "يبان للمسافرين. ما يبدّلش كي تكون في الطريق.",
