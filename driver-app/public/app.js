@@ -282,7 +282,7 @@ function homeScreen() {
           `⇄ ${planned[0]} → ${planned[planned.length - 1]}`)),
       h("div", { class: "field" },
         h("label", { for: "via" }, t("route_via")),
-        h("input", { id: "via", dir: "ltr", list: "places-list", value: planned.slice(1, -1).join(" → "), oninput: (e) => { queueVia = e.target.value.split("→").map((s) => s.trim()).filter(Boolean); } }),
+        h("input", { id: "via", dir: "ltr", list: "places-list", value: planned.slice(1, -1).join(", "), oninput: (e) => { queueVia = e.target.value.split(/[,،;]/).map((s) => s.trim()).filter(Boolean); } }),
         h("p", { class: "note" }, t("route_via_hint"))),
       h("button", { type: "button", class: "btn primary huge", id: "join", onclick: async () => {
         const stops = plannedStops();
