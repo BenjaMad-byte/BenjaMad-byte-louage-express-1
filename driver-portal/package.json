@@ -24,10 +24,10 @@
     "express": "^4.19.2",
     "express-rate-limit": "^7.4.0",
     "helmet": "^7.1.0",
-    "multer": "^2.4.0"
+    "multer": "^2.5.0"
   },
   "devDependencies": {
     "axe-core": "^4.14.0",
-    "playwright-core": "^1.63.0"
+    "playwright-core": "^1.64.1"
   }
 }
