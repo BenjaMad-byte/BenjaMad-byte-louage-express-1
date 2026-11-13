@@ -140,6 +140,24 @@ export function createApp({
     }
   });
 
+  // Verrou de démo : un déploiement de test (pas encore d'autorisation INPDP pour de vraies pièces d'identité) reste accessible
+  // seulement à qui a le mot de passe partagé. Jamais actif sans les deux variables ; sans effet sur un déploiement réel (DEPLOY.md).
+  const demoGateUser = process.env.DEMO_GATE_USER;
+  const demoGatePassword = process.env.DEMO_GATE_PASSWORD;
+  if (demoGateUser && demoGatePassword) {
+    const userDigest = sha(demoGateUser);
+    const passDigest = sha(demoGatePassword);
+    app.use((req, res, next) => {
+      const header = req.get("authorization") ?? "";
+      const [scheme, encoded] = header.split(" ");
+      if (scheme === "Basic" && encoded) {
+        const [user, pass] = Buffer.from(encoded, "base64").toString("utf8").split(":");
+        if (crypto.timingSafeEqual(sha(user ?? ""), userDigest) && crypto.timingSafeEqual(sha(pass ?? ""), passDigest)) return next();
+      }
+      res.set("WWW-Authenticate", "Basic realm=\"Louage Express (test)\"").status(401).send("Authentification requise.");
+    });
+  }
+
   // HTTPS obligatoire en production : lecture redirigée, écriture refusée (les mots de passe, CIN et visages ne doivent jamais circuler en clair).
   if (forceHttps) {
     app.use((req, res, next) => {
