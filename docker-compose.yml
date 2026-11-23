@@ -1,0 +1,43 @@
+services:
+  driver-portal:
+    build:
+      context: .
+      dockerfile: driver-portal/Dockerfile
+    ports:
+      - "4100:4100"
+    environment:
+      NODE_ENV: development
+      PORT: 4100
+      DATA_DIR: /data
+      ADMIN_TOKEN: ${ADMIN_TOKEN}
+      OTP_SECRET: ${PORTAL_OTP_SECRET}
+      APP_SERVICE_KEY: ${APP_SERVICE_KEY}
+      APP_URL: http://driver-app:4200
+      APP_OPS_KEY: ${OPS_SERVICE_KEY}
+    volumes:
+      - portal-data:/data
+    restart: unless-stopped
+
+  driver-app:
+    build:
+      context: .
+      dockerfile: driver-app/Dockerfile
+    ports:
+      - "4200:4200"
+    environment:
+      NODE_ENV: development
+      PORT: 4200
+      DATA_DIR: /data
+      OTP_SECRET: ${APP_OTP_SECRET}
+      PORTAL_URL: http://driver-portal:4100
+      APP_SERVICE_KEY: ${APP_SERVICE_KEY}
+      OPS_SERVICE_KEY: ${OPS_SERVICE_KEY}
+    volumes:
+      - app-data:/data
+    depends_on:
+      - driver-portal
+    restart: unless-stopped
+
+volumes:
+  portal-data:
+  app-data:

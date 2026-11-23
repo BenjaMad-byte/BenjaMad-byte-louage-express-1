@@ -1,0 +1,12 @@
+.git
+.claude
+node_modules
+**/node_modules
+data
+**/data
+data-demo
+**/data-demo
+driver-app/android
+driver-app/capacitor-cordova-android-plugins
+*.log
+.env
