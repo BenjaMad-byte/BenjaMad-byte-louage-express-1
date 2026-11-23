@@ -422,3 +422,8 @@ test("sécurité : écriture depuis un autre site refusée, jamais de cache sur 
   assert.equal((await call("GET", "/api/rien")).status, 404);
   assert.equal((await call("GET", "/healthz")).status, 200);
 });
+
+test("limiteur de débit : construire l'application avec rateLimits actif (comme en vrai, tous les tests ci-dessus le désactivent) ne lève jamais au démarrage", async () => {
+  const { createApp } = await import("../server.js");
+  assert.doesNotThrow(() => createApp({ portal, sms, otpSecret: "o".repeat(40), now, sosPhones: ["97000111"], opsKey: OPS, rateLimits: true, forceHttps: false, appUrl: APP_URL }));
+});

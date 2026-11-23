@@ -100,7 +100,7 @@ export function createApp({
   /** Limite par APPAREIL (jeton) quand il est connu : des chauffeurs derrière la même adresse de l'opérateur ne doivent pas se bloquer entre eux. */
   const limiter = (windowMs, max, byToken = false) =>
     rateLimits
-      ? rateLimit({ windowMs, max, standardHeaders: true, legacyHeaders: false, message: { error: "rate_limited" }, validate: { keyGeneratorIpFallback: false }, keyGenerator: (req) => (byToken && bearer(req) ? `t:${sha(bearer(req)).toString("hex")}` : `ip:${req.ip}`) })
+      ? rateLimit({ windowMs, max, standardHeaders: true, legacyHeaders: false, message: { error: "rate_limited" }, validate: { ip: false }, keyGenerator: (req) => (byToken && bearer(req) ? `t:${sha(bearer(req)).toString("hex")}` : `ip:${req.ip}`) })
       : (_req, _res, next) => next();
 
   // ---------------------------------------------------------------- connexion : matricule + mot de passe au quotidien
