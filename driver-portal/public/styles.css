@@ -281,9 +281,24 @@ html[lang="ar"] .btn.small { font-size: 0.95rem; }
 .steps strong { display: block; }
 .steps span { color: var(--ink-2); font-size: 0.97rem; }
 
-.perks { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
-.perks li { padding-inline-start: 30px; position: relative; }
+/* Avantages : juste après la démonstration de la file (gare), avant la couverture/route — la conviction arrive tôt, pas après la section confiance. */
+.perks-section { background: var(--card); border-block: 1px solid var(--line); padding: var(--space-5) 16px; }
+.perks-inner { max-width: 760px; margin: 0 auto; }
+.perks-inner h2 { margin-top: 0; }
+.perks { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--space-2); }
+.perks li { padding-inline-start: 30px; position: relative; font-size: 1.05rem; }
 .perks li::before { content: ""; position: absolute; inset-inline-start: 0; top: 0.55em; width: 14px; height: 14px; border-radius: 3px; background: var(--ok); }
+@media (min-width: 900px) { .perks-section { padding: var(--space-6) 32px; } }
+
+/* CTA final : identique au CTA du hero (même titre, même sous-titre, même bouton) — pour qui arrive jusqu'en bas sans remonter.
+   Couleurs fixes (pas var(--ink)/var(--card)) : cette carte reste sombre volontairement dans les deux thèmes,
+   comme .hero-cine et .dawn — var(--ink) s'inverserait en clair en mode sombre et casserait le contraste. */
+.final-cta { background: #003934; color: #fff; border-radius: var(--radius); padding: var(--space-6) var(--space-4); margin: var(--space-5) 0 var(--space-4); text-align: center; }
+.final-cta h2 { color: #fff; margin-top: 0; }
+.final-cta .lead { color: #cfe8e3; max-width: 46ch; margin-inline: auto; }
+.final-cta .actions { justify-content: center; }
+.final-cta .btn { background: #fff; border-color: #fff; color: #003934; }
+.final-cta .btn:hover { background: #def0ed; border-color: #def0ed; color: #003934; }
 
 details { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 0 16px; margin-bottom: 8px; }
 summary { cursor: pointer; padding: 14px 0; font-weight: 600; min-height: 48px; }
