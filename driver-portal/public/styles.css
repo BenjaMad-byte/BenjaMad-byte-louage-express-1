@@ -21,6 +21,18 @@
   --focus: #e8a800;
   --radius: 12px;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Rythme de la page calculé sur le nombre d'or (1,618) : suite de Fibonacci, chaque palier = le précédent × φ.
+     Sert les espacements verticaux entre sections (pas les marges de sécurité horizontales, qui restent 16/32px). */
+  --phi: 1.618;
+  --space-1: 8px;
+  --space-2: 13px;
+  --space-3: 21px;
+  --space-4: 34px;
+  --space-5: 55px;
+  --space-6: 89px;
+  --space-7: 144px;
+  --golden-minor: 0.382fr;
+  --golden-major: 0.618fr;
   --font: "Segoe UI", "Noto Sans Arabic", "Noto Naskh Arabic", Tahoma, system-ui, -apple-system, Roboto, Arial, sans-serif;
 }
 @media (prefers-color-scheme: dark) {
@@ -74,9 +86,9 @@ html[lang="ar"] nav a { font-size: 0.95rem; letter-spacing: 0; text-transform: n
 .lang:hover { border-color: var(--accent); }
 
 /* Mise en page */
-main { max-width: 760px; margin: 0 auto; padding: 24px 16px 56px; }
-h1 { font-size: 1.9rem; line-height: 1.25; margin: 0 0 12px; text-wrap: balance; font-weight: 300; }
-h2 { font-size: 1.3rem; margin: 40px 0 12px; font-weight: 500; }
+main { max-width: 760px; margin: 0 auto; padding: var(--space-3) 16px var(--space-5); }
+h1 { font-size: 1.9rem; line-height: 1.25; margin: 0 0 var(--space-2); text-wrap: balance; font-weight: 300; }
+h2 { font-size: 1.3rem; margin: var(--space-4) 0 var(--space-2); font-weight: 500; }
 html[lang="fr"] h1 { letter-spacing: 0.01em; }
 p { margin: 0 0 12px; max-width: 62ch; }
 .lead { font-size: 1.12rem; color: var(--ink-2); }
@@ -86,14 +98,14 @@ p { margin: 0 0 12px; max-width: 62ch; }
 
 /* Accueil : hero plein écran (photo + voile sombre pour la lisibilité du texte) */
 .home main { max-width: none; padding: 0; }
-.home .page { max-width: 760px; margin: 0 auto; padding: 24px 16px 56px; }
+.home .page { max-width: 760px; margin: 0 auto; padding: var(--space-3) 16px var(--space-5); }
 .hero-cine { position: relative; isolation: isolate; overflow: hidden; min-height: min(82vh, 680px); display: flex; align-items: flex-end; background: #02201d; color: #fff; }
 .hero-cine picture, .hero-cine img { position: absolute; inset: 0; width: 100%; height: 100%; }
 .hero-cine picture { z-index: -2; }
 .hero-cine img { object-fit: cover; object-position: 50% 62%; z-index: -2; }
 .hero-cine::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(to top, rgba(0, 31, 28, 0.92) 0%, rgba(0, 31, 28, 0.7) 38%, rgba(0, 31, 28, 0.12) 72%, rgba(0, 31, 28, 0) 100%); }
 .hero-cine::after { content: ""; position: absolute; inset-inline: 0; bottom: 0; height: 8px; background: linear-gradient(90deg, #1a9e8f 0 72%, #7fe0d3 72% 100%); }
-.hero-text { position: relative; z-index: 1; /* au-dessus de la photo : sinon la photo capte les clics sur les boutons */ width: 100%; max-width: 760px; margin: 0 auto; padding: 96px 16px 40px; }
+.hero-text { position: relative; z-index: 1; /* au-dessus de la photo : sinon la photo capte les clics sur les boutons */ width: 100%; max-width: 760px; margin: 0 auto; padding: var(--space-6) 16px var(--space-4); }
 .hero-cine h1 { font-size: clamp(2rem, 6.5vw, 3.2rem); line-height: 1.2; font-weight: 300; text-shadow: 0 2px 14px rgba(0, 0, 0, 0.45); }
 .hero-cine .lead, .hero-cine .note { color: #e3f3f0; text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5); }
 .hero-cine .btn { background: #fff; border-color: #fff; color: #003934; }
@@ -107,9 +119,9 @@ p { margin: 0 0 12px; max-width: 62ch; }
 :root[dir="rtl"] .hero-cine .btn.secondary:hover::after { transform: translateX(-4px); }
 .hero-cine .btn:focus-visible { outline-color: #ffc533; }
 /* Scène 2 : la gare */
-.scene { background: var(--paper); padding: 48px 16px; }
-.scene-inner { max-width: 1120px; margin: 0 auto; display: grid; gap: 28px; align-items: center; }
-.scene h2 { font-size: clamp(1.6rem, 4.5vw, 2.4rem); line-height: 1.2; margin: 0 0 12px; }
+.scene { background: var(--paper); padding: var(--space-5) 16px; }
+.scene-inner { max-width: 1120px; margin: 0 auto; display: grid; gap: var(--space-4); align-items: center; }
+.scene h2 { font-size: clamp(1.618rem, 4.5vw, 2.618rem); line-height: 1.2; margin: 0 0 var(--space-2); }
 .scene-fig { margin: 0; }
 .scene-fig img { display: block; width: 100%; height: auto; border-radius: 14px; box-shadow: 0 10px 30px rgba(0, 31, 28, 0.25); aspect-ratio: 1376 / 768; object-fit: cover; background: var(--card); }
 .scene-fig figcaption { margin-top: 6px; font-size: 0.8rem; color: var(--ink-2); }
@@ -118,13 +130,14 @@ p { margin: 0 0 12px; max-width: 62ch; }
 .queue .rank { fill: var(--ink-2); }
 .queue .rank.first { fill: var(--accent); }
 .queue .rank-n { fill: #fff; font: 700 11px var(--font); text-anchor: middle; }
-@media (min-width: 900px) { .scene { padding: 72px 32px; } .scene-inner { grid-template-columns: 5fr 7fr; gap: 48px; } }
+/* Texte/photo : proportion dorée exacte (0,382 / 0,618) au lieu d'un rapport approximatif. */
+@media (min-width: 900px) { .scene { padding: var(--space-6) 32px; } .scene-inner { grid-template-columns: var(--golden-minor) var(--golden-major); gap: var(--space-5); } }
 
 /* Scène 3 : la route du nord au sud */
-.route { background: var(--card); border-block: 1px solid var(--line); padding: 48px 16px 56px; }
+.route { background: var(--card); border-block: 1px solid var(--line); padding: var(--space-5) 16px var(--space-5); }
 .route-inner { max-width: 1120px; margin: 0 auto; }
-.route h2 { font-size: clamp(1.6rem, 4.5vw, 2.4rem); line-height: 1.2; margin: 0 0 8px; }
-.stops { list-style: none; margin: 28px 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px 12px; }
+.route h2 { font-size: clamp(1.618rem, 4.5vw, 2.618rem); line-height: 1.2; margin: 0 0 var(--space-1); }
+.stops { list-style: none; margin: var(--space-4) 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4) var(--space-2); }
 .stop { position: relative; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 2px; padding-top: 4px; }
 .stop::before { content: ""; position: absolute; top: 40px; inset-inline: -6px; border-top: 3px dashed var(--line); z-index: 0; }
 .stop:first-child::before { inset-inline-start: 50%; }
@@ -133,7 +146,7 @@ p { margin: 0 0 12px; max-width: 62ch; }
 .stop strong { margin-top: 6px; font-size: 1.05rem; }
 .stop span { color: var(--ink-2); font-size: 0.9rem; line-height: 1.35; max-width: 16ch; }
 @media (min-width: 640px) { .stops { grid-template-columns: repeat(5, 1fr); } }
-@media (min-width: 900px) { .route { padding: 72px 32px 80px; } }
+@media (min-width: 900px) { .route { padding: var(--space-6) 32px var(--space-6); } }
 .em.bizerte { --em: #e6665a; --em2: #f2c14e; }
 .em.tunis { --em: #cfe0f2; }
 .em.nabeul { --em: #f0902a; --em2: #4f9a3e; }
@@ -144,30 +157,30 @@ p { margin: 0 0 12px; max-width: 62ch; }
 .em.tozeur { --em: #d9894a; }
 .em.djerba { --em: #9cc4e8; }
 .em.tataouine { --em: #e9c48a; }
-.govs-title { font-size: 1.15rem; margin: 40px 0 4px; }
-.govs { list-style: none; margin: 14px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.govs-title { font-size: 1.15rem; margin: var(--space-4) 0 4px; }
+.govs { list-style: none; margin: var(--space-2) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-1); }
 .govs li { padding: 5px 14px; border: 1px solid var(--line); border-radius: 99px; background: var(--paper); font-size: 0.92rem; }
 
 /* Moment à part, entre les gouvernorats et les étapes : une phrase qui se révèle mot par mot au défilement. */
-.tagline-reveal { max-width: 900px; margin: 0 auto; padding: 64px 16px; text-align: center; }
+.tagline-reveal { max-width: 900px; margin: 0 auto; padding: var(--space-5) 16px; text-align: center; }
 .tagline-text { font-size: clamp(1.5rem, 4.2vw, 2.1rem); line-height: 1.5; font-weight: 500; max-width: 46ch; margin: 0 auto; text-wrap: balance; }
 /* Mot "éteint" en --ink-2 (déjà testé lisible ailleurs sur le site), jamais en opacité réduite :
    une opacité sur le texte fait chuter le contraste sous le seuil AA avant même le défilement (axe le détecte sur la page entière, pas seulement ce qui est visible à l'écran). */
 .tagline-text .word { display: inline-block; color: var(--ink-2); transition: color 0.6s var(--ease); }
 .tagline-text .word.in { color: var(--ink); }
-@media (min-width: 900px) { .tagline-reveal { padding: 88px 32px; } }
+@media (min-width: 900px) { .tagline-reveal { padding: var(--space-6) 32px; } }
 
 /* Scène 4 : de la nuit à l'aube, les trois étapes sont des tampons de gares */
-.dawn { position: relative; color: #eef2f5; padding: 56px 16px 72px; background:
+.dawn { position: relative; color: #eef2f5; padding: var(--space-5) 16px var(--space-6); background:
   radial-gradient(1.5px 1.5px at 12% 18%, #fff, transparent), radial-gradient(1.5px 1.5px at 31% 9%, #fff, transparent),
   radial-gradient(1px 1px at 47% 24%, #fff, transparent), radial-gradient(1.5px 1.5px at 63% 12%, #fff, transparent),
   radial-gradient(1px 1px at 78% 20%, #fff, transparent), radial-gradient(1.5px 1.5px at 90% 8%, #fff, transparent),
   radial-gradient(1px 1px at 21% 34%, #fff, transparent), radial-gradient(1px 1px at 85% 38%, #fff, transparent),
   linear-gradient(180deg, #001a17 0%, #003934 45%, #0b5f56 72%, #1a9e8f 100%); }
 .dawn-inner { max-width: 760px; margin: 0 auto; }
-.dawn h2 { font-size: clamp(1.6rem, 4.5vw, 2.4rem); line-height: 1.2; margin: 0 0 8px; color: #fff; }
+.dawn h2 { font-size: clamp(1.618rem, 4.5vw, 2.618rem); line-height: 1.2; margin: 0 0 var(--space-1); color: #fff; }
 .dawn .lead { color: #d3dde7; }
-.steps.stamped { margin-top: 28px; }
+.steps.stamped { margin-top: var(--space-4); }
 .steps.stamped li { position: relative; grid-template-columns: 76px 1fr; align-items: center; background: rgba(0, 31, 28, 0.55); border-color: rgba(255, 255, 255, 0.22); backdrop-filter: blur(3px); }
 .steps.stamped li::before { grid-row: auto; position: absolute; top: 8px; inset-inline-start: 8px; z-index: 2; width: 24px; height: 24px; font-size: 0.8rem; background: #fff; color: #003934; }
 .steps.stamped .em { grid-row: span 2; width: 68px; height: 68px; padding: 8px; border-radius: 50%; background: #f3f7f6; border: 2px dashed #c9ced3; color: #003934; transform: rotate(-6deg); --em2: #def0ed; }
@@ -175,15 +188,15 @@ p { margin: 0 0 12px; max-width: 62ch; }
 .steps.stamped span { color: #d3dde7; }
 
 /* Scène 5 : confiance */
-.trust { background: var(--paper); padding: 56px 16px 64px; border-bottom: 8px solid transparent; border-image: linear-gradient(90deg, var(--blue) 0 72%, var(--accent) 72% 100%) 1; }
-.trust-inner { max-width: 760px; margin: 0 auto; display: grid; gap: 20px; }
+.trust { background: var(--paper); padding: var(--space-5) 16px var(--space-5); border-bottom: 8px solid transparent; border-image: linear-gradient(90deg, var(--blue) 0 72%, var(--accent) 72% 100%) 1; }
+.trust-inner { max-width: 760px; margin: 0 auto; display: grid; gap: var(--space-3); }
 .trust-icon { width: 84px; height: 84px; color: var(--ink); --em: var(--ok-soft); }
-.trust h2 { font-size: clamp(1.6rem, 4.5vw, 2.4rem); line-height: 1.2; margin: 0 0 8px; }
-.checks { list-style: none; margin: 20px 0 0; padding: 0; display: grid; gap: 10px; }
+.trust h2 { font-size: clamp(1.618rem, 4.5vw, 2.618rem); line-height: 1.2; margin: 0 0 var(--space-1); }
+.checks { list-style: none; margin: var(--space-3) 0 0; padding: 0; display: grid; gap: var(--space-1); }
 .checks li { position: relative; padding-inline-start: 34px; }
 .checks li::before { content: ""; position: absolute; inset-inline-start: 0; top: 0.35em; width: 22px; height: 22px; border-radius: 50%; background: var(--ok); }
 .checks li::after { content: ""; position: absolute; inset-inline-start: 7px; top: 0.58em; width: 6px; height: 11px; border: solid #fff; border-width: 0 2.5px 2.5px 0; transform: rotate(45deg); }
-@media (min-width: 760px) { .trust-inner { grid-template-columns: 110px 1fr; gap: 32px; align-items: start; } .trust-icon { width: 110px; height: 110px; } .dawn { padding: 80px 32px 96px; } .trust { padding: 80px 32px; } }
+@media (min-width: 760px) { .trust-inner { grid-template-columns: 110px 1fr; gap: var(--space-4); align-items: start; } .trust-icon { width: 110px; height: 110px; } .dawn { padding: var(--space-6) 32px var(--space-7); } .trust { padding: var(--space-6) 32px; } }
 
 /* Tampons de gares du formulaire : sticky en haut, un tampon par section complète */
 .stamps { position: sticky; top: 0; z-index: 5; margin: 0 -16px 16px; padding: 10px 16px 8px; background: var(--paper); border-bottom: 1px solid var(--line); overflow-x: clip; /* l'animation d'un tampon au bord ne doit jamais élargir la page */ }
@@ -240,7 +253,7 @@ fieldset { scroll-margin-top: 120px; }
   .hero-cine::after { display: none; }
   .hero-text { position: relative; margin-top: -28px; padding: 0 16px 32px; }
 }
-.actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
+.actions { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-3); }
 
 /* Boutons */
 .btn {
