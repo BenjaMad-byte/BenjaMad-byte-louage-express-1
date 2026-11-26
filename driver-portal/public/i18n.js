@@ -23,8 +23,8 @@ export const DICT = {
     lang_other: "Français",
     skip: "تخطّى إلى المحتوى",
 
-    home_title: "عمّر كرهبتك من غير تعب.",
-    home_sub: "سجّل من تليفونك. الركّاب يجوك على دورك في الطابور، وثمن التذكرة كامل ليك.",
+    home_title: "من دارك لين المحطة، كل شيء معروف.",
+    home_sub: "تعرف قداش بلاصة محجوزة قبل ما تخرج من دارك.",
     home_cta: "سجّل توّا", home_cta2: "شوف طلبك",
     home_open: "موقع خاص بسوّاق اللواج، في كل الولايات.", home_img_alt: "لواج على طريق ساحلي عند شروق الشمس بين أشجار الزيتون", home_img_note: "صورة توضيحية",
     gare_title: "تستنّى أقل في المحطة",
@@ -188,8 +188,8 @@ export const DICT = {
     lang_other: "العربية",
     skip: "Aller au contenu",
 
-    home_title: "Chaque place se remplit. Vous, vous roulez.",
-    home_sub: "Inscrivez-vous depuis votre téléphone. Nous vous envoyons les passagers selon votre rang dans la file, et vous gardez 100 % du prix du billet.",
+    home_title: "De votre porte à la gare, tout est su d'avance.",
+    home_sub: "Vous savez combien de places sont réservées avant même de partir.",
     home_cta: "S'inscrire", home_cta2: "Suivre ma demande",
     home_open: "Site réservé aux chauffeurs de louage, dans tous les gouvernorats.", home_img_alt: "Un louage sur une route côtière au lever du soleil, entre des oliviers", home_img_note: "Image illustrative",
     gare_title: "Moins d'attente en gare.",
