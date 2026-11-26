@@ -186,6 +186,19 @@ db.exec(`
   );
 `);
 
+/** Migration légère : ajoute une colonne manquante sans toucher aux données existantes.
+    `CREATE TABLE IF NOT EXISTS` ne modifie jamais une table déjà créée : sans ce garde-fou,
+    un futur changement de schéma n'aurait aucun effet sur une base existante (déjà vécu une
+    fois avec une base de dev restée sur l'ancien schéma). Même idiome que driver-portal/db.js —
+    à utiliser au prochain ajout de colonne, par ex. :
+      ensureColumn("drivers", "nouvelle_colonne", "TEXT");
+*/
+export function ensureColumn(table, col, ddl) {
+  if (!db.prepare(`PRAGMA table_info(${table})`).all().some((c) => c.name === col)) {
+    db.exec(`ALTER TABLE ${table} ADD COLUMN ${col} ${ddl}`);
+  }
+}
+
 /** Exécute `fn` dans une transaction : tout ou rien. */
 export function transaction(fn) {
   db.exec("BEGIN IMMEDIATE");
