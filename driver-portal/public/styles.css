@@ -77,20 +77,22 @@ a { color: var(--accent-ink); }
 .bar { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 24px; padding: 8px 16px; max-width: 1040px; margin: 12px auto; background: var(--frost); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 8px 28px rgba(0, 57, 52, 0.08); }
 .brand { font-weight: 300; font-size: 1.05rem; color: var(--ink); text-decoration: none; letter-spacing: 0.28em; text-transform: uppercase; }
 nav { display: flex; flex-wrap: wrap; gap: 4px 16px; flex: 1; }
-nav a { color: var(--ink-2); text-decoration: none; padding: 6px 2px; font-size: 0.76rem; font-weight: 500; letter-spacing: 0.13em; text-transform: uppercase; border-bottom: 2px solid transparent; transition: color 0.2s var(--ease), border-color 0.2s var(--ease); }
+nav a { color: var(--ink-2); text-decoration: none; padding: 6px 2px; font-size: 0.76rem; font-weight: 500; letter-spacing: 0.13em; text-transform: uppercase; border-bottom: 2px solid transparent; transition: color 0.2s var(--ease), border-color 0.2s var(--ease), opacity 0.2s var(--ease); }
 nav a:hover { color: var(--ink); border-bottom-color: var(--accent); }
+nav a:active { opacity: 0.6; }
 nav a[aria-current="page"] { color: var(--ink); border-bottom-color: var(--accent); font-weight: 600; }
 /* L'arabe ne se met ni en capitales ni en lettres espacées : l'espacement casse la liaison des lettres. */
 html[lang="ar"] nav a { font-size: 0.95rem; letter-spacing: 0; text-transform: none; }
-.lang { font: inherit; font-size: 0.9rem; min-height: 44px; padding: 4px 16px; border: 1px solid var(--line); border-radius: 99px; background: var(--card); color: var(--ink); cursor: pointer; transition: border-color 0.2s var(--ease); }
+.lang { font: inherit; font-size: 0.9rem; min-height: 44px; padding: 4px 16px; border: 1px solid var(--line); border-radius: 99px; background: var(--card); color: var(--ink); cursor: pointer; transition: border-color 0.2s var(--ease), transform 0.2s var(--ease); }
 .lang:hover { border-color: var(--accent); }
+.lang:active { transform: scale(0.96); }
 
 /* Mise en page */
 main { max-width: 760px; margin: 0 auto; padding: var(--space-3) 16px var(--space-5); }
 h1 { font-size: 1.9rem; line-height: 1.25; margin: 0 0 var(--space-2); text-wrap: balance; font-weight: 300; }
-h2 { font-size: 1.3rem; margin: var(--space-4) 0 var(--space-2); font-weight: 500; }
+h2 { font-size: 1.3rem; margin: var(--space-4) 0 var(--space-2); font-weight: 500; text-wrap: balance; }
 html[lang="fr"] h1 { letter-spacing: 0.01em; }
-p { margin: 0 0 12px; max-width: 62ch; }
+p { margin: 0 0 12px; max-width: 62ch; text-wrap: pretty; }
 .lead { font-size: 1.12rem; color: var(--ink-2); }
 .note { color: var(--ink-2); font-size: 0.95rem; }
 
@@ -230,7 +232,7 @@ fieldset { scroll-margin-top: 120px; }
 .draft-notice { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; justify-content: space-between; font-weight: 500; margin-bottom: 12px; }
 .img-note { margin: 4px 0 0; font-size: 0.8rem; color: #bcd9d4; }
 @media (prefers-reduced-motion: no-preference) {
-  .hero-cine img { animation: drift 24s ease-out both; }
+  .hero-cine img { animation: drift 24s var(--ease) both; }
   @keyframes drift { from { transform: scale(1.06); } to { transform: scale(1); } }
 }
 /* Grand écran : texte d'un côté, louage de l'autre (l'image est élargie et ancrée du côté du texte) */
@@ -318,6 +320,8 @@ input[dir="ltr"] { text-align: start; }
 button.choice { display: block; width: 100%; background: none; border: 0; padding: 0; margin: 0; font: inherit; text-align: inherit; }
 button.choice:focus-visible span { outline: 3px solid var(--focus); outline-offset: 2px; }
 button.choice:hover span { border-color: var(--blue); }
+button.choice:active span { transform: scale(0.98); }
+button.choice span { transition: transform 0.2s var(--ease), border-color 0.2s var(--ease); }
 
 .file { display: grid; gap: 6px; }
 .file input[type="file"] { width: 100%; font: inherit; padding: 10px; border: 2px dashed var(--line); border-radius: var(--radius); background: var(--paper); min-height: 52px; }
