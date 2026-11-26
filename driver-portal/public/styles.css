@@ -20,6 +20,7 @@
   --err-soft: #fbe5e3;
   --focus: #e8a800;
   --radius: 12px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --font: "Segoe UI", "Noto Sans Arabic", "Noto Naskh Arabic", Tahoma, system-ui, -apple-system, Roboto, Arial, sans-serif;
 }
 @media (prefers-color-scheme: dark) {
@@ -64,12 +65,12 @@ a { color: var(--accent-ink); }
 .bar { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 24px; padding: 8px 16px; max-width: 1040px; margin: 12px auto; background: var(--frost); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 8px 28px rgba(0, 57, 52, 0.08); }
 .brand { font-weight: 300; font-size: 1.05rem; color: var(--ink); text-decoration: none; letter-spacing: 0.28em; text-transform: uppercase; }
 nav { display: flex; flex-wrap: wrap; gap: 4px 16px; flex: 1; }
-nav a { color: var(--ink-2); text-decoration: none; padding: 6px 2px; font-size: 0.76rem; font-weight: 500; letter-spacing: 0.13em; text-transform: uppercase; border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s; }
+nav a { color: var(--ink-2); text-decoration: none; padding: 6px 2px; font-size: 0.76rem; font-weight: 500; letter-spacing: 0.13em; text-transform: uppercase; border-bottom: 2px solid transparent; transition: color 0.2s var(--ease), border-color 0.2s var(--ease); }
 nav a:hover { color: var(--ink); border-bottom-color: var(--accent); }
 nav a[aria-current="page"] { color: var(--ink); border-bottom-color: var(--accent); font-weight: 600; }
 /* L'arabe ne se met ni en capitales ni en lettres espacées : l'espacement casse la liaison des lettres. */
 html[lang="ar"] nav a { font-size: 0.95rem; letter-spacing: 0; text-transform: none; }
-.lang { font: inherit; font-size: 0.9rem; min-height: 44px; padding: 4px 16px; border: 1px solid var(--line); border-radius: 99px; background: var(--card); color: var(--ink); cursor: pointer; transition: border-color 0.2s; }
+.lang { font: inherit; font-size: 0.9rem; min-height: 44px; padding: 4px 16px; border: 1px solid var(--line); border-radius: 99px; background: var(--card); color: var(--ink); cursor: pointer; transition: border-color 0.2s var(--ease); }
 .lang:hover { border-color: var(--accent); }
 
 /* Mise en page */
@@ -100,7 +101,7 @@ p { margin: 0 0 12px; max-width: 62ch; }
 /* Lien d'exploration : texte turquoise clair et flèche, sans cadre. */
 .hero-cine .btn.secondary { background: transparent; border-color: transparent; color: #7fe0d3; padding-inline: 4px; text-transform: none; letter-spacing: 0.03em; font-weight: 400; font-size: 1.02rem; }
 .hero-cine .btn.secondary:hover { background: transparent; color: #fff; }
-.hero-cine .btn.secondary::after { content: "→"; transition: transform 0.2s; }
+.hero-cine .btn.secondary::after { content: "→"; transition: transform 0.2s var(--ease); }
 .hero-cine .btn.secondary:hover::after { transform: translateX(4px); }
 :root[dir="rtl"] .hero-cine .btn.secondary::after { content: "←"; }
 :root[dir="rtl"] .hero-cine .btn.secondary:hover::after { transform: translateX(-4px); }
@@ -147,6 +148,15 @@ p { margin: 0 0 12px; max-width: 62ch; }
 .govs { list-style: none; margin: 14px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
 .govs li { padding: 5px 14px; border: 1px solid var(--line); border-radius: 99px; background: var(--paper); font-size: 0.92rem; }
 
+/* Moment à part, entre les gouvernorats et les étapes : une phrase qui se révèle mot par mot au défilement. */
+.tagline-reveal { max-width: 900px; margin: 0 auto; padding: 64px 16px; text-align: center; }
+.tagline-text { font-size: clamp(1.5rem, 4.2vw, 2.1rem); line-height: 1.5; font-weight: 500; max-width: 46ch; margin: 0 auto; text-wrap: balance; }
+/* Mot "éteint" en --ink-2 (déjà testé lisible ailleurs sur le site), jamais en opacité réduite :
+   une opacité sur le texte fait chuter le contraste sous le seuil AA avant même le défilement (axe le détecte sur la page entière, pas seulement ce qui est visible à l'écran). */
+.tagline-text .word { display: inline-block; color: var(--ink-2); transition: color 0.6s var(--ease); }
+.tagline-text .word.in { color: var(--ink); }
+@media (min-width: 900px) { .tagline-reveal { padding: 88px 32px; } }
+
 /* Scène 4 : de la nuit à l'aube, les trois étapes sont des tampons de gares */
 .dawn { position: relative; color: #eef2f5; padding: 56px 16px 72px; background:
   radial-gradient(1.5px 1.5px at 12% 18%, #fff, transparent), radial-gradient(1.5px 1.5px at 31% 9%, #fff, transparent),
@@ -179,7 +189,7 @@ p { margin: 0 0 12px; max-width: 62ch; }
 .stamps { position: sticky; top: 0; z-index: 5; margin: 0 -16px 16px; padding: 10px 16px 8px; background: var(--paper); border-bottom: 1px solid var(--line); overflow-x: clip; /* l'animation d'un tampon au bord ne doit jamais élargir la page */ }
 .stamp-row { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; }
 .stamp { display: flex; flex-direction: column; align-items: center; gap: 2px; text-decoration: none; color: var(--ink-2); min-height: 44px; }
-.stamp .em { width: 46px; height: 46px; padding: 6px; border-radius: 50%; background: var(--card); border: 2px dashed var(--line); color: var(--ink); opacity: 0.4; filter: grayscale(1); --em2: var(--blue-soft); transition: opacity 0.2s, filter 0.2s; }
+.stamp .em { width: 46px; height: 46px; padding: 6px; border-radius: 50%; background: var(--card); border: 2px dashed var(--line); color: var(--ink); opacity: 0.4; filter: grayscale(1); --em2: var(--blue-soft); transition: opacity 0.2s var(--ease), filter 0.2s var(--ease); }
 .stamp.done .em { opacity: 1; filter: none; border: 2px solid var(--accent); transform: rotate(-6deg); }
 .stamp-name { display: none; font-size: 0.72rem; line-height: 1.2; text-align: center; }
 .stamp.done .stamp-name { color: var(--ink); font-weight: 700; }
@@ -238,9 +248,10 @@ fieldset { scroll-margin-top: 120px; }
   min-height: 52px; padding: 10px 26px; border-radius: 10px;
   font: inherit; font-size: 0.84rem; font-weight: 500; letter-spacing: 0.11em; text-transform: uppercase; text-decoration: none; cursor: pointer;
   border: 1.5px solid var(--blue); background: var(--blue); color: var(--blue-ink);
-  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  transition: background 0.2s var(--ease), border-color 0.2s var(--ease), color 0.2s var(--ease), transform 0.2s var(--ease);
 }
 .btn:hover { background: var(--accent-ink); border-color: var(--accent-ink); color: #fff; }
+.btn:active { transform: scale(0.98); }
 .btn.secondary { background: transparent; color: var(--blue); }
 .btn.secondary:hover { background: var(--blue-soft); border-color: var(--blue); color: var(--ink); }
 html[lang="ar"] .btn { font-size: 1rem; font-weight: 700; letter-spacing: 0; text-transform: none; }
