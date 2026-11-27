@@ -14,8 +14,12 @@ services:
       APP_SERVICE_KEY: ${APP_SERVICE_KEY}
       APP_URL: http://driver-app:4200
       APP_OPS_KEY: ${OPS_SERVICE_KEY}
+      # Chiffrement au repos des CIN/permis/selfies. Sans elle, les pièces sont stockées EN CLAIR (voir security.js).
+      DATA_KEY: ${DATA_KEY}
+      DATA_KEY_PREVIOUS: ${DATA_KEY_PREVIOUS:-}
     volumes:
       - portal-data:/data
+      - portal-backups:/backups
     restart: unless-stopped
 
   driver-app:
@@ -40,4 +44,5 @@ services:
 
 volumes:
   portal-data:
+  portal-backups:
   app-data:
