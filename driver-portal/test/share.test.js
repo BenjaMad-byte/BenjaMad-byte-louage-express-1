@@ -97,6 +97,19 @@ test("pages sans script ni style en ligne (la CSP stricte reste valable)", () =>
   }
 });
 
+test("page d'accueil : JSON-LD JobPosting chargé en fichier externe (pas inline, CSP stricte), JSON valide", async () => {
+  const { base } = launch({ publicUrl: BASE });
+  const { body } = await text(base + "/");
+  assert.match(body, /<script type="application\/ld\+json" src="\/schema-home\.json"><\/script>/);
+  const { res, body: json } = await text(base + "/schema-home.json");
+  assert.equal(res.status, 200);
+  const data = JSON.parse(json);
+  assert.equal(data["@type"], "JobPosting");
+  assert.equal(data.hiringOrganization.name, "Louage Express");
+  assert.equal(data.jobLocation.address.addressCountry, "TN");
+  assert.ok(data.title && data.description && data.datePosted, "champs recommandés présents");
+});
+
 test("robots.txt et sitemap.xml : adresses absolues, ni l'admin ni l'API", async () => {
   const { base } = launch({ publicUrl: BASE });
   const robots = await text(base + "/robots.txt");
