@@ -11,6 +11,23 @@ export const GOVERNORATES = [
   "Sfax", "Sidi Bouzid", "Siliana", "Sousse", "Tataouine", "Tozeur", "Tunis", "Zaghouan",
 ];
 
+// Règle de pluriel CLDR réelle (pas un bricolage "(s)") : une clé comptée a des variantes
+// `<clé>_zero/_one/_two/_few/_many/_other` ; t(key, {n}) dans common.js choisit la bonne.
+// Arabe : zero=0, one=1, two=2, few=3..10, many=11..99, other=le reste.
+// Français : one=0 ou 1 (« 0 place », « 1 place »), other=le reste. Même règle que driver-app/public/i18n.js.
+export function pluralCategory(lang, n) {
+  if (lang === "ar") {
+    if (n === 0) return "zero";
+    if (n === 1) return "one";
+    if (n === 2) return "two";
+    const m = n % 100;
+    if (m >= 3 && m <= 10) return "few";
+    if (m >= 11 && m <= 99) return "many";
+    return "other";
+  }
+  return n === 0 || n === 1 ? "one" : "other";
+}
+
 export const DICT = {
   ar: {
     title_home: "Louage Express — تسجيل السائقين",
@@ -98,7 +115,11 @@ export const DICT = {
     f_line_to: "ولاية الوصول", f_line_to_ph: "اختر ولاية الوصول", f_line_to_same: "الخط الجهوي أو الريفي يبقى داخل ولاية محطتك.",
     f_line_via: "مدن تأخذ منها مسافرين في الطريق (اختياري)", f_line_via_hint: "افصل بينها بفاصلة، مثال: المتلوي، أم العرائس",
     f_circuit_suggest_hint: "خطوط صرّح بها سوّاقون آخرون في ولايتك — اضغط باش تعمّرها مرّة وحدة :",
-    f_circuit_drivers: "سوّاق",
+    f_circuit_drivers_one: "سائق واحد",
+    f_circuit_drivers_two: "سائقين",
+    f_circuit_drivers_few: "{n} سوّاق",
+    f_circuit_drivers_many: "{n} سوّاق",
+    f_circuit_drivers_other: "{n} سوّاق",
     pickup_en_route: "أحيانًا آخذ مسافرين من مدن أخرى في طريقي", leaves_partial: "أحيانًا أنطلق قبل أن تمتلئ السيارة وأكمل المقاعد في الطريق",
     docs_hint: "صور واضحة بصيغة JPG أو PNG أو PDF، بحد أقصى 5 ميغابايت لكل ملف.",
     d_cin_front: "بطاقة التعريف — الوجه الأمامي (صورة)", d_cin_back: "بطاقة التعريف — الوجه الخلفي",
@@ -263,7 +284,8 @@ export const DICT = {
     f_line_to: "Gouvernorat d'arrivée", f_line_to_ph: "Choisir le gouvernorat d'arrivée", f_line_to_same: "Une ligne régionale ou rurale reste dans le gouvernorat de votre station.",
     f_line_via: "Villes où vous prenez des passagers en route (facultatif)", f_line_via_hint: "Séparez par des virgules, ex. Métlaoui, Oum Larayes",
     f_circuit_suggest_hint: "Circuits déjà déclarés par d'autres chauffeurs de votre gouvernorat — appuyez pour remplir d'un coup :",
-    f_circuit_drivers: "chauffeur(s)",
+    f_circuit_drivers_one: "{n} chauffeur",
+    f_circuit_drivers_other: "{n} chauffeurs",
     pickup_en_route: "Il m'arrive de prendre des passagers dans d'autres villes sur ma route", leaves_partial: "Il m'arrive de partir avant d'être plein et de compléter en route",
     docs_hint: "Photos nettes en JPG, PNG ou PDF, 5 Mo maximum par fichier.",
     d_cin_front: "CIN — recto (photo)", d_cin_back: "CIN — verso",

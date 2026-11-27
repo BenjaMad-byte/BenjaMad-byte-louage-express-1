@@ -1,11 +1,34 @@
 // Textes de l'application chauffeur. Arabe : darija tunisien simple, compris de tous ; français : phrases courtes. Les deux versions disent la même chose.
+
+// Règle de pluriel CLDR réelle (pas un bricolage "(s)") : une clé comptée a des variantes
+// `<clé>_zero/_one/_two/_few/_many/_other` ; t() choisit la bonne selon vars.n et la langue.
+// Arabe : zero=0, one=1, two=2, few=3..10, many=11..99, other=le reste (ex. 100, 200…).
+// Français : one=0 ou 1 (« 0 place », « 1 place »), other=le reste.
+export function pluralCategory(lang, n) {
+  if (lang === "ar") {
+    if (n === 0) return "zero";
+    if (n === 1) return "one";
+    if (n === 2) return "two";
+    const m = n % 100;
+    if (m >= 3 && m <= 10) return "few";
+    if (m >= 11 && m <= 99) return "many";
+    return "other";
+  }
+  return n === 0 || n === 1 ? "one" : "other";
+}
+
 export const DICT = {
   ar: {
     app_title: "لواج إكسبريس — السوّاق",
     loading: "لحظة…",
     lang_other: "Français",
     logout: "نخرج",
-    logout_pending: "فما {n} حاجة ما تبعثتش لسّا. كان تخرج تتمسح. تخرج ؟",
+    logout_pending_zero: "ما فماش حاجة ما تبعثتش. تخرج ؟",
+    logout_pending_one: "فما حاجة وحدة ما تبعثتش لسّا. كان تخرج تتمسح. تخرج ؟",
+    logout_pending_two: "فما حاجتين ما تبعثوش لسّا. كان تخرج يتمسحو. تخرج ؟",
+    logout_pending_few: "فما {n} حاجات ما تبعثوش لسّا. كان تخرج يتمسحو. تخرج ؟",
+    logout_pending_many: "فما {n} حاجة ما تبعثوش لسّا. كان تخرج يتمسحو. تخرج ؟",
+    logout_pending_other: "فما {n} حاجة ما تبعثوش لسّا. كان تخرج يتمسحو. تخرج ؟",
     install: "نركّب التطبيق على التليفون",
     net_online: "متصل",
     net_offline: "موش متصل",
@@ -50,9 +73,17 @@ export const DICT = {
     your_rank: "دورك",
     rank_pending: "باش يظهر دورك كي يرجع الأنترنات",
     rank_first: "إنت اللي تعمّر الأول",
-    rank_ahead: "قدّامك {n} لواج",
+    rank_ahead_one: "قدّامك لواج واحد",
+    rank_ahead_two: "قدّامك لواجين",
+    rank_ahead_few: "قدّامك {n} لواجات",
+    rank_ahead_many: "قدّامك {n} لواج",
+    rank_ahead_other: "قدّامك {n} لواج",
     seats_taken: "البلايص المعمّرة",
-    seats_reserved: "{n} محجوزة بالأنترنات",
+    seats_reserved_one: "بلاصة وحدة محجوزة بالأنترنات",
+    seats_reserved_two: "بلاصتين محجوزين بالأنترنات",
+    seats_reserved_few: "{n} بلايص محجوزة بالأنترنات",
+    seats_reserved_many: "{n} بلاصة محجوزة بالأنترنات",
+    seats_reserved_other: "{n} بلاصة محجوزة بالأنترنات",
     seats_full: "عامر",
     board_one: "+1 راكب",
     board_other: "راكب بوجهة أخرى",
@@ -63,8 +94,16 @@ export const DICT = {
     pax_online: "حجز أنترنات",
     pax_arrived: "جا",
     pax_leaves_here: "ينزل هنا",
-    stop_alight: "{n} راكب ينزل هنا",
-    stop_board: "{n} راكب يستناك",
+    stop_alight_one: "راكب ينزل هنا",
+    stop_alight_two: "راكبين ينزلو هنا",
+    stop_alight_few: "{n} ركّاب ينزلو هنا",
+    stop_alight_many: "{n} راكب ينزلو هنا",
+    stop_alight_other: "{n} راكب ينزلو هنا",
+    stop_board_one: "راكب يستناك هنا",
+    stop_board_two: "راكبين يستنّاوك هنا",
+    stop_board_few: "{n} ركّاب يستنّاوك هنا",
+    stop_board_many: "{n} راكب يستنّاوك هنا",
+    stop_board_other: "{n} راكب يستنّاوك هنا",
     depart: "نخرج من المحطة",
     leave_queue: "نخرج من الطابور",
     press_again: "اضغط مرّة أخرى للتأكيد",
@@ -130,7 +169,8 @@ export const DICT = {
     loading: "Un instant…",
     lang_other: "العربية",
     logout: "Quitter",
-    logout_pending: "{n} action(s) ne sont pas encore envoyées et seront perdues si vous quittez. Quitter quand même ?",
+    logout_pending_one: "{n} action n'est pas encore envoyée et sera perdue si vous quittez. Quitter quand même ?",
+    logout_pending_other: "{n} actions ne sont pas encore envoyées et seront perdues si vous quittez. Quitter quand même ?",
     install: "Installer l'application sur le téléphone",
     net_online: "En ligne",
     net_offline: "Hors ligne",
@@ -175,9 +215,11 @@ export const DICT = {
     your_rank: "Votre rang",
     rank_pending: "Il s'affichera au retour du réseau",
     rank_first: "Vous remplissez en premier",
-    rank_ahead: "{n} louage(s) devant vous",
+    rank_ahead_one: "{n} louage devant vous",
+    rank_ahead_other: "{n} louages devant vous",
     seats_taken: "Places occupées",
-    seats_reserved: "dont {n} réservée(s) en ligne",
+    seats_reserved_one: "dont {n} réservée en ligne",
+    seats_reserved_other: "dont {n} réservées en ligne",
     seats_full: "Complet",
     board_one: "+1 PASSAGER",
     board_other: "Passager vers une autre destination",
@@ -188,8 +230,10 @@ export const DICT = {
     pax_online: "réservation en ligne",
     pax_arrived: "Il est là",
     pax_leaves_here: "Descend ici",
-    stop_alight: "{n} passager descend ici",
-    stop_board: "{n} passager vous attend",
+    stop_alight_one: "{n} passager descend ici",
+    stop_alight_other: "{n} passagers descendent ici",
+    stop_board_one: "{n} passager vous attend",
+    stop_board_other: "{n} passagers vous attendent",
     depart: "PARTIR DE LA GARE",
     leave_queue: "Quitter la file",
     press_again: "Appuyez encore pour confirmer",

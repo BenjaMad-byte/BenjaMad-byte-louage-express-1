@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { DICT } from "../public/i18n.js";
+import { DICT, pluralCategory } from "../public/i18n.js";
 import { applyLocal, rebase, queueInfo } from "../public/local.js";
 import { createSync } from "../public/sync.js";
 import { openStore } from "../public/store.js";
@@ -208,18 +208,38 @@ test("sync : deux flush simultanés n'envoient jamais deux fois la même action"
 });
 
 // ---------------------------------------------------------------- textes
-test("textes : arabe et français ont exactement les mêmes clés, aucune n'est vide", () => {
-  const ar = Object.keys(DICT.ar).sort();
-  const fr = Object.keys(DICT.fr).sort();
+// Variantes de pluriel CLDR (pluralCategory dans i18n.js) : le français n'a que one/other,
+// l'arabe peut avoir jusqu'à zero/one/two/few/many/other — les deux langues n'ont donc pas
+// forcément les mêmes SUFFIXES, mais doivent couvrir la même clé de base. Liste explicite plutôt
+// qu'une détection par motif : "lang_other" (l'AUTRE langue) ou "board_one"/"board_other" (deux
+// boutons différents) se terminent pareil sans être un pluriel.
+const PLURAL_BASE_KEYS = new Set(["logout_pending", "rank_ahead", "seats_reserved", "stop_alight", "stop_board"]);
+const PLURAL_SUFFIX = /_(?:zero|one|two|few|many|other)$/;
+const baseKey = (k) => {
+  const m = k.match(PLURAL_SUFFIX);
+  if (!m) return k;
+  const base = k.slice(0, -m[0].length);
+  return PLURAL_BASE_KEYS.has(base) ? base : k;
+};
+
+test("pluralCategory : règle CLDR réelle, pas un « (s) » — arabe à 6 catégories, français à 2", () => {
+  assert.deepEqual([0, 1, 2, 3, 10, 11, 99, 100].map((n) => pluralCategory("ar", n)), ["zero", "one", "two", "few", "few", "many", "many", "other"]);
+  assert.deepEqual([0, 1, 2, 11].map((n) => pluralCategory("fr", n)), ["one", "one", "other", "other"]);
+});
+
+test("textes : arabe et français ont exactement les mêmes clés (variantes de pluriel comptées par clé de base), aucune n'est vide", () => {
+  const ar = [...new Set(Object.keys(DICT.ar).map(baseKey))].sort();
+  const fr = [...new Set(Object.keys(DICT.fr).map(baseKey))].sort();
   assert.deepEqual(ar, fr);
   for (const lang of ["ar", "fr"]) for (const [k, v] of Object.entries(DICT[lang])) assert.ok(String(v).trim(), `${lang}.${k} est vide`);
+  for (const k of Object.keys(DICT.ar)) if (baseKey(k) !== k) assert.ok(DICT.ar[`${baseKey(k)}_other`] && DICT.fr[`${baseKey(k)}_other`], `${baseKey(k)} : variante _other manquante dans une langue`);
   assert.ok(Object.values(DICT.ar).some((v) => /[؀-ۿ]/.test(v)));
 });
 
 test("textes : chaque clé utilisée par l'application existe, et chaque code d'erreur ou de refus du serveur a son message", () => {
   const app = read("public/app.js");
   const used = new Set([...app.matchAll(/(?<![\w.$])t\(\s*["']([a-z0-9_]+)["']/g)].map((m) => m[1]));
-  for (const key of used) assert.ok(DICT.ar[key] && DICT.fr[key], `clé « ${key} » utilisée mais non définie`);
+  for (const key of used) assert.ok((DICT.ar[key] && DICT.fr[key]) || (PLURAL_BASE_KEYS.has(key) && DICT.ar[`${key}_other`] && DICT.fr[`${key}_other`]), `clé « ${key} » utilisée mais non définie`);
   assert.ok(used.size > 40);
 
   // Raisons de refus : celles du moteur et des actions.

@@ -1,4 +1,4 @@
-import { DICT, GOVERNORATES, GOVERNORATES_AR } from "./i18n.js";
+import { DICT, GOVERNORATES, GOVERNORATES_AR, pluralCategory } from "./i18n.js";
 
 const safeStorage = {
   get: (k) => { try { return localStorage.getItem(k); } catch { return null; } },
@@ -6,7 +6,17 @@ const safeStorage = {
 };
 
 export const getLang = () => (safeStorage.get("lang") === "fr" ? "fr" : "ar");
-export const t = (key) => DICT[getLang()][key] ?? key;
+// vars.n déclenche le pluriel réel (variantes <clé>_zero/_one/_two/_few/_many/_other, voir i18n.js)
+// quand elles existent pour cette clé ; sinon la clé est utilisée telle quelle, {var} interpolé.
+export const t = (key, vars = {}) => {
+  const dict = DICT[getLang()];
+  let k = key;
+  if (typeof vars.n === "number" && `${key}_other` in dict) {
+    const cat = `${key}_${pluralCategory(getLang(), vars.n)}`;
+    k = cat in dict ? cat : `${key}_other`;
+  }
+  return String(dict[k] ?? k).replace(/\{(\w+)\}/g, (_, v) => vars[v] ?? "");
+};
 
 /** Création DOM sans innerHTML : tout texte passe par textContent. */
 export function h(tag, attrs = {}, ...children) {

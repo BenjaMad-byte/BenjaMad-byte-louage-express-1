@@ -3,7 +3,7 @@ import { openStore } from "./store.js";
 import { createSync } from "./sync.js";
 import { applyLocal, rebase, queueInfo } from "./local.js";
 import * as E from "./engine.js";
-import { DICT } from "./i18n.js";
+import { DICT, pluralCategory } from "./i18n.js";
 
 const root = document.getElementById("app");
 const netBar = document.getElementById("net");
@@ -27,7 +27,16 @@ let loginStep = { plate: "", busy: false, error: "" };
 let recoverStep = { stage: "phone", phone: "", busy: false, error: "" };
 let activationStep = null; // null, ou { token, stage: "loading"|"form"|"error", name, plate, error, busy } pendant l'activation via lien SMS
 
-export const t = (key, vars = {}) => String(DICT[lang][key] ?? key).replace(/\{(\w+)\}/g, (_, k) => vars[k] ?? "");
+// Pluriel réel : si des variantes <key>_zero/_one/_two/_few/_many/_other existent pour cette clé
+// (voir pluralCategory dans i18n.js), la bonne est choisie selon vars.n ; sinon clé telle quelle.
+export const t = (key, vars = {}) => {
+  let k = key;
+  if (typeof vars.n === "number" && `${key}_other` in DICT[lang]) {
+    const cat = `${key}_${pluralCategory(lang, vars.n)}`;
+    k = cat in DICT[lang] ? cat : `${key}_other`;
+  }
+  return String(DICT[lang][k] ?? k).replace(/\{(\w+)\}/g, (_, v) => vars[v] ?? "");
+};
 
 function h(tag, attrs = {}, ...kids) {
   const el = document.createElement(tag);

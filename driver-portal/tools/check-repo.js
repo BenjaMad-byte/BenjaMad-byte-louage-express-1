@@ -50,14 +50,33 @@ export function secretProblems(file, content) {
   return SECRET_PATTERNS.filter(([re]) => re.test(content)).map(([, label]) => `${file} : ressemble à un secret (${label}) : le retirer et le changer s'il était réel`);
 }
 
+// Clés traduites par variantes de pluriel CLDR (<clé>_zero/_one/_two/_few/_many/_other) plutôt que par
+// une seule valeur : l'arabe peut couvrir jusqu'à 6 catégories, le français seulement 2 (one/other), donc
+// les deux langues n'ont pas forcément les mêmes SUFFIXES pour une même clé. Liste explicite plutôt qu'une
+// détection par motif : des clés comme "lang_other" (l'AUTRE langue) ou "board_one"/"board_other" (deux
+// boutons différents) se terminent pareil sans être un pluriel — seules les clés ci-dessous le sont.
+const PLURAL_BASE_KEYS = new Set(["logout_pending", "rank_ahead", "seats_reserved", "stop_alight", "stop_board", "f_circuit_drivers"]);
+const PLURAL_SUFFIX = /_(?:zero|one|two|few|many|other)$/;
+const baseIfPlural = (k) => {
+  const m = k.match(PLURAL_SUFFIX);
+  if (!m) return null;
+  const base = k.slice(0, -m[0].length);
+  return PLURAL_BASE_KEYS.has(base) ? base : null;
+};
+
 /** Les clés de traduction existent des deux côtés (arabe ET français), et toutes celles utilisées par les pages et les scripts sont définies. */
 export function i18nProblems(dict, usages) {
   const problems = [];
   const ar = new Set(Object.keys(dict.ar));
   const fr = new Set(Object.keys(dict.fr));
-  for (const k of ar) if (!fr.has(k)) problems.push(`i18n : « ${k} » existe en arabe mais pas en français`);
-  for (const k of fr) if (!ar.has(k)) problems.push(`i18n : « ${k} » existe en français mais pas en arabe`);
-  for (const { file, key } of usages) if (!ar.has(key) || !fr.has(key)) problems.push(`${file} : clé de traduction « ${key} » non définie dans les deux langues`);
+  const arBase = new Set([...ar].map((k) => baseIfPlural(k) ?? k));
+  const frBase = new Set([...fr].map((k) => baseIfPlural(k) ?? k));
+  for (const k of arBase) if (!frBase.has(k)) problems.push(`i18n : « ${k} » existe en arabe mais pas en français`);
+  for (const k of frBase) if (!arBase.has(k)) problems.push(`i18n : « ${k} » existe en français mais pas en arabe`);
+  for (const { file, key } of usages) {
+    const defined = (ar.has(key) && fr.has(key)) || (PLURAL_BASE_KEYS.has(key) && ar.has(`${key}_other`) && fr.has(`${key}_other`));
+    if (!defined) problems.push(`${file} : clé de traduction « ${key} » non définie dans les deux langues`);
+  }
   for (const lang of ["ar", "fr"]) for (const [k, v] of Object.entries(dict[lang])) if (typeof v === "string" && v.trim() === "") problems.push(`i18n : « ${k} » est vide en ${lang}`);
   return problems;
 }

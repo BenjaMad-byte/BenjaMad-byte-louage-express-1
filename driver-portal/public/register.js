@@ -80,7 +80,7 @@ async function renderCircuitSuggestions() {
     h("div", { class: "choices stack" }, list.map((c) => h("button", { type: "button", class: "choice", onclick: () => applyCircuit(c) },
       h("span", {},
         h("strong", {}, `${c.from} → ${c.type === "national" ? typeLabel.national : c.to_gov}`),
-        h("small", {}, [typeLabel[c.type], c.via.length ? c.via.join(", ") : null, `${c.drivers} ${t("f_circuit_drivers")}`].filter(Boolean).join(" · ")))))));
+        h("small", {}, [typeLabel[c.type], c.via.length ? c.via.join(", ") : null, t("f_circuit_drivers", { n: c.drivers })].filter(Boolean).join(" · ")))))));
 }
 function applyCircuit(c) {
   form.querySelector(`input[name="line_type"][value="${c.type}"]`).checked = true;
@@ -256,7 +256,7 @@ function renderDraftNotice() {
   if (restoredAt === null) return;
   const locale = getLang() === "ar" ? "ar-TN-u-nu-latn" : "fr-FR"; // chiffres latins aussi en arabe
   const date = new Intl.DateTimeFormat(locale, { dateStyle: "short", timeStyle: "short" }).format(restoredAt);
-  document.getElementById("draft-text").textContent = t("draft_restored").replace("{date}", date);
+  document.getElementById("draft-text").textContent = t("draft_restored", { date });
   draftNotice.hidden = false;
 }
 
