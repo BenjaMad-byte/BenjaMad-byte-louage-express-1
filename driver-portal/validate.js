@@ -54,7 +54,7 @@ export function validateApplication(body) {
     phone: normalizePhone(body.phone),
     cin: normalizeCin(body.cin),
     role: "driver", // le site est réservé aux chauffeurs de louage
-    plate: clean(body.plate, 20).toUpperCase(),
+    plate: clean(latinDigits(body.plate), 20).toUpperCase(),
     governorate: clean(body.governorate, 40),
     station: clean(body.station, 80),
     line_type: body.line_type,
@@ -118,7 +118,7 @@ export function newRef() {
 }
 
 export function normalizeRef(raw) {
-  const v = String(raw ?? "").trim().toUpperCase();
+  const v = latinDigits(raw).trim().toUpperCase();
   return /^LX-[A-Z2-9]{8}$/.test(v) ? v : null;
 }
 

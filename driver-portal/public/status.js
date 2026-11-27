@@ -5,6 +5,12 @@ const bannerEl = document.getElementById("banner");
 const result = document.getElementById("result");
 let last = null; // dernier résultat, pour re-rendu au changement de langue
 
+const latinDigits = (s) => String(s ?? "").replace(/[٠-٩]/g, (d) => d.charCodeAt(0) - 0x0660).replace(/[۰-۹]/g, (d) => d.charCodeAt(0) - 0x06f0);
+// Chiffres indo-arabes → chiffres latins dès la saisie (le serveur les accepte aussi, mais l'affichage reste lisible).
+for (const name of ["ref", "phone"]) {
+  form.elements[name].addEventListener("input", (e) => { e.target.value = latinDigits(e.target.value); });
+}
+
 function render() {
   if (!last) return;
   const badge = document.getElementById("badge");

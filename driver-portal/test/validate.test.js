@@ -88,6 +88,15 @@ test("les chiffres indo-arabes d'un clavier arabe sont acceptés (téléphone, C
   assert.equal(normalizePhone("+٢١٦٩٨١٢٣٤٥٦"), "98123456", "le préfixe +216 est reconnu aussi en chiffres indo-arabes");
 });
 
+test("les chiffres indo-arabes sont aussi acceptés pour la plaque et la référence", () => {
+  const r = validateApplication({ ...valid, plate: "١٢٣ tun ٤٥٦٧" });
+  assert.equal(r.values.plate, "123 TUN 4567");
+  const ref = newRef();
+  const digits = "٠١٢٣٤٥٦٧٨٩";
+  const ref2Ar = ref.replace(/[0-9]/g, (d) => digits[Number(d)]);
+  assert.equal(normalizeRef(ref2Ar), ref);
+});
+
 test("circuit : le champ ligne est dérivé de « ville de départ → gouvernorat d'arrivée »", () => {
   const r = validateApplication(valid);
   assert.equal(r.ok, true);

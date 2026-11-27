@@ -7,6 +7,12 @@ const submitBtn = document.getElementById("submit");
 let slots = null; // null = pas encore chargé
 let selected = null;
 
+const latinDigits = (s) => String(s ?? "").replace(/[٠-٩]/g, (d) => d.charCodeAt(0) - 0x0660).replace(/[۰-۹]/g, (d) => d.charCodeAt(0) - 0x06f0);
+// Chiffres indo-arabes → chiffres latins dès la saisie (le serveur les accepte aussi, mais l'affichage reste lisible).
+for (const name of ["phone", "ref"]) {
+  form.elements[name].addEventListener("input", (e) => { e.target.value = latinDigits(e.target.value); });
+}
+
 function renderSlots() {
   if (slots === null) return slotsEl.replaceChildren(h("p", { class: "note" }, t("iv_loading")));
   if (!slots.length) return slotsEl.replaceChildren(h("p", { class: "note" }, t("iv_none")));

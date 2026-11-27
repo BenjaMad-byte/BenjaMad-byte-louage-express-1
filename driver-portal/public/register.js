@@ -134,7 +134,7 @@ function resetOtp() {
 }
 
 // Chiffres indo-arabes → chiffres latins dès la saisie (le serveur les accepte aussi, mais l'affichage reste lisible).
-for (const name of ["phone", "cin"]) {
+for (const name of ["phone", "cin", "plate"]) {
   form.elements[name].addEventListener("input", (e) => { e.target.value = latinDigits(e.target.value); });
 }
 
