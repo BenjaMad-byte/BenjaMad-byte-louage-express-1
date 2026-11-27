@@ -178,7 +178,10 @@ p { margin: 0 0 12px; max-width: 62ch; text-wrap: pretty; }
   radial-gradient(1px 1px at 47% 24%, #fff, transparent), radial-gradient(1.5px 1.5px at 63% 12%, #fff, transparent),
   radial-gradient(1px 1px at 78% 20%, #fff, transparent), radial-gradient(1.5px 1.5px at 90% 8%, #fff, transparent),
   radial-gradient(1px 1px at 21% 34%, #fff, transparent), radial-gradient(1px 1px at 85% 38%, #fff, transparent),
-  linear-gradient(180deg, #001a17 0%, #003934 45%, #0b5f56 72%, #1a9e8f 100%); }
+  linear-gradient(180deg, #001a17 0%, #003934 45%, #0b5f56 72%, #0d6358 100%); }
+/* Dernier palier assombri (#1a9e8f → #0d6358) : au bas du dégradé, le texte clair (#eef2f5/#d3dde7) tombait
+   autour de 2,2:1 sur #1a9e8f, sous le seuil AA (4,5:1) — pire encore avec un texte arabe plus long qui pousse
+   le contenu plus bas dans le dégradé. #0d6358 garde la même teinte (nuit → turquoise) en restant ≥ 5:1 partout. */
 .dawn-inner { max-width: 760px; margin: 0 auto; }
 .dawn h2 { font-size: clamp(1.618rem, 4.5vw, 2.618rem); line-height: 1.2; margin: 0 0 var(--space-1); color: #fff; }
 .dawn .lead { color: #d3dde7; }
