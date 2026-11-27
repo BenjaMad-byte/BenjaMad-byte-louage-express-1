@@ -150,15 +150,15 @@ p { margin: 0 0 12px; max-width: 62ch; text-wrap: pretty; }
 @media (min-width: 640px) { .stops { grid-template-columns: repeat(5, 1fr); } }
 @media (min-width: 900px) { .route { padding: var(--space-6) 32px var(--space-6); } }
 .em.bizerte { --em: #e6665a; --em2: #f2c14e; }
-.em.tunis { --em: #cfe0f2; }
+.em.tunis { --em: #cfe0f2; --em2: #2f6fa6; }
 .em.nabeul { --em: #f0902a; --em2: #4f9a3e; }
-.em.sousse { --em: #e8d3a6; }
+.em.sousse { --em: #e8d3a6; --em2: #6a8f52; }
 .em.kairouan { --em: #2f8f66; --em2: #e8d3a6; }
-.em.sfax { --em: #8aa65a; }
+.em.sfax { --em: #8aa65a; --em2: #d9894a; }
 .em.gafsa { --em: #cdbf9f; --em2: #e6dcc6; }
-.em.tozeur { --em: #d9894a; }
-.em.djerba { --em: #9cc4e8; }
-.em.tataouine { --em: #e9c48a; }
+.em.tozeur { --em: #d9894a; --em2: #6fae4f; }
+.em.djerba { --em: #9cc4e8; --em2: #e6c98f; }
+.em.tataouine { --em: #e9c48a; --em2: #a67a4f; }
 .govs-title { font-size: 1.15rem; margin: var(--space-4) 0 4px; }
 .govs { list-style: none; margin: var(--space-2) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-1); }
 .govs li { padding: 5px 14px; border: 1px solid var(--line); border-radius: 99px; background: var(--paper); font-size: 0.92rem; }
@@ -207,10 +207,13 @@ p { margin: 0 0 12px; max-width: 62ch; text-wrap: pretty; }
 .stamps { position: sticky; top: 0; z-index: 5; margin: 0 -16px 16px; padding: 10px 16px 8px; background: var(--paper); border-bottom: 1px solid var(--line); overflow-x: clip; /* l'animation d'un tampon au bord ne doit jamais élargir la page */ }
 .stamp-row { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; }
 .stamp { display: flex; flex-direction: column; align-items: center; gap: 2px; text-decoration: none; color: var(--ink-2); min-height: 44px; }
-.stamp .em { width: 46px; height: 46px; padding: 6px; border-radius: 50%; background: var(--card); border: 2px dashed var(--line); color: var(--ink); opacity: 0.4; filter: grayscale(1); --em2: var(--blue-soft); transition: opacity 0.2s var(--ease), filter 0.2s var(--ease); }
+.stamp .em { width: 46px; height: 46px; padding: 6px; border-radius: 50%; background: var(--card); border: 2px dashed var(--line); color: var(--ink); opacity: 0.4; filter: grayscale(1); --em2: var(--blue-soft); transition: opacity 0.2s var(--ease), filter 0.2s var(--ease), border-color 0.2s var(--ease), transform 0.2s var(--ease); }
 .stamp.done .em { opacity: 1; filter: none; border: 2px solid var(--accent); transform: rotate(-6deg); }
 .stamp-name { display: none; font-size: 0.72rem; line-height: 1.2; text-align: center; }
 .stamp.done .stamp-name { color: var(--ink); font-weight: 700; }
+.stamp:hover .em { border-color: var(--blue); }
+.stamp:active .em { transform: scale(0.94); }
+.stamp.done:active .em { transform: rotate(-6deg) scale(0.94); }
 .stamp:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-radius: 10px; }
 .stamps-count { margin: 4px 0 0; text-align: center; font-size: 0.85rem; color: var(--ink-2); }
 fieldset { scroll-margin-top: 120px; }
@@ -289,22 +292,31 @@ html[lang="ar"] .btn.small { font-size: 0.95rem; }
 .perks-inner { max-width: 760px; margin: 0 auto; }
 .perks-inner h2 { margin-top: 0; }
 .perks { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--space-2); }
-.perks li { padding-inline-start: 30px; position: relative; font-size: 1.05rem; }
-.perks li::before { content: ""; position: absolute; inset-inline-start: 0; top: 0.55em; width: 14px; height: 14px; border-radius: 3px; background: var(--ok); }
+.perks li { padding-inline-start: 34px; position: relative; font-size: 1.05rem; }
+/* Même puce que .checks (pastille ronde + coche), pas un simple carré vert : les deux listes d'avantages partagent un seul langage visuel. */
+.perks li::before { content: ""; position: absolute; inset-inline-start: 0; top: 0.35em; width: 22px; height: 22px; border-radius: 50%; background: var(--ok); }
+.perks li::after { content: ""; position: absolute; inset-inline-start: 7px; top: 0.58em; width: 6px; height: 11px; border: solid #fff; border-width: 0 2.5px 2.5px 0; transform: rotate(45deg); }
 @media (min-width: 900px) { .perks-section { padding: var(--space-6) 32px; } }
 
 /* CTA final : identique au CTA du hero (même titre, même sous-titre, même bouton) — pour qui arrive jusqu'en bas sans remonter.
    Couleurs fixes (pas var(--ink)/var(--card)) : cette carte reste sombre volontairement dans les deux thèmes,
    comme .hero-cine et .dawn — var(--ink) s'inverserait en clair en mode sombre et casserait le contraste. */
 .final-cta { background: #003934; color: #fff; border-radius: var(--radius); padding: var(--space-6) var(--space-4); margin: var(--space-5) 0 var(--space-4); text-align: center; }
-.final-cta h2 { color: #fff; margin-top: 0; }
+.final-cta h2 { font-size: clamp(1.618rem, 4.5vw, 2.618rem); line-height: 1.2; color: #fff; margin-top: 0; }
 .final-cta .lead { color: #cfe8e3; max-width: 46ch; margin-inline: auto; }
 .final-cta .actions { justify-content: center; }
 .final-cta .btn { background: #fff; border-color: #fff; color: #003934; }
 .final-cta .btn:hover { background: #def0ed; border-color: #def0ed; color: #003934; }
 
-details { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 0 16px; margin-bottom: 8px; }
-summary { cursor: pointer; padding: 14px 0; font-weight: 600; min-height: 48px; }
+details { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 0 16px; margin-bottom: 8px; transition: border-color 0.2s var(--ease); }
+details[open] { border-color: var(--blue); }
+summary { cursor: pointer; padding: 14px 28px 14px 0; font-weight: 600; min-height: 48px; display: flex; align-items: center; position: relative; list-style: none; }
+summary::-webkit-details-marker { display: none; }
+/* Chevron fait main (pas le triangle par défaut du navigateur) : tourne à l'ouverture, même courbe de mouvement que le reste du site. */
+summary::after { content: ""; position: absolute; inset-inline-end: 2px; top: 50%; width: 9px; height: 9px; border-inline-end: 2px solid var(--ink-2); border-block-end: 2px solid var(--ink-2); transform: translateY(-70%) rotate(45deg); transition: transform 0.3s var(--ease); }
+details[open] summary::after { transform: translateY(-30%) rotate(225deg); }
+summary:hover::after { border-color: var(--ink); }
+summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-radius: 8px; }
 details p { padding-bottom: 8px; }
 
 /* Formulaires */
@@ -327,13 +339,15 @@ input[dir="ltr"] { text-align: start; }
 .choices { display: flex; flex-wrap: wrap; gap: 10px; }
 .choice { position: relative; }
 .choice input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
-.choice span { display: inline-flex; align-items: center; min-height: 52px; padding: 8px 22px; border: 2px solid var(--line); border-radius: var(--radius); background: var(--paper); font-weight: 600; }
+.choice span { display: inline-flex; align-items: center; min-height: 52px; padding: 8px 22px; border: 2px solid var(--line); border-radius: var(--radius); background: var(--paper); font-weight: 600; transition: border-color 0.2s var(--ease), transform 0.2s var(--ease); }
 .choices.stack { display: grid; gap: 10px; }
 .choice span:has(strong) { flex-direction: column; align-items: flex-start; justify-content: center; gap: 2px; width: 100%; }
 .choice small { color: var(--ink-2); font-weight: 400; font-size: 0.9rem; }
 @media (min-width: 640px) { .choices.stack { grid-template-columns: 1fr 1fr; } }
 .choice input:checked + span { border-color: var(--blue); background: var(--blue-soft); }
 .choice input:focus-visible + span { outline: 3px solid var(--focus); outline-offset: 2px; }
+.choice input:not(:checked):hover + span { border-color: var(--blue); }
+.choice input:active + span { transform: scale(0.98); }
 /* Suggestion de circuit : un bouton, pas une case à cocher (pas d'<input> à l'intérieur) — on enlève juste le style natif du <button>. */
 button.choice { display: block; width: 100%; background: none; border: 0; padding: 0; margin: 0; font: inherit; text-align: inherit; }
 button.choice:focus-visible span { outline: 3px solid var(--focus); outline-offset: 2px; }
